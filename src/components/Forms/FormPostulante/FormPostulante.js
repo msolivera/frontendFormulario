@@ -6,6 +6,7 @@ import Domicilio from "../Componentes/Domicilio/index";
 import Educacion from "../Componentes/Educacion/index";
 import Laboral from "../Componentes/Laboral/index";
 import Preguntas from "../Componentes/Preguntas/index";
+import OtrosFamiliares from "../Componentes/OtrosFamiliares";
 
 import "./FormPostulante.scss";
 
@@ -13,12 +14,13 @@ export default function FormPostulante() {
   return (
     <>
       <Container>
-        <Educacion />
+        <OtrosFamiliares />
         {/*
         <DatosPersonales />
         <Educacion />
         <Laboral />
         <Preguntas />
+        <OtrosFamiliares/>
         */}
       </Container>
     </>

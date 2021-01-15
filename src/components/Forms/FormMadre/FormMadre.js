@@ -18,7 +18,6 @@ export default function FormMadre() {
       <Container>
         <Form>
           <DatosPersonales />
-          <Domicilio />
           <Button variant="primary" type="submit">
             Guardar <FontAwesomeIcon icon={faLongArrowAltRight} />
           </Button>

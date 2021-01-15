@@ -8,7 +8,6 @@ export default function App() {
   /*const [user, serUser] = useState({ name: "micaela" });
 
   return <div>{user ? <Principal /> : <h1>no estas logueado</h1>}</div>;*/
-
   return (
     <div>
       <InicioForm />

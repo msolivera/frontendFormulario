@@ -1,29 +1,30 @@
 import React, { useState } from "react";
-import {
-  Row,
-  Col,
-  Form,
-  Button,
-  Spinner,
-  Jumbotron,
-  Table,
-} from "react-bootstrap";
+import { Form, Button, Spinner, Jumbotron, Table } from "react-bootstrap";
 
 import { crearEstudiosBasicos } from "../../../../api/auth";
 
-import { values, size } from "lodash";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faUserGraduate,
-  faPlus,
-  faLongArrowAltRight,
-} from "@fortawesome/free-solid-svg-icons";
+import { faUserGraduate, faPlus } from "@fortawesome/free-solid-svg-icons";
+
+import BasicModal from "../../../Modal/BasicModal";
+import OtrosEstudios from "../OtrosEstudios";
+
+import { sinCaracteresEspeciales } from "../../../../utils/validations";
 
 import "../../FormPostulante/FormPostulante.scss";
 export default function Educacion() {
+  //Para manejar el Modal
+  const [showModal, setShowModal] = useState(false);
+  const [contentModal, setContentModal] = useState(null);
+  //funcion que abre el modal y le agrega el contenido de los form
+  const openModal = (content) => {
+    setShowModal(true);
+    setContentModal(content);
+  };
+
   //state para hacer funcionar el Spinner
   const [guardadoLoading, setGuardadoLoading] = useState(false);
   //state que guarda la info del formulario
@@ -33,6 +34,9 @@ export default function Educacion() {
     e.preventDefault();
     //lo siguiente se encarga de recorrer el form y ver si tiene el campo relleno o no
     //si el valid count tiene tiene el mismo numero que el total de keys del formdata entonces significa que tiene todos los campos rellenados
+    /*if (!sinCaracteresEspeciales(formData.values)) {
+      toast.warning("email invalido");
+    } else {*/
     setGuardadoLoading(true);
     crearEstudiosBasicos(formData)
       .then((response) => {
@@ -49,9 +53,14 @@ export default function Educacion() {
       .finally(() => {
         setGuardadoLoading(false);
       });
+    //}
   };
   return (
     <div>
+      <BasicModal show={showModal} setShow={setShowModal}>
+        {contentModal}
+      </BasicModal>
+
       <Form onSubmit={onSubmit}>
         <Jumbotron>
           <div>
@@ -368,33 +377,29 @@ export default function Educacion() {
               </tbody>
             </Table>
 
-            <Form.Group as={Row} controlId="formHorizontalEmail">
-              <Form.Label column sm={1}>
-                Otros Estudios
-              </Form.Label>
-
-              <Form.Label column sm={1.5}>
-                Nombre
-              </Form.Label>
-
-              <Col sm={4}>
-                <Form.Control type="text" placeholder="Primer Año" />
-              </Col>
-
-              <Form.Label column sm={1}>
-                Años Cursados
-              </Form.Label>
-              <Col sm={4}>
-                <Form.Control type="text" placeholder="Primer Año" />
-              </Col>
-              <Col>
-                <Button variant="outline-primary">
-                  Añadir mas
-                  <FontAwesomeIcon icon={faPlus} />
-                  <FontAwesomeIcon icon={faUserGraduate} />
-                </Button>
-              </Col>
-            </Form.Group>
+            <h3>Otros Estudios Realizados</h3>
+            <Table id="tabla">
+              <thead>
+                <tr>
+                  <th>Años Cursados</th>
+                  <th>Nombre del Estudio/Capacitacion</th>
+                  <th>
+                    {" "}
+                    <Button
+                      variant="outline-primary"
+                      onClick={() =>
+                        openModal(<OtrosEstudios setShowModal={setShowModal} />)
+                      }
+                    >
+                      Añadir
+                      <FontAwesomeIcon icon={faPlus} />
+                      <FontAwesomeIcon icon={faUserGraduate} />
+                    </Button>
+                  </th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </Table>
           </div>
         </Jumbotron>
         <Button variant="primary" type="submit">

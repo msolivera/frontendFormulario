@@ -102,3 +102,82 @@ export function crearEstudiosBasicos(estudios) {
       return err;
     });
 }
+
+export function crearEstudio(estudio) {
+  const url = `${API_HOST}estudio`;
+  const params = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(estudio),
+  };
+
+  return fetch(url, params)
+    .then((response) => {
+      if (response.status >= 200 && response.status < 300) {
+        return response.json();
+      }
+      return { code: 404, message: "Error al guardar los datos" };
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return err;
+    });
+}
+
+export function obtenerOtrosEstudios() {
+  const url = `${API_HOST}estudios`;
+  const params = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  console.log(params);
+  console.log(url);
+  return fetch(url, params)
+    .then((response) => {
+      if (response.status >= 200 && response.status < 300) {
+        return response.json();
+      }
+      return { code: 404, message: "Error al guardar los datos" };
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return err;
+    });
+}
+
+export function crearOtroFliar(familiar) {
+  const url = `${API_HOST}familiar`;
+
+  console.log(familiar);
+  console.log(url);
+
+  const params = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(familiar),
+  };
+
+  return fetch(url, params)
+    .then((response) => {
+      if (response.status >= 200 && response.status < 300) {
+        return response.json();
+      }
+      return { code: 404, message: "Error al guardar los datos" };
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return err;
+    });
+}
