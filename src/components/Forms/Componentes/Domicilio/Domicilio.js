@@ -8,14 +8,6 @@ import {
   Jumbotron,
   Container,
 } from "react-bootstrap";
-import DatePicker from "react-date-picker";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faUserGraduate,
-  faPlus,
-  faLongArrowAltRight,
-} from "@fortawesome/free-solid-svg-icons";
 
 import MiniComponentPais from "../MiniComponentPais/index";
 import MiniComponenteDepa from "../MiniComponenteDepa/Index";

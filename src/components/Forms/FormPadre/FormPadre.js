@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button, Container } from "react-bootstrap";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,12 +12,14 @@ import Preguntas from "../Componentes/Preguntas/index";
 import "../FormPostulante/FormPostulante.scss";
 
 export default function FormPadre() {
+  //este state lo uso para harcodear el tipo de persona que recibe el componente de datos personales
+  const [tipoPerstate, settipoPerstate] = useState(3);
   return (
     <>
       <h2>Datos del Padre</h2>
       <Container>
         <Form>
-          <DatosPersonales />
+          <DatosPersonales tipoPerstate={tipoPerstate} />
           <Domicilio />
           <Button variant="primary" type="submit">
             Guardar <FontAwesomeIcon icon={faLongArrowAltRight} />

@@ -12,12 +12,14 @@ import Preguntas from "../Componentes/Preguntas/index";
 import "../FormPostulante/FormPostulante.scss";
 
 export default function FormPareja() {
+  //este state lo uso para harcodear el tipo de persona que recibe el componente de datos personales
+  const [tipoPerstate, settipoPerstate] = useState(10);
   return (
     <>
       <h2>Datos Conyuge, Concubino/a , Novio/a</h2>
       <Container>
         <Form>
-          <DatosPersonales />
+          <DatosPersonales tipoPerstate={tipoPerstate} />
           <Domicilio />
           <Button variant="primary" type="submit">
             Guardar <FontAwesomeIcon icon={faLongArrowAltRight} />

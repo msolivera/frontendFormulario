@@ -4,9 +4,7 @@ import { Row, Col, Form, Jumbotron, Button, Spinner } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import es from "date-fns/locale/es";
 import "react-datepicker/dist/react-datepicker.css";
-
-import MiniComponentPais from "../MiniComponentPais/index";
-import MiniComponenteDepa from "../MiniComponenteDepa/Index";
+import range from "lodash/range";
 
 import { values, size } from "lodash";
 import { toast } from "react-toastify";
@@ -17,11 +15,48 @@ import { crearPersona } from "../../../../api/auth";
 
 import "../../FormPostulante/FormPostulante.scss";
 
-export default function DatosPersonales() {
+export default function DatosPersonales(props) {
+  /*DATE PICKER PERSONALIZADO**********************************************/
+  const [startDate, setStartDate] = useState(new Date());
+
+  const years = range(1920, new Date().getFullYear() + 1, 1);
+  const months = [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Setiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre",
+  ];
+  /*DATE PICKER PERSONALIZADO**********************************************/
+
+  //este estate me lo manda el form que lo llame para harcodear tipo de persona
+  const { tipoPerstate } = props;
+
+  console.log(tipoPerstate);
   const [guardadoLoading, setGuardadoLoading] = useState(false);
   //state que guarda la info del formulario
   const [formData, setFormData] = useState(initialFormValue());
   //funcion que controla cuando se va a guardara el fomrulario
+
+  function formatearDate(startDate) {
+    let year = startDate.getFullYear();
+    let month = "" + (startDate.getMonth() + 1);
+    let day = "" + startDate.getDate();
+
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+
+    let fechaFinal = year + "-" + month + "-" + day;
+    return fechaFinal;
+  }
+
   const onSubmit = (e) => {
     e.preventDefault();
     //lo siguiente se encarga de recorrer el form y ver si tiene el campo relleno o no
@@ -32,8 +67,6 @@ export default function DatosPersonales() {
       return null;
     });
 
-    //descomentar esta linea cuando tenga solucionado la fecha
-    /*if (validCount !== size(formData)) {*/
     if (validCount !== size(formData)) {
       toast.warning("Faltan campos que completar");
     } else {
@@ -77,7 +110,11 @@ export default function DatosPersonales() {
                     placeholder="Primer Nombre"
                     value={formData.primerNombre}
                     onChange={(e) =>
-                      setFormData({ ...formData, primerNombre: e.target.value })
+                      setFormData({
+                        ...formData,
+                        primerNombre: e.target.value,
+                        tipo_persona_id: tipoPerstate,
+                      })
                     }
                   />
                 </Col>
@@ -180,9 +217,72 @@ export default function DatosPersonales() {
                 <Col>
                   <Form.Label>Fecha de Nacimiento</Form.Label>
                   <DatePicker
-                    placeholder="Fecha de Nacimiento"
+                    dateFormat="yyyy/MM/dd"
+                    renderCustomHeader={({
+                      date,
+                      changeYear,
+                      changeMonth,
+                      decreaseMonth,
+                      increaseMonth,
+                      prevMonthButtonDisabled,
+                      nextMonthButtonDisabled,
+                    }) => (
+                      <div
+                        style={{
+                          margin: 10,
+                          display: "flex",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <button
+                          onClick={decreaseMonth}
+                          disabled={prevMonthButtonDisabled}
+                        >
+                          {"<"}
+                        </button>
+                        <select
+                          value={date.getFullYear()}
+                          onChange={({ target: { value } }) =>
+                            changeYear(value)
+                          }
+                        >
+                          {years.map((option) => (
+                            <option key={option} value={option}>
+                              {option}
+                            </option>
+                          ))}
+                        </select>
+
+                        <select
+                          value={months[date.getMonth()]}
+                          onChange={({ target: { value } }) =>
+                            changeMonth(months.indexOf(value))
+                          }
+                        >
+                          {months.map((option) => (
+                            <option key={option} value={option}>
+                              {option}
+                            </option>
+                          ))}
+                        </select>
+
+                        <button
+                          onClick={increaseMonth}
+                          disabled={nextMonthButtonDisabled}
+                        >
+                          {">"}
+                        </button>
+                      </div>
+                    )}
                     locale={es}
-                    selected={new Date()}
+                    selected={startDate}
+                    onChange={(date) =>
+                      setStartDate(date) |
+                      setFormData({
+                        ...formData,
+                        fechaNacimiento: formatearDate(date),
+                      })
+                    }
                   />
                 </Col>
                 <Col>
@@ -442,12 +542,12 @@ export default function DatosPersonales() {
 }
 
 //Ver su funciona esto o no o como implementar el asunto
-function AbirMiniComponente(content) {
+/**function AbirMiniComponente(content) {
   if (content == "Uruguay") {
     return <MiniComponenteDepa />;
   }
   return <MiniComponentPais />;
-}
+}*/
 
 //FUNCION QUE GUARDA LA INFO QUE UNO ESCRIBE EN EL FORMULARIO
 function initialFormValue() {
@@ -469,7 +569,7 @@ function initialFormValue() {
     seccionalPolicial: "",
     estadocivil_id: "",
     pais_id: "",
-    tipo_persona_id: "1",
+    tipo_persona_id: "",
     inscripcion_id: "1",
     departamento_id: "",
     ciudadBarrio_id: "",
@@ -478,3 +578,21 @@ function initialFormValue() {
     nombre_ciudad: "",
   };
 }
+
+/*
+
+ <DatePicker
+                    dateFormat="yyyy/MM/dd"
+                    locale={es}
+                    mode="datatime"
+                    selected={startDate}
+                    onChange={(date) =>
+                      setStartDate(date) |
+                      setFormData({
+                        ...formData,
+                        fechaNacimiento: formatearDate(date),
+                      })
+                    }
+                  />
+
+                  */

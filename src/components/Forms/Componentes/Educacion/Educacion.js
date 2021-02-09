@@ -12,8 +12,6 @@ import { faUserGraduate, faPlus } from "@fortawesome/free-solid-svg-icons";
 import BasicModal from "../../../Modal/BasicModal";
 import OtrosEstudios from "../OtrosEstudios";
 
-import { sinCaracteresEspeciales } from "../../../../utils/validations";
-
 import "../../FormPostulante/FormPostulante.scss";
 export default function Educacion() {
   //Para manejar el Modal
@@ -32,11 +30,6 @@ export default function Educacion() {
   //funcion que controla cuando se va a guardara el fomrulario
   const onSubmit = (e) => {
     e.preventDefault();
-    //lo siguiente se encarga de recorrer el form y ver si tiene el campo relleno o no
-    //si el valid count tiene tiene el mismo numero que el total de keys del formdata entonces significa que tiene todos los campos rellenados
-    /*if (!sinCaracteresEspeciales(formData.values)) {
-      toast.warning("email invalido");
-    } else {*/
     setGuardadoLoading(true);
     crearEstudiosBasicos(formData)
       .then((response) => {

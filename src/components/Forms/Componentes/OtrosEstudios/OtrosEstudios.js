@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Form, Button, Table } from "react-bootstrap";
 import "../../FormPostulante/FormPostulante.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faSave } from "@fortawesome/free-solid-svg-icons";
 import { values, size } from "lodash";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -26,8 +26,6 @@ export default function OtrosEstudios(props) {
       return null;
     });
 
-    //descomentar esta linea cuando tenga solucionado la fecha
-    /*if (validCount !== size(formData)) {*/
     if (validCount !== size(formData)) {
       toast.warning("Faltan campos que completar");
     } else {
