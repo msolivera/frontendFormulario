@@ -17,7 +17,7 @@ export default function OtrosEstudios(props) {
   const onSubmit = (e) => {
     e.preventDefault();
     setShowModal(false);
-    obtenerOtrosEstudios();
+    // obtenerOtrosEstudios();
     //lo siguiente se encarga de recorrer el form y ver si tiene el campo relleno o no
     //si el valid count tiene tiene el mismo numero que el total de keys del formdata entonces significa que tiene todos los campos rellenados
     let validCount = 0;

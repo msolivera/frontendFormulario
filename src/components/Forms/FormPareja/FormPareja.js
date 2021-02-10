@@ -16,21 +16,12 @@ export default function FormPareja() {
   const [tipoPerstate, settipoPerstate] = useState(10);
   return (
     <>
-      <h2>Datos Conyuge, Concubino/a , Novio/a</h2>
       <Container>
-        <Form>
-          <DatosPersonales tipoPerstate={tipoPerstate} />
-          <Domicilio />
-          <Button variant="primary" type="submit">
-            Guardar <FontAwesomeIcon icon={faLongArrowAltRight} />
-          </Button>
-        </Form>
+        <h2>Datos Conyuge, Concubino/a , Novio/a</h2>
+        <DatosPersonales tipoPerstate={tipoPerstate} />
         <Laboral />
         <Preguntas />
       </Container>
-      <Button variant="primary" type="submit">
-        Siguiente <FontAwesomeIcon icon={faLongArrowAltRight} />
-      </Button>
     </>
   );
 }

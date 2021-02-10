@@ -15,8 +15,8 @@ export default function FormPostulante() {
   const [tipoPerstate, settipoPerstate] = useState(1);
   return (
     <>
-      <h2>Datos del Postulante</h2>
       <Container>
+        <h2>Datos del Postulante</h2>
         <DatosPersonales tipoPerstate={tipoPerstate} />
         <Educacion />
         <Laboral />

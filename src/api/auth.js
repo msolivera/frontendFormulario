@@ -1,17 +1,23 @@
-import { API_HOST } from "../utils/constant";
+import {
+  API_HOST,
+  ID_POSTU,
+  ID_MADRE,
+  ID_PAREJA,
+  ID_PADRE,
+} from "../utils/constant";
 
 export function crearPersona(persona) {
   const url = `${API_HOST}persona`;
 
-  console.log(persona);
-  console.log(url);
+  //console.log(persona);
+  // console.log(url);
 
   const personaTemp = {
     ...persona,
     correoElectronico: persona.correoElectronico.toLowerCase(),
   };
 
-  console.log(personaTemp);
+  //console.log(personaTemp);
   const params = {
     method: "POST",
     headers: {
@@ -128,16 +134,20 @@ export function crearEstudio(estudio) {
     });
 }
 
-export function obtenerOtrosEstudios() {
-  const url = `${API_HOST}estudios`;
+export function crearOtroFliar(familiar) {
+  const url = `${API_HOST}familiar`;
+
+  console.log(familiar);
+  console.log(url);
+
   const params = {
-    method: "GET",
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
+    body: JSON.stringify(familiar),
   };
-  console.log(params);
-  console.log(url);
+
   return fetch(url, params)
     .then((response) => {
       if (response.status >= 200 && response.status < 300) {
@@ -153,20 +163,62 @@ export function obtenerOtrosEstudios() {
     });
 }
 
-export function crearOtroFliar(familiar) {
-  const url = `${API_HOST}familiar`;
+export function setIdsApi(tipoPer, id) {
+  switch (tipoPer) {
+    case 1:
+      localStorage.setItem(ID_POSTU, id);
+      break;
+    case 2:
+      localStorage.setItem(ID_MADRE, id);
+      break;
+    case 3:
+      localStorage.setItem(ID_PADRE, id);
+      break;
+    case 10:
+      localStorage.setItem(ID_PAREJA, id);
+      break;
 
-  console.log(familiar);
-  console.log(url);
+    default:
+      break;
+  }
+}
+
+export function comboPaises() {
+  const url = `${API_HOST}paises`;
 
   const params = {
-    method: "POST",
+    method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(familiar),
+    body: JSON.stringify(),
   };
+  return fetch(url, params)
+    .then((response) => {
+      if (response.status >= 200 && response.status < 300) {
+        return response.json();
+      }
+      return { code: 404, message: "Error" };
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return err;
+    });
+}
 
+//esto no funciona aun
+export function obtenerOtrosEstudios() {
+  const url = `${API_HOST}estudios`;
+  const params = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  console.log(params);
+  console.log(url);
   return fetch(url, params)
     .then((response) => {
       if (response.status >= 200 && response.status < 300) {

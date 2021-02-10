@@ -1,23 +1,62 @@
-import React, { useState } from "react";
-import { Row, Col, Form, Jumbotron, Button, Spinner } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import {
+  Row,
+  Col,
+  Form,
+  Jumbotron,
+  Button,
+  Spinner,
+  Select,
+} from "react-bootstrap";
 
 import DatePicker from "react-datepicker";
 import es from "date-fns/locale/es";
 import "react-datepicker/dist/react-datepicker.css";
 import range from "lodash/range";
 
-import { values, size } from "lodash";
+import { values, size, map } from "lodash";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { isEmailValid } from "../../../../utils/validations";
-import { crearPersona } from "../../../../api/auth";
+import { crearPersona, setIdsApi } from "../../../../api/auth";
+import { getPaisesApi } from "../../../../api/combos";
 
 import "../../FormPostulante/FormPostulante.scss";
 
 export default function DatosPersonales(props) {
+  //Logica para cargar los paises en un combo
+  const [paises, setPaises] = useState(null);
+
+  useEffect(() => {
+    getPaisesApi()
+      .then((response) => {
+        let lista = response.data;
+        setPaises(lista);
+
+        let opciones = lista.map((pais) => {
+          return { id: `${pais.id}`, nombre: `${pais.nombre}` };
+        });
+        setPaises(opciones);
+        console.log(opciones);
+        fillSelector(opciones);
+
+        return { opciones: opciones };
+      })
+      .catch(() => {});
+  }, []);
+
+  /////////////////////////////////////////////////////
+  //este estate me lo manda el form que lo llame para harcodear tipo de persona
+  const { tipoPerstate } = props;
+
+  const [guardadoLoading, setGuardadoLoading] = useState(false);
+  //state que guarda la info del formulario
+  const [formData, setFormData] = useState(initialFormValue());
+  //funcion que controla cuando se va a guardara el fomrulario
+
   /*DATE PICKER PERSONALIZADO**********************************************/
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(null);
 
   const years = range(1920, new Date().getFullYear() + 1, 1);
   const months = [
@@ -34,16 +73,6 @@ export default function DatosPersonales(props) {
     "Noviembre",
     "Diciembre",
   ];
-  /*DATE PICKER PERSONALIZADO**********************************************/
-
-  //este estate me lo manda el form que lo llame para harcodear tipo de persona
-  const { tipoPerstate } = props;
-
-  console.log(tipoPerstate);
-  const [guardadoLoading, setGuardadoLoading] = useState(false);
-  //state que guarda la info del formulario
-  const [formData, setFormData] = useState(initialFormValue());
-  //funcion que controla cuando se va a guardara el fomrulario
 
   function formatearDate(startDate) {
     let year = startDate.getFullYear();
@@ -57,7 +86,10 @@ export default function DatosPersonales(props) {
     return fechaFinal;
   }
 
+  /*DATE PICKER PERSONALIZADO**********************************************/
+
   const onSubmit = (e) => {
+    //comboPaises();
     e.preventDefault();
     //lo siguiente se encarga de recorrer el form y ver si tiene el campo relleno o no
     //si el valid count tiene tiene el mismo numero que el total de keys del formdata entonces significa que tiene todos los campos rellenados
@@ -81,6 +113,7 @@ export default function DatosPersonales(props) {
             } else {
               toast.success("Registro correcto");
               setFormData(initialFormValue());
+              setIdsApi(tipoPerstate, response.data);
             }
           })
           .catch(() => {
@@ -311,7 +344,6 @@ export default function DatosPersonales(props) {
                 <Col>
                   <Col>
                     <Form.Label>Estado Civil</Form.Label>
-                    <Form.Label>Estado Civil</Form.Label>
                   </Col>
                   <Col>
                     <Form.Control
@@ -391,8 +423,8 @@ export default function DatosPersonales(props) {
               <Row>
                 <Col>
                   <Form.Label>Pais de Nacimiento</Form.Label>
-                  <Form.Label>Pais de Nacimiento</Form.Label>
                   <Form.Control
+                    id="select_form_pais"
                     as="select"
                     defaultValue="Seleccione"
                     value={formData.pais_id}
@@ -403,10 +435,7 @@ export default function DatosPersonales(props) {
                       })
                     }
                   >
-                    <option value="0"> Seleccione</option>
-                    <option value="1">Uruguay</option>
-                    <option value="2">España</option>
-                    <option value="3">Inglaterra</option>
+                    <option value=""> Seleccione</option>
                   </Form.Control>
                 </Col>
                 <Col>
@@ -557,7 +586,7 @@ function initialFormValue() {
     primerApellido: "",
     segundoApellido: "",
     apodo: "",
-    fechaNacimiento: "1994-03-04",
+    fechaNacimiento: "",
     cedula: "",
     credencialSerie: "",
     credencialNumero: "",
@@ -577,6 +606,21 @@ function initialFormValue() {
     nombre_departamento_estado: "",
     nombre_ciudad: "",
   };
+}
+
+function fillSelector(options_list) {
+  var options = options_list;
+  var modelList = document.getElementById("select_form_pais");
+  for (var i in options) {
+    // creamos un elemento de tipo option
+    var opt = document.createElement("option");
+    // le damos un valor
+    opt.value = options[i].id;
+    // le ponemos un texto
+    opt.textContent = options[i].nombre;
+    // lo agregamos al select
+    modelList.options.add(opt);
+  }
 }
 
 /*

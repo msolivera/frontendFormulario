@@ -1,5 +1,5 @@
 //rfc para crear componente rapido
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import FormPostulante from "../../components/Forms/FormPostulante/index";
 import FormMadre from "../../components/Forms/FormMadre/index";
@@ -20,3 +20,11 @@ export default function InicioForm() {
     </div>
   );
 }
+/*
+ <FormPostulante />
+ <FormMadre />
+ <FormPadre />
+      <FormPareja />
+      <Container>
+        <OtrosFamiliares />
+      </Container>  */

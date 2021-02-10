@@ -18,13 +18,7 @@ export default function FormPadre() {
     <>
       <h2>Datos del Padre</h2>
       <Container>
-        <Form>
-          <DatosPersonales tipoPerstate={tipoPerstate} />
-          <Domicilio />
-          <Button variant="primary" type="submit">
-            Guardar <FontAwesomeIcon icon={faLongArrowAltRight} />
-          </Button>
-        </Form>
+        <DatosPersonales tipoPerstate={tipoPerstate} />
         <Laboral />
         <Preguntas />
       </Container>

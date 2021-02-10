@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Container } from "react-bootstrap";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLongArrowAltRight } from "@fortawesome/free-solid-svg-icons";
-
 import DatosPersonales from "../Componentes/DatosPersonales/index";
 import Domicilio from "../Componentes/Domicilio/index";
 import Laboral from "../Componentes/Laboral/index";
@@ -16,6 +13,17 @@ export default function FormMadre() {
   const [tipoPerstate, settipoPerstate] = useState(2);
   return (
     <>
+      <Container>
+        <h2>Datos de la madre</h2>
+        <DatosPersonales tipoPerstate={tipoPerstate} />
+        <Laboral />
+        <Preguntas />
+      </Container>
+    </>
+  );
+}
+
+/*  <>
       <h2>Datos de la madre</h2>
       <Container>
         <Form>
@@ -30,6 +38,4 @@ export default function FormMadre() {
       <Button variant="primary" type="submit">
         Siguiente <FontAwesomeIcon icon={faLongArrowAltRight} />
       </Button>
-    </>
-  );
-}
+    </>*/
