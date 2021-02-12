@@ -1,18 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col, Form, Button, Spinner, Jumbotron } from "react-bootstrap";
 import { values, size } from "lodash";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../../FormPostulante/FormPostulante.scss";
 
-import { crearOcupacion } from "../../../../api/auth";
+import { crearOcupacion, getIdPostu } from "../../../../api/auth";
 
 export default function Laboral() {
+  //state que guarda el id del postulante en cero pero lo uso para cambiarlo una vez que di submit en datos personales
+  const [idPostulante, setIdPostulante] = useState(0);
   //state para hacer funcionar el Spinner
   const [guardadoLoading, setGuardadoLoading] = useState(false);
   //state que guarda la info del formulario
   const [formData, setFormData] = useState(initialFormValue());
   //funcion que controla cuando se va a guardara el fomrulario
+
+  useEffect(() => {
+    getIdPostu();
+    setIdPostulante(getIdPostu());
+
+    //console.log(idPostulante);
+    setFormData({
+      ...formData,
+      persona_id: getIdPostu(),
+    });
+
+    return getIdPostu();
+  }, []);
   const onSubmit = (e) => {
     e.preventDefault();
     //lo siguiente se encarga de recorrer el form y ver si tiene el campo relleno o no
@@ -137,6 +152,6 @@ function initialFormValue() {
     ente: "",
     nombreEmpresa: "",
     direccion: "",
-    persona_id: "1",
+    persona_id: "",
   };
 }

@@ -14,7 +14,7 @@ export default function FormMadre() {
   return (
     <>
       <Container>
-        <h2>Datos de la madre</h2>
+        <h2>Segundo Paso: Datos de la madre</h2>
         <DatosPersonales tipoPerstate={tipoPerstate} />
         <Laboral />
         <Preguntas />

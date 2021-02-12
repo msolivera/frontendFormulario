@@ -16,7 +16,7 @@ export default function FormPostulante() {
   return (
     <>
       <Container>
-        <h2>Datos del Postulante</h2>
+        <h2>Primer paso: Datos del Postulante</h2>
         <DatosPersonales tipoPerstate={tipoPerstate} />
         <Educacion />
         <Laboral />

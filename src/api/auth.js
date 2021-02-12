@@ -4,6 +4,7 @@ import {
   ID_MADRE,
   ID_PAREJA,
   ID_PADRE,
+  ID_OTRO_FLIAR,
 } from "../utils/constant";
 
 export function crearPersona(persona) {
@@ -137,15 +138,38 @@ export function crearEstudio(estudio) {
 export function crearOtroFliar(familiar) {
   const url = `${API_HOST}familiar`;
 
-  console.log(familiar);
-  console.log(url);
-
   const params = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(familiar),
+  };
+
+  return fetch(url, params)
+    .then((response) => {
+      if (response.status >= 200 && response.status < 300) {
+        return response.json();
+      }
+      return { code: 404, message: "Error al guardar los datos" };
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return err;
+    });
+}
+
+export function crearParentesco(parientes) {
+  const url = `${API_HOST}parentesco`;
+
+  const params = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(parientes),
   };
 
   return fetch(url, params)
@@ -179,8 +203,25 @@ export function setIdsApi(tipoPer, id) {
       break;
 
     default:
+      localStorage.setItem(ID_OTRO_FLIAR, id);
       break;
   }
+}
+
+export function getIdPostu() {
+  return localStorage.getItem(ID_POSTU);
+}
+export function getIdMadre() {
+  return localStorage.getItem(ID_MADRE);
+}
+export function getIdPadre() {
+  return localStorage.getItem(ID_PADRE);
+}
+export function getIdPareja() {
+  return localStorage.getItem(ID_PAREJA);
+}
+export function getIdOtro() {
+  return localStorage.getItem(ID_OTRO_FLIAR);
 }
 
 export function comboPaises() {

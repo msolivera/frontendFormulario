@@ -1,51 +1,73 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button, Table } from "react-bootstrap";
 import "../../FormPostulante/FormPostulante.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
-import { values, size } from "lodash";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { crearEstudio, obtenerOtrosEstudios } from "../../../../api/auth";
+import {
+  crearEstudio,
+  obtenerOtrosEstudios,
+  getIdPostu,
+} from "../../../../api/auth";
 
 export default function OtrosEstudios(props) {
+  //state que guarda el id del postulante en cero pero lo uso para cambiarlo una vez que di submit en datos personales
+  const [idPostulante, setIdPostulante] = useState(0);
   //state para hacer funcionar el Spinner
   const [guardadoLoading, setGuardadoLoading] = useState(false);
   //state que guarda la info del formulario
   const [formData, setFormData] = useState(initialFormValue());
   const { setShowModal } = props;
+
+  //recibo el id de postulante (del local storage y cambio mi estado para luego asignarlo al form data)
+  useEffect(() => {
+    getIdPostu();
+    setIdPostulante(getIdPostu());
+    //console.log("otros estudios");
+    //console.log(getIdPostu());
+    //console.log("idper");
+    //console.log(idPostulante);
+    setFormData({
+      ...formData,
+      persona_id: getIdPostu(),
+    });
+
+    return getIdPostu();
+  }, []);
+
   const onSubmit = (e) => {
     e.preventDefault();
     setShowModal(false);
     // obtenerOtrosEstudios();
     //lo siguiente se encarga de recorrer el form y ver si tiene el campo relleno o no
     //si el valid count tiene tiene el mismo numero que el total de keys del formdata entonces significa que tiene todos los campos rellenados
-    let validCount = 0;
+    /* let validCount = 0;
     values(formData).some((value) => {
       value && validCount++;
       return null;
-    });
+    });*/
 
-    if (validCount !== size(formData)) {
+    /* if (validCount !== size(formData)) {
       toast.warning("Faltan campos que completar");
-    } else {
-      setGuardadoLoading(true);
-      crearEstudio(formData)
-        .then((response) => {
-          if (response.code) {
-            toast.warning(response.message);
-          } else {
-            toast.success("Registro correcto");
-            setFormData(initialFormValue());
-          }
-        })
-        .catch(() => {
-          toast.error("Error del servidor");
-        })
-        .finally(() => {
-          setGuardadoLoading(false);
-        });
-    }
+    } else {*/
+    setGuardadoLoading(true);
+    crearEstudio(formData)
+      .then((response) => {
+        if (response.code) {
+          toast.warning(response.message);
+        } else {
+          toast.success("Registro correcto");
+          setFormData(initialFormValue());
+        }
+      })
+      .catch(() => {
+        toast.error("Error del servidor");
+      })
+      .finally(() => {
+        setGuardadoLoading(false);
+      });
+    /*}*/
   };
 
   return (
@@ -107,6 +129,6 @@ function initialFormValue() {
     anioEstudio: "",
     nombreInstituto: "",
     tipo_estudio_id: "4",
-    persona_id: "1",
+    persona_id: "",
   };
 }

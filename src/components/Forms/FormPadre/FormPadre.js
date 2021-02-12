@@ -16,15 +16,12 @@ export default function FormPadre() {
   const [tipoPerstate, settipoPerstate] = useState(3);
   return (
     <>
-      <h2>Datos del Padre</h2>
       <Container>
+        <h2>Tercer Paso: Datos del Padre</h2>
         <DatosPersonales tipoPerstate={tipoPerstate} />
         <Laboral />
         <Preguntas />
       </Container>
-      <Button variant="primary" type="submit">
-        Siguiente <FontAwesomeIcon icon={faLongArrowAltRight} />
-      </Button>
     </>
   );
 }

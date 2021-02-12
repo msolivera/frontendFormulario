@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button, Table } from "react-bootstrap";
 import "../../FormPostulante/FormPostulante.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,10 +6,17 @@ import { faSave } from "@fortawesome/free-solid-svg-icons";
 import { values, size } from "lodash";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { crearOtroFliar } from "../../../../api/auth";
+import {
+  crearOtroFliar,
+  setIdsApi,
+  getIdPostu,
+  getIdOtro,
+  crearParentesco,
+} from "../../../../api/auth";
+import { getTipoPersonaApi } from "../../../../api/combos";
 import DatePicker from "react-datepicker";
-import es from "date-fns/locale/es";
 import "react-datepicker/dist/react-datepicker.css";
+import range from "lodash/range";
 
 export default function AgregarOtrosFamiliares(props) {
   //state para hacer funcionar el Spinner
@@ -17,6 +24,52 @@ export default function AgregarOtrosFamiliares(props) {
   //state que guarda la info del formulario
   const [formData, setFormData] = useState(initialFormValue());
   const { setShowModal } = props;
+
+  useEffect(() => {
+    getTipoPersonaApi()
+      .then((response) => {
+        let lista = response.data;
+        let opciones = lista.map((tipopersona) => {
+          return { id: `${tipopersona.id}`, nombre: `${tipopersona.nombre}` };
+        });
+        cargarCombos(opciones, "select_form_personas");
+        return { opciones: opciones };
+      })
+      .catch(() => {});
+  }, []);
+
+  /*DATE PICKER PERSONALIZADO**********************************************/
+  const [startDate, setStartDate] = useState(null);
+
+  const years = range(1920, new Date().getFullYear() + 1, 1);
+  const months = [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Setiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre",
+  ];
+
+  function formatearDate(startDate) {
+    let year = startDate.getFullYear();
+    let month = "" + (startDate.getMonth() + 1);
+    let day = "" + startDate.getDate();
+
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+
+    let fechaFinal = year + "-" + month + "-" + day;
+    return fechaFinal;
+  }
+  /*DATE PICKER PERSONALIZADO**********************************************/
+
   const onSubmit = (e) => {
     e.preventDefault();
     setShowModal(false);
@@ -39,6 +92,7 @@ export default function AgregarOtrosFamiliares(props) {
           } else {
             toast.success("Registro correcto");
             setFormData(initialFormValue());
+            setIdsApi(0, response.data);
           }
         })
         .catch(() => {
@@ -46,6 +100,7 @@ export default function AgregarOtrosFamiliares(props) {
         })
         .finally(() => {
           setGuardadoLoading(false);
+          crearParentesco(jsonParientes());
         });
     }
   };
@@ -68,6 +123,7 @@ export default function AgregarOtrosFamiliares(props) {
             <tr>
               <th>
                 <Form.Control
+                  id="select_form_personas"
                   as="select"
                   defaultValue="Seleccione"
                   value={formData.tipo_persona_id}
@@ -78,9 +134,7 @@ export default function AgregarOtrosFamiliares(props) {
                     })
                   }
                 >
-                  <option value="0"> Seleccione</option>
-                  <option value="1">Abuelo</option>
-                  <option value="2">Hermano</option>
+                  <option value=""> Seleccione</option>
                 </Form.Control>
               </th>
 
@@ -111,9 +165,69 @@ export default function AgregarOtrosFamiliares(props) {
               </th>
               <th>
                 <DatePicker
-                  placeholder="Fecha de Nacimiento"
-                  locale={es}
-                  selected={new Date()}
+                  dateFormat="yyyy/MM/dd"
+                  renderCustomHeader={({
+                    date,
+                    changeYear,
+                    changeMonth,
+                    decreaseMonth,
+                    increaseMonth,
+                    prevMonthButtonDisabled,
+                    nextMonthButtonDisabled,
+                  }) => (
+                    <div
+                      style={{
+                        margin: 10,
+                        display: "flex",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <button
+                        onClick={decreaseMonth}
+                        disabled={prevMonthButtonDisabled}
+                      >
+                        {"<"}
+                      </button>
+                      <select
+                        value={date.getFullYear()}
+                        onChange={({ target: { value } }) => changeYear(value)}
+                      >
+                        {years.map((option) => (
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+
+                      <select
+                        value={months[date.getMonth()]}
+                        onChange={({ target: { value } }) =>
+                          changeMonth(months.indexOf(value))
+                        }
+                      >
+                        {months.map((option) => (
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+
+                      <button
+                        onClick={increaseMonth}
+                        disabled={nextMonthButtonDisabled}
+                      >
+                        {">"}
+                      </button>
+                    </div>
+                  )}
+                  selected={startDate}
+                  onChange={(date) =>
+                    setStartDate(date) |
+                    setFormData({
+                      ...formData,
+                      fechaNacimiento: formatearDate(date),
+                    })
+                  }
                 />
               </th>
             </tr>
@@ -132,7 +246,30 @@ function initialFormValue() {
   return {
     primerNombre: "",
     primerApellido: "",
-    fechaNacimiento: "1994-03-04",
+    fechaNacimiento: "",
     tipo_persona_id: "",
   };
+}
+
+function jsonParientes() {
+  return {
+    postulante_id: getIdPostu(),
+    familiar_id: getIdOtro(),
+  };
+}
+
+function cargarCombos(listaOpciones, idComponente) {
+  var options = listaOpciones;
+  var listaACargar = document.getElementById(idComponente);
+
+  for (var i in options) {
+    // creamos un elemento de tipo option
+    var opt = document.createElement("option");
+    // le damos un valor
+    opt.value = options[i].id;
+    // le ponemos un texto
+    opt.textContent = options[i].nombre;
+    // lo agregamos al select
+    listaACargar.options.add(opt);
+  }
 }

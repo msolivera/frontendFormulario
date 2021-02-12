@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Button, Spinner, Jumbotron, Table } from "react-bootstrap";
 
 import { crearEstudiosBasicos } from "../../../../api/auth";
@@ -12,8 +12,12 @@ import { faUserGraduate, faPlus } from "@fortawesome/free-solid-svg-icons";
 import BasicModal from "../../../Modal/BasicModal";
 import OtrosEstudios from "../OtrosEstudios";
 
+import { getIdPostu } from "../../../../api/auth";
+import { getEstudiosPersona } from "../../../../api/tablas";
 import "../../FormPostulante/FormPostulante.scss";
 export default function Educacion() {
+  //state que guarda el id del postulante en cero pero lo uso para cambiarlo una vez que di submit en datos personales
+  const [idPostulante, setIdPostulante] = useState(0);
   //Para manejar el Modal
   const [showModal, setShowModal] = useState(false);
   const [contentModal, setContentModal] = useState(null);
@@ -22,6 +26,47 @@ export default function Educacion() {
     setShowModal(true);
     setContentModal(content);
   };
+
+  useEffect(() => {
+    getEstudiosPersona()
+      .then((response) => {
+        let lista = response.data;
+        let opciones = lista.map((estudiopersona) => {
+          return {
+            id: `${estudiopersona.anioEstudio}`,
+            nombre: `${estudiopersona.nombreInstituto}`,
+          };
+        });
+        cargarTabla(opciones);
+        return { opciones: opciones };
+      })
+      .catch(() => {});
+  }, []);
+
+  //recibo el id de postulante (del local storage y cambio mi estado para luego asignarlo al form data)
+  useEffect(() => {
+    getIdPostu();
+    setIdPostulante(getIdPostu());
+
+    //console.log(idPostulante);
+    setFormData({
+      ...formData,
+      primeroPrimaria_persona_id: idPostulante,
+      segundoPrimaria_persona_id: idPostulante,
+      terceroPrimaria_persona_id: idPostulante,
+      cuartoPrimaria_persona_id: idPostulante,
+      quintoPrimaria_persona_id: idPostulante,
+      sextoPrimaria_persona_id: idPostulante,
+      primeroSecu_persona_id: idPostulante,
+      segundoSecu_persona_id: idPostulante,
+      terceroSecu_persona_id: idPostulante,
+      cuartoBach_persona_id: idPostulante,
+      quintoBach_persona_id: idPostulante,
+      sextoBach_persona_id: idPostulante,
+    });
+
+    return getIdPostu();
+  }, []);
 
   //state para hacer funcionar el Spinner
   const [guardadoLoading, setGuardadoLoading] = useState(false);
@@ -390,6 +435,10 @@ export default function Educacion() {
                     </Button>
                   </th>
                 </tr>
+                <tr>
+                  <td>fefef</td>
+                  <td>fefeff</td>
+                </tr>
               </thead>
               <tbody></tbody>
             </Table>
@@ -408,61 +457,77 @@ function initialFormValue() {
     primeroPrimaria_anioEstudio: "Primer año",
     primeroPrimaria_nombreInstituto: "",
     primeroPrimaria_tipo_estudio_id: "1",
-    primeroPrimaria_persona_id: "1",
+    primeroPrimaria_persona_id: "",
 
     segundoPrimaria_anioEstudio: "Segundo año",
     segundoPrimaria_nombreInstituto: "",
     segundoPrimaria_tipo_estudio_id: "1",
-    segundoPrimaria_persona_id: "1",
+    segundoPrimaria_persona_id: "",
 
     terceroPrimaria_anioEstudio: "Tercer año",
     terceroPrimaria_nombreInstituto: "",
     terceroPrimaria_tipo_estudio_id: "1",
-    terceroPrimaria_persona_id: "1",
+    terceroPrimaria_persona_id: "",
 
     cuartoPrimaria_anioEstudio: "Cuarto año",
     cuartoPrimaria_nombreInstituto: "",
     cuartoPrimaria_tipo_estudio_id: "1",
-    cuartoPrimaria_persona_id: "1",
+    cuartoPrimaria_persona_id: "",
 
     quintoPrimaria_anioEstudio: "Quinto año",
     quintoPrimaria_nombreInstituto: "",
     quintoPrimaria_tipo_estudio_id: "1",
-    quintoPrimaria_persona_id: "1",
+    quintoPrimaria_persona_id: "",
 
     sextoPrimaria_anioEstudio: "Sexto año",
     sextoPrimaria_nombreInstituto: "",
     sextoPrimaria_tipo_estudio_id: "1",
-    sextoPrimaria_persona_id: "1",
+    sextoPrimaria_persona_id: "",
 
     primeroSecu_anioEstudio: "Primer año",
     primeroSecu_nombreInstituto: "",
     primeroSecu_tipo_estudio_id: "2",
-    primeroSecu_persona_id: "1",
+    primeroSecu_persona_id: "",
 
     segundoSecu_anioEstudio: "Segundo año",
     segundoSecu_nombreInstituto: "",
     segundoSecu_tipo_estudio_id: "2",
-    segundoSecu_persona_id: "1",
+    segundoSecu_persona_id: "",
 
     terceroSecu_anioEstudio: "Tercer año",
     terceroSecu_nombreInstituto: "",
     terceroSecu_tipo_estudio_id: "2",
-    terceroSecu_persona_id: "1",
+    terceroSecu_persona_id: "",
 
     cuartoBach_anioEstudio: "Cuarto año",
     cuartoBach_nombreInstituto: "",
     cuartoBach_tipo_estudio_id: "3",
-    cuartoBach_persona_id: "1",
+    cuartoBach_persona_id: "",
 
     quintoBach_anioEstudio: "Quinto año",
     quintoBach_nombreInstituto: "",
     quintoBach_tipo_estudio_id: "3",
-    quintoBach_persona_id: "1",
+    quintoBach_persona_id: "",
 
     sextoBach_anioEstudio: "Sexto año",
     sextoBach_nombreInstituto: "",
     sextoBach_tipo_estudio_id: "3",
-    sextoBach_persona_id: "1",
+    sextoBach_persona_id: "",
   };
+}
+
+function cargarTabla(listaOpciones) {
+  var options = listaOpciones;
+  var listaACargar = document.getElementById("tabla");
+
+  for (var i in options) {
+    // creamos un elemento de tipo option
+    var opt = document.createElement("td");
+    // le damos un valor
+    opt.value = options[i].id;
+    // le ponemos un texto
+    opt.textContent = options[i].nombre;
+    // lo agregamos al select
+    listaACargar.options.add(opt);
+  }
 }

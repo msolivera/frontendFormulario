@@ -1,59 +1,109 @@
 import React, { useState, useEffect } from "react";
-import {
-  Row,
-  Col,
-  Form,
-  Jumbotron,
-  Button,
-  Spinner,
-  Select,
-} from "react-bootstrap";
+import { Row, Col, Form, Jumbotron, Button, Spinner } from "react-bootstrap";
 
 import DatePicker from "react-datepicker";
-import es from "date-fns/locale/es";
 import "react-datepicker/dist/react-datepicker.css";
 import range from "lodash/range";
 
-import { values, size, map } from "lodash";
+import { values, size } from "lodash";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { isEmailValid } from "../../../../utils/validations";
-import { crearPersona, setIdsApi } from "../../../../api/auth";
-import { getPaisesApi } from "../../../../api/combos";
+import {
+  crearPersona,
+  setIdsApi,
+  getIdPostu,
+  getIdMadre,
+  getIdPadre,
+  getIdPareja,
+  crearParentesco,
+} from "../../../../api/auth";
+import {
+  getPaisesApi,
+  getEstadosCivilesApi,
+  getDepartamentosApi,
+  getCiudades,
+} from "../../../../api/combos";
 
 import "../../FormPostulante/FormPostulante.scss";
 
 export default function DatosPersonales(props) {
-  //Logica para cargar los paises en un combo
-  const [paises, setPaises] = useState(null);
-
-  useEffect(() => {
-    getPaisesApi()
-      .then((response) => {
-        let lista = response.data;
-        setPaises(lista);
-
-        let opciones = lista.map((pais) => {
-          return { id: `${pais.id}`, nombre: `${pais.nombre}` };
-        });
-        setPaises(opciones);
-        console.log(opciones);
-        fillSelector(opciones);
-
-        return { opciones: opciones };
-      })
-      .catch(() => {});
-  }, []);
-
-  /////////////////////////////////////////////////////
   //este estate me lo manda el form que lo llame para harcodear tipo de persona
   const { tipoPerstate } = props;
 
   const [guardadoLoading, setGuardadoLoading] = useState(false);
   //state que guarda la info del formulario
   const [formData, setFormData] = useState(initialFormValue());
-  //funcion que controla cuando se va a guardara el fomrulario
+
+  const [estadoCivi, setEstadoCivi] = useState([]);
+
+  const [ciudades, setciudades] = useState([]);
+
+  //useEffect que recibe la respuesta de la funcion de obtener paises y luego la procesa en una lista de opciones.
+  useEffect(() => {
+    getPaisesApi()
+      .then((response) => {
+        let lista = response.data;
+        let opciones = lista.map((pais) => {
+          return { id: `${pais.id}`, nombre: `${pais.nombre}` };
+        });
+        cargarCombos(opciones, "select_form_pais");
+        return { opciones: opciones };
+      })
+      .catch(() => {});
+  }, []);
+
+  //useEffect que recibe la respuesta de la funcion de obtener departamentos y luego la procesa en una lista de opciones.
+  useEffect(() => {
+    getDepartamentosApi()
+      .then((response) => {
+        let lista = response.data;
+        let opciones = lista.map((departamento) => {
+          return { id: `${departamento.id}`, nombre: `${departamento.nombre}` };
+        });
+        cargarCombos(opciones, "select_form_departamento");
+        return { opciones: opciones };
+      })
+      .catch(() => {});
+  }, []);
+
+  //useEffect que recibe la respuesta de la funcion de obtener estados civiles y luego la procesa en una lista de opciones.''
+
+  //console.log(estadoCivi);
+  useEffect(() => {
+    getEstadosCivilesApi()
+      .then((response) => {
+        let lista = response.data;
+        let opciones = lista.map((estadocivil) => {
+          return { id: `${estadocivil.id}`, nombre: `${estadocivil.nombre}` };
+        });
+        setEstadoCivi(opciones);
+        //console.log(estadoCivi);
+        cargarCombos(opciones, "select_form_estadoCivil");
+        return { opciones: opciones };
+      })
+      .catch(() => {});
+  }, []);
+
+  //useEffect que recibe la respuesta de la funcion de obtener ciudades segun departamento seleccionado y luego la procesa en una lista de opciones.
+  useEffect(() => {
+    getCiudades()
+      .then((response) => {
+        let lista = response.data;
+        let opciones = lista.map((ciudad) => {
+          return {
+            id: `${ciudad.id}`,
+            nombre: `${ciudad.nombre}`,
+            depa: `${ciudad.departamento_id}`,
+          };
+        });
+        setciudades(opciones);
+        //cargarComboCiudad(ciudades, 2);
+        return { opciones: opciones };
+      })
+      .catch(() => {});
+  }, []);
 
   /*DATE PICKER PERSONALIZADO**********************************************/
   const [startDate, setStartDate] = useState(null);
@@ -85,11 +135,10 @@ export default function DatosPersonales(props) {
     let fechaFinal = year + "-" + month + "-" + day;
     return fechaFinal;
   }
-
   /*DATE PICKER PERSONALIZADO**********************************************/
 
+  //funcion que controla cuando se va a guardara el fomrulario
   const onSubmit = (e) => {
-    //comboPaises();
     e.preventDefault();
     //lo siguiente se encarga de recorrer el form y ver si tiene el campo relleno o no
     //si el valid count tiene tiene el mismo numero que el total de keys del formdata entonces significa que tiene todos los campos rellenados
@@ -121,6 +170,7 @@ export default function DatosPersonales(props) {
           })
           .finally(() => {
             setGuardadoLoading(false);
+            crearParentesco(jsonParientes(tipoPerstate));
           });
       }
     }
@@ -307,7 +357,6 @@ export default function DatosPersonales(props) {
                         </button>
                       </div>
                     )}
-                    locale={es}
                     selected={startDate}
                     onChange={(date) =>
                       setStartDate(date) |
@@ -347,6 +396,7 @@ export default function DatosPersonales(props) {
                   </Col>
                   <Col>
                     <Form.Control
+                      id="select_form_estadoCivil"
                       as="select"
                       value={formData.estadocivil_id}
                       onChange={(e) =>
@@ -356,10 +406,7 @@ export default function DatosPersonales(props) {
                         })
                       }
                     >
-                      <option value="0"> Seleccione</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
+                      <option value=""> Seleccione</option>
                     </Form.Control>
                   </Col>
                 </Col>
@@ -458,24 +505,26 @@ export default function DatosPersonales(props) {
                 <Col>
                   <Form.Label>Departamento de Domicilio</Form.Label>
                   <Form.Control
+                    id="select_form_departamento"
                     as="select"
                     defaultValue="Seleccione"
                     value={formData.departamento_id}
+                    //value={1}
                     onChange={(e) =>
+                      cargarComboCiudad(ciudades, e.target.value) |
                       setFormData({
                         ...formData,
                         departamento_id: e.target.value,
                       })
                     }
                   >
-                    <option value="0"> Seleccione</option>
-                    <option value="1">Montevideo</option>
-                    <option value="2">Artigas</option>
+                    <option Value="0">Seleccione</option>
                   </Form.Control>
                 </Col>
                 <Col>
                   <Form.Label>Ciudad/Barrio</Form.Label>
                   <Form.Control
+                    id="select_form_ciudad"
                     as="select"
                     defaultValue="Seleccione"
                     value={formData.ciudadBarrio_id}
@@ -487,8 +536,6 @@ export default function DatosPersonales(props) {
                     }
                   >
                     <option value="0"> Seleccione</option>
-                    <option value="1">Pocitos</option>
-                    <option value="2">Maroñas</option>
                   </Form.Control>
                 </Col>
               </Row>
@@ -608,9 +655,38 @@ function initialFormValue() {
   };
 }
 
-function fillSelector(options_list) {
-  var options = options_list;
-  var modelList = document.getElementById("select_form_pais");
+function jsonParientes(tipoPerstate) {
+  switch (tipoPerstate) {
+    case 2:
+      return {
+        postulante_id: getIdPostu(),
+        familiar_id: getIdMadre(),
+      };
+
+      break;
+    case 3:
+      return {
+        postulante_id: getIdPostu(),
+        familiar_id: getIdPadre(),
+      };
+      break;
+
+    case 10:
+      return {
+        postulante_id: getIdPostu(),
+        familiar_id: getIdPareja(),
+      };
+      break;
+
+    default:
+      break;
+  }
+}
+
+function cargarCombos(listaOpciones, idComponente) {
+  var options = listaOpciones;
+  var listaACargar = document.getElementById(idComponente);
+
   for (var i in options) {
     // creamos un elemento de tipo option
     var opt = document.createElement("option");
@@ -619,24 +695,32 @@ function fillSelector(options_list) {
     // le ponemos un texto
     opt.textContent = options[i].nombre;
     // lo agregamos al select
-    modelList.options.add(opt);
+    listaACargar.options.add(opt);
   }
 }
 
-/*
+function cargarComboCiudad(listaOpciones, idDepa) {
+  var options = listaOpciones;
+  var listaACargar = document.getElementById("select_form_ciudad");
 
- <DatePicker
-                    dateFormat="yyyy/MM/dd"
-                    locale={es}
-                    mode="datatime"
-                    selected={startDate}
-                    onChange={(date) =>
-                      setStartDate(date) |
-                      setFormData({
-                        ...formData,
-                        fechaNacimiento: formatearDate(date),
-                      })
-                    }
-                  />
-
-                  */
+  if (listaACargar.length != 0) {
+    for (var i in listaACargar) {
+      listaACargar.remove(listaACargar[i]);
+    }
+  }
+  for (var i in options) {
+    if (options[i].depa == idDepa) {
+      // creamos un elemento de tipo option
+      var opt = document.createElement("option");
+      // le damos un valor
+      opt.value = options[i].id;
+      // le ponemos un texto
+      opt.textContent = options[i].nombre;
+      // lo agregamos al select
+      listaACargar.options.add(opt);
+      console.log(opt);
+    }
+  }
+  //console.log("cantidad elementos");
+  //console.log(listaACargar.length);
+}

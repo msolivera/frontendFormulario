@@ -10,21 +10,16 @@ import OtrosFamiliares from "../../components/Forms/Componentes/OtrosFamiliares/
 export default function InicioForm() {
   return (
     <div>
+      <FormPadre />
+    </div>
+  );
+}
+/*
       <FormPostulante />
       <FormMadre />
       <FormPadre />
       <FormPareja />
       <Container>
+        <h2>Quinto Paso: Otros Familiares</h2>
         <OtrosFamiliares />
-      </Container>
-    </div>
-  );
-}
-/*
- <FormPostulante />
- <FormMadre />
- <FormPadre />
-      <FormPareja />
-      <Container>
-        <OtrosFamiliares />
-      </Container>  */
+      </Container> */

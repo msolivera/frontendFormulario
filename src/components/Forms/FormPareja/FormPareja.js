@@ -17,7 +17,7 @@ export default function FormPareja() {
   return (
     <>
       <Container>
-        <h2>Datos Conyuge, Concubino/a , Novio/a</h2>
+        <h2>Cuarto Paso: Datos Conyuge, Concubino/a , Novio/a</h2>
         <DatosPersonales tipoPerstate={tipoPerstate} />
         <Laboral />
         <Preguntas />
