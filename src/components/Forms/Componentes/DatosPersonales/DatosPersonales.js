@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Form, Jumbotron, Button, Spinner } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Form,
+  Jumbotron,
+  Button,
+  Spinner,
+  Container,
+} from "react-bootstrap";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -106,7 +114,7 @@ export default function DatosPersonales(props) {
   }, []);
 
   /*DATE PICKER PERSONALIZADO**********************************************/
-  const [startDate, setStartDate] = useState(null);
+  const [startDate, setStartDate] = useState(new Date());
 
   const years = range(1920, new Date().getFullYear() + 1, 1);
   const months = [
@@ -148,31 +156,34 @@ export default function DatosPersonales(props) {
       return null;
     });
 
-    if (validCount !== size(formData)) {
+    if ((tipoPerstate == 1) & (validCount < 18)) {
       toast.warning("Faltan campos que completar");
     } else {
-      if (!isEmailValid(formData.correoElectronico)) {
+      /* if (
+        formData.correoElectronico.value != "" &&
+        !isEmailValid(formData.correoElectronico)
+      ) {
         toast.warning("email invalido");
-      } else {
-        setGuardadoLoading(true);
-        crearPersona(formData)
-          .then((response) => {
-            if (response.code) {
-              toast.warning(response.message);
-            } else {
-              toast.success("Registro correcto");
-              setFormData(initialFormValue());
-              setIdsApi(tipoPerstate, response.data);
-            }
-          })
-          .catch(() => {
-            toast.error("Error del servidor");
-          })
-          .finally(() => {
-            setGuardadoLoading(false);
-            crearParentesco(jsonParientes(tipoPerstate));
-          });
-      }
+      } else {*/
+      setGuardadoLoading(true);
+      crearPersona(formData)
+        .then((response) => {
+          if (response.code) {
+            toast.warning(response.message);
+          } else {
+            toast.success("Registro correcto");
+            setFormData(initialFormValue());
+            setIdsApi(tipoPerstate, response.data);
+          }
+        })
+        .catch(() => {
+          toast.error("Error del servidor");
+        })
+        .finally(() => {
+          setGuardadoLoading(false);
+          crearParentesco(jsonParientes(tipoPerstate));
+        });
+      /*}*/
     }
   };
   //###################EMPIEZA FORMULARIO####################################################
@@ -196,7 +207,6 @@ export default function DatosPersonales(props) {
                       setFormData({
                         ...formData,
                         primerNombre: e.target.value,
-                        tipo_persona_id: tipoPerstate,
                       })
                     }
                   />
@@ -357,7 +367,7 @@ export default function DatosPersonales(props) {
                         </button>
                       </div>
                     )}
-                    selected={startDate}
+                    selected={new Date()}
                     onChange={(date) =>
                       setStartDate(date) |
                       setFormData({
@@ -377,6 +387,7 @@ export default function DatosPersonales(props) {
                       setFormData({
                         ...formData,
                         sexo: e.target.value,
+                        tipo_persona_id: tipoPerstate,
                       })
                     }
                   >
@@ -538,12 +549,11 @@ export default function DatosPersonales(props) {
                     <option value="0"> Seleccione</option>
                   </Form.Control>
                 </Col>
+                <Row></Row>
               </Row>
 
+              <h3>Complete si es nacido en el Extranjero: </h3>
               <Row>
-                <Col>
-                  <h5>Informacion del Extranjero: </h5>
-                </Col>
                 <Col>
                   <Form.Label>Departamento/Estado</Form.Label>
                   <Form.Control
@@ -609,7 +619,7 @@ export default function DatosPersonales(props) {
           </div>
         </Jumbotron>
 
-        <Button variant="primary" type="submit">
+        <Button variant="info" type="submit">
           {!guardadoLoading ? "Siguiente" : <Spinner animation="border" />}
         </Button>
       </Form>
@@ -634,13 +644,13 @@ function initialFormValue() {
     segundoApellido: "",
     apodo: "",
     fechaNacimiento: "",
-    cedula: "",
+    cedula: "11111111",
     credencialSerie: "",
-    credencialNumero: "",
+    credencialNumero: "0",
     sexo: "",
     domicilioActual: "",
     domicilioAnterior: "",
-    telefono_celular: "",
+    telefono_celular: "0",
     correoElectronico: "",
     seccionalPolicial: "",
     estadocivil_id: "",

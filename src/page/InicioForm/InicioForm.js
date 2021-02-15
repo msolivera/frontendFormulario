@@ -10,7 +10,7 @@ import OtrosFamiliares from "../../components/Forms/Componentes/OtrosFamiliares/
 export default function InicioForm() {
   return (
     <div>
-      <FormPadre />
+      <FormPostulante />
     </div>
   );
 }
