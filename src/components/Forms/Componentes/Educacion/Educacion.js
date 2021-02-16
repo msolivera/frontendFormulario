@@ -422,7 +422,6 @@ export default function Educacion() {
                   <th>Años Cursados</th>
                   <th>Nombre del Estudio/Capacitacion</th>
                   <th>
-                    {" "}
                     <Button
                       variant="outline-primary"
                       onClick={() =>

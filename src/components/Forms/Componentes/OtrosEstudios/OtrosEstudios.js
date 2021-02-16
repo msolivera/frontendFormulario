@@ -24,10 +24,6 @@ export default function OtrosEstudios(props) {
   useEffect(() => {
     getIdPostu();
     setIdPostulante(getIdPostu());
-    //console.log("otros estudios");
-    //console.log(getIdPostu());
-    //console.log("idper");
-    //console.log(idPostulante);
     setFormData({
       ...formData,
       persona_id: getIdPostu(),
@@ -40,17 +36,6 @@ export default function OtrosEstudios(props) {
     e.preventDefault();
     setShowModal(false);
     // obtenerOtrosEstudios();
-    //lo siguiente se encarga de recorrer el form y ver si tiene el campo relleno o no
-    //si el valid count tiene tiene el mismo numero que el total de keys del formdata entonces significa que tiene todos los campos rellenados
-    /* let validCount = 0;
-    values(formData).some((value) => {
-      value && validCount++;
-      return null;
-    });*/
-
-    /* if (validCount !== size(formData)) {
-      toast.warning("Faltan campos que completar");
-    } else {*/
     setGuardadoLoading(true);
     crearEstudio(formData)
       .then((response) => {
@@ -115,7 +100,7 @@ export default function OtrosEstudios(props) {
           </tbody>
         </Table>
 
-        <Button variant="primary" type="submit">
+        <Button variant="info" type="submit">
           <FontAwesomeIcon icon={faSave} />
           Guardar
         </Button>

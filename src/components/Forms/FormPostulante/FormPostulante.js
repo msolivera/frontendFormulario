@@ -19,8 +19,8 @@ export default function FormPostulante() {
         <h2>Primer paso: Datos del Postulante</h2>
         <DatosPersonales tipoPerstate={tipoPerstate} />
         <Educacion />
-        <Laboral />
-        <Preguntas />
+        <Laboral tipoPerstate={tipoPerstate} />
+        <Preguntas tipoPerstate={tipoPerstate} />
         {/*
         <DatosPersonales />
         <Educacion />

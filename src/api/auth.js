@@ -7,8 +7,43 @@ import {
   ID_OTRO_FLIAR,
 } from "../utils/constant";
 
-export function crearPersona(persona) {
+export function crearPostulante(persona) {
   const url = `${API_HOST}persona`;
+
+  //console.log(persona);
+  // console.log(url);
+
+  const personaTemp = {
+    ...persona,
+    correoElectronico: persona.correoElectronico.toLowerCase(),
+  };
+
+  //console.log(personaTemp);
+  const params = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(personaTemp),
+  };
+
+  return fetch(url, params)
+    .then((response) => {
+      if (response.status >= 200 && response.status < 300) {
+        return response.json();
+      }
+      return { code: 404, message: "Error al guardar los datos" };
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return err;
+    });
+}
+
+export function crearFamiliarPostulante(persona) {
+  const url = `${API_HOST}personaFamiliar`;
 
   //console.log(persona);
   // console.log(url);
@@ -187,6 +222,32 @@ export function crearParentesco(parientes) {
     });
 }
 
+export function crearRespuesta(respuesta) {
+  const url = `${API_HOST}respuesta`;
+
+  const params = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(respuesta),
+  };
+
+  return fetch(url, params)
+    .then((response) => {
+      if (response.status >= 200 && response.status < 300) {
+        return response.json();
+      }
+      return { code: 404, message: "Error al guardar los datos" };
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return err;
+    });
+}
+
 export function setIdsApi(tipoPer, id) {
   switch (tipoPer) {
     case 1:
@@ -204,6 +265,26 @@ export function setIdsApi(tipoPer, id) {
 
     default:
       localStorage.setItem(ID_OTRO_FLIAR, id);
+      break;
+  }
+}
+
+export function getSuId(tipoPer) {
+  switch (tipoPer) {
+    case 1:
+      return localStorage.getItem(ID_POSTU);
+      break;
+    case 2:
+      return localStorage.getItem(ID_MADRE);
+      break;
+    case 3:
+      return localStorage.getItem(ID_PADRE);
+      break;
+    case 10:
+      return localStorage.getItem(ID_PAREJA);
+      break;
+
+    default:
       break;
   }
 }

@@ -19,8 +19,8 @@ export default function FormPadre() {
       <Container>
         <h2>Tercer Paso: Datos del Padre</h2>
         <DatosPersonales tipoPerstate={tipoPerstate} />
-        <Laboral />
-        <Preguntas />
+        <Laboral tipoPerstate={tipoPerstate} />
+        <Preguntas tipoPerstate={tipoPerstate} />
       </Container>
     </>
   );

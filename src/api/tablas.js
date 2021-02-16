@@ -18,3 +18,24 @@ export function getEstudiosPersona(idPersona) {
       return err;
     });
 }
+
+export function getPreguntasApi() {
+  const url = `${API_HOST}preguntas`;
+
+  const params = {
+    headers: {
+      "Content-Type": "application-json",
+    },
+  };
+
+  return fetch(url, params)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return err;
+    });
+}

@@ -16,8 +16,8 @@ export default function FormMadre() {
       <Container>
         <h2>Segundo Paso: Datos de la madre</h2>
         <DatosPersonales tipoPerstate={tipoPerstate} />
-        <Laboral />
-        <Preguntas />
+        <Laboral tipoPerstate={tipoPerstate} />
+        <Preguntas tipoPerstate={tipoPerstate} />
       </Container>
     </>
   );

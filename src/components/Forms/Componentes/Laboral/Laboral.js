@@ -5,9 +5,10 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../../FormPostulante/FormPostulante.scss";
 
-import { crearOcupacion, getIdPostu } from "../../../../api/auth";
+import { crearOcupacion, getSuId } from "../../../../api/auth";
 
-export default function Laboral() {
+export default function Laboral(props) {
+  const { tipoPerstate } = props;
   //state que guarda el id del postulante en cero pero lo uso para cambiarlo una vez que di submit en datos personales
   const [idPostulante, setIdPostulante] = useState(0);
   //state para hacer funcionar el Spinner
@@ -17,16 +18,14 @@ export default function Laboral() {
   //funcion que controla cuando se va a guardara el fomrulario
 
   useEffect(() => {
-    getIdPostu();
-    setIdPostulante(getIdPostu());
+    getSuId(tipoPerstate);
+    setIdPostulante(getSuId(tipoPerstate));
 
     //console.log(idPostulante);
     setFormData({
       ...formData,
-      persona_id: getIdPostu(),
+      persona_id: getSuId(tipoPerstate),
     });
-
-    return getIdPostu();
   }, []);
   const onSubmit = (e) => {
     e.preventDefault();

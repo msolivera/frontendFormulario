@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Row,
-  Col,
-  Form,
-  Jumbotron,
-  Button,
-  Spinner,
-  Container,
-} from "react-bootstrap";
+import { Row, Col, Form, Jumbotron, Button, Spinner } from "react-bootstrap";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -19,13 +11,14 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { isEmailValid } from "../../../../utils/validations";
 import {
-  crearPersona,
+  crearPostulante,
   setIdsApi,
   getIdPostu,
   getIdMadre,
   getIdPadre,
   getIdPareja,
   crearParentesco,
+  crearFamiliarPostulante,
 } from "../../../../api/auth";
 import {
   getPaisesApi,
@@ -42,7 +35,7 @@ export default function DatosPersonales(props) {
 
   const [guardadoLoading, setGuardadoLoading] = useState(false);
   //state que guarda la info del formulario
-  const [formData, setFormData] = useState(initialFormValue());
+  const [formData, setFormData] = useState(initialFormValue(tipoPerstate));
 
   const [estadoCivi, setEstadoCivi] = useState([]);
 
@@ -144,7 +137,6 @@ export default function DatosPersonales(props) {
     return fechaFinal;
   }
   /*DATE PICKER PERSONALIZADO**********************************************/
-
   //funcion que controla cuando se va a guardara el fomrulario
   const onSubmit = (e) => {
     e.preventDefault();
@@ -156,23 +148,42 @@ export default function DatosPersonales(props) {
       return null;
     });
 
-    if ((tipoPerstate == 1) & (validCount < 18)) {
-      toast.warning("Faltan campos que completar");
+    if (tipoPerstate == 1) {
+      if (validCount < 18) {
+        toast.warning("Faltan campos que completar");
+      } else {
+        if (!isEmailValid(formData.correoElectronico)) {
+          toast.warning("email invalido");
+        } else {
+          setGuardadoLoading(true);
+          crearPostulante(formData)
+            .then((response) => {
+              if (response.code) {
+                toast.warning(response.message);
+              } else {
+                toast.success("Registro correcto");
+                setFormData(initialFormValue(tipoPerstate));
+                setIdsApi(tipoPerstate, response.data);
+              }
+            })
+            .catch(() => {
+              toast.error("Error del servidor");
+            })
+            .finally(() => {
+              setGuardadoLoading(false);
+              crearParentesco(jsonParientes(tipoPerstate));
+            });
+        }
+      }
     } else {
-      /* if (
-        formData.correoElectronico.value != "" &&
-        !isEmailValid(formData.correoElectronico)
-      ) {
-        toast.warning("email invalido");
-      } else {*/
       setGuardadoLoading(true);
-      crearPersona(formData)
+      crearFamiliarPostulante(formData)
         .then((response) => {
           if (response.code) {
             toast.warning(response.message);
           } else {
             toast.success("Registro correcto");
-            setFormData(initialFormValue());
+            setFormData(initialFormValue(tipoPerstate));
             setIdsApi(tipoPerstate, response.data);
           }
         })
@@ -183,7 +194,6 @@ export default function DatosPersonales(props) {
           setGuardadoLoading(false);
           crearParentesco(jsonParientes(tipoPerstate));
         });
-      /*}*/
     }
   };
   //###################EMPIEZA FORMULARIO####################################################
@@ -387,7 +397,6 @@ export default function DatosPersonales(props) {
                       setFormData({
                         ...formData,
                         sexo: e.target.value,
-                        tipo_persona_id: tipoPerstate,
                       })
                     }
                   >
@@ -552,38 +561,6 @@ export default function DatosPersonales(props) {
                 <Row></Row>
               </Row>
 
-              <h3>Complete si es nacido en el Extranjero: </h3>
-              <Row>
-                <Col>
-                  <Form.Label>Departamento/Estado</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Nombre de Departamento/Estado"
-                    value={formData.nombre_departamento_estado}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        nombre_departamento_estado: e.target.value,
-                      })
-                    }
-                  />
-                </Col>
-                <Col>
-                  <Form.Label>Ciudad</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Ciudad"
-                    value={formData.nombre_ciudad}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        nombre_ciudad: e.target.value,
-                      })
-                    }
-                  />
-                </Col>
-              </Row>
-
               <Row>
                 <Col>
                   <Form.Label>Seccional Policial</Form.Label>
@@ -615,6 +592,38 @@ export default function DatosPersonales(props) {
                   }
                 />
               </Row>
+
+              <h3>Complete si es nacido en el Extranjero: </h3>
+              <Row>
+                <Col>
+                  <Form.Label>Departamento/Estado</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Nombre de Departamento/Estado"
+                    value={formData.nombre_departamento_estado}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        nombre_departamento_estado: e.target.value,
+                      })
+                    }
+                  />
+                </Col>
+                <Col>
+                  <Form.Label>Ciudad</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Ciudad"
+                    value={formData.nombre_ciudad}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        nombre_ciudad: e.target.value,
+                      })
+                    }
+                  />
+                </Col>
+              </Row>
             </Form.Group>
           </div>
         </Jumbotron>
@@ -627,42 +636,63 @@ export default function DatosPersonales(props) {
   );
 }
 
-//Ver su funciona esto o no o como implementar el asunto
-/**function AbirMiniComponente(content) {
-  if (content == "Uruguay") {
-    return <MiniComponenteDepa />;
-  }
-  return <MiniComponentPais />;
-}*/
-
 //FUNCION QUE GUARDA LA INFO QUE UNO ESCRIBE EN EL FORMULARIO
-function initialFormValue() {
-  return {
-    primerNombre: "",
-    segundoNombre: "",
-    primerApellido: "",
-    segundoApellido: "",
-    apodo: "",
-    fechaNacimiento: "",
-    cedula: "11111111",
-    credencialSerie: "",
-    credencialNumero: "0",
-    sexo: "",
-    domicilioActual: "",
-    domicilioAnterior: "",
-    telefono_celular: "0",
-    correoElectronico: "",
-    seccionalPolicial: "",
-    estadocivil_id: "",
-    pais_id: "",
-    tipo_persona_id: "",
-    inscripcion_id: "1",
-    departamento_id: "",
-    ciudadBarrio_id: "",
+function initialFormValue(tipoPerstate) {
+  if (tipoPerstate == 1) {
+    return {
+      primerNombre: "",
+      segundoNombre: "",
+      primerApellido: "",
+      segundoApellido: "",
+      apodo: "",
+      fechaNacimiento: "",
+      cedula: "",
+      credencialSerie: "",
+      credencialNumero: "",
+      sexo: "",
+      domicilioActual: "",
+      domicilioAnterior: "",
+      telefono_celular: "",
+      correoElectronico: "",
+      seccionalPolicial: "",
+      estadocivil_id: "",
+      pais_id: "",
+      tipo_persona_id: tipoPerstate,
+      inscripcion_id: "1",
+      departamento_id: "",
+      ciudadBarrio_id: "",
 
-    nombre_departamento_estado: "",
-    nombre_ciudad: "",
-  };
+      nombre_departamento_estado: "",
+      nombre_ciudad: "",
+    };
+  } else {
+    return {
+      primerNombre: "",
+      segundoNombre: "",
+      primerApellido: "",
+      segundoApellido: "",
+      apodo: "",
+      fechaNacimiento: "",
+      cedula: "0",
+      credencialSerie: "",
+      credencialNumero: "0",
+      sexo: "",
+      domicilioActual: "",
+      domicilioAnterior: "",
+      telefono_celular: "0",
+      correoElectronico: "",
+      seccionalPolicial: "",
+      estadocivil_id: "0",
+      pais_id: "0",
+      tipo_persona_id: tipoPerstate,
+      inscripcion_id: "1",
+      departamento_id: "0",
+      ciudadBarrio_id: "0",
+
+      nombre_departamento_estado: "",
+      nombre_ciudad: "",
+    };
+  }
 }
 
 function jsonParientes(tipoPerstate) {
