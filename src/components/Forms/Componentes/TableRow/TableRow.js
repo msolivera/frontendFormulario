@@ -31,27 +31,31 @@ export default function TableRow(props) {
   };
 
   return (
-    <tr>
-      <td>{pregunta.texto}</td>
-      <td>
-        <Form.Control
-          type="text"
-          placeholder="Respuesta"
-          value={formData.respuesta}
-          onChange={(e) =>
-            setFormData({
-              ...formData,
-              respuesta: e.target.value,
-            })
-          }
-        />
-      </td>
-      <td>
-        <Button variant="info" type="button" onClick={onSubmit}>
-          Guardar
-        </Button>
-      </td>
-    </tr>
+    <>
+      <tr>
+        <td>{pregunta.texto}</td>
+      </tr>
+      <tr>
+        <td>
+          <Form.Control
+            type="text"
+            placeholder="Respuesta"
+            value={formData.respuesta}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                respuesta: e.target.value,
+              })
+            }
+          />
+        </td>
+        <td>
+          <Button variant="info" type="button" onClick={onSubmit}>
+            Guardar
+          </Button>
+        </td>
+      </tr>
+    </>
   );
 }
 

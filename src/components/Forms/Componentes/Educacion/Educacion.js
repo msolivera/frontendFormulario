@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Form, Button, Spinner, Jumbotron, Table } from "react-bootstrap";
-
+import { map } from "lodash";
 import { crearEstudiosBasicos } from "../../../../api/auth";
 
 import { toast } from "react-toastify";
@@ -11,7 +11,7 @@ import { faUserGraduate, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 import BasicModal from "../../../Modal/BasicModal";
 import OtrosEstudios from "../OtrosEstudios";
-
+import TableRowEducacion from "../TableRowEducacion";
 import { getIdPostu } from "../../../../api/auth";
 import { getEstudiosPersona } from "../../../../api/tablas";
 import "../../FormPostulante/FormPostulante.scss";
@@ -21,34 +21,28 @@ export default function Educacion() {
   //Para manejar el Modal
   const [showModal, setShowModal] = useState(false);
   const [contentModal, setContentModal] = useState(null);
+  //estate que uso para mandar al modal de otros estudios e incrementar cuando se cierra el mismo para hacer que el useEfect que carga los estudios se ejecute al cambiar contador
+  const [contador, setcontador] = useState(1);
   //funcion que abre el modal y le agrega el contenido de los form
   const openModal = (content) => {
     setShowModal(true);
     setContentModal(content);
   };
+  //state que va a guardar los estudios de la persona
+  const [estudios, setEstudios] = useState([]);
 
   useEffect(() => {
-    getEstudiosPersona()
+    getEstudiosPersona(getIdPostu())
       .then((response) => {
-        let lista = response.data;
-        let opciones = lista.map((estudiopersona) => {
-          return {
-            id: `${estudiopersona.anioEstudio}`,
-            nombre: `${estudiopersona.nombreInstituto}`,
-          };
-        });
-        cargarTabla(opciones);
-        return { opciones: opciones };
+        let listaEstudios = formatModel(response.data);
+        setEstudios(listaEstudios);
       })
       .catch(() => {});
-  }, []);
-
+  }, [contador]);
   //recibo el id de postulante (del local storage y cambio mi estado para luego asignarlo al form data)
   useEffect(() => {
     getIdPostu();
     setIdPostulante(getIdPostu());
-
-    //console.log(idPostulante);
     setFormData({
       ...formData,
       primeroPrimaria_persona_id: idPostulante,
@@ -416,34 +410,43 @@ export default function Educacion() {
             </Table>
 
             <h3>Otros Estudios Realizados</h3>
+            <Button
+              variant="outline-primary"
+              onClick={() =>
+                openModal(
+                  <OtrosEstudios
+                    setShowModal={setShowModal}
+                    contador={contador}
+                    setcontador={setcontador}
+                  />
+                )
+              }
+            >
+              Añadir
+              <FontAwesomeIcon icon={faPlus} />
+              <FontAwesomeIcon icon={faUserGraduate} />
+            </Button>
             <Table id="tabla">
               <thead>
                 <tr>
                   <th>Años Cursados</th>
                   <th>Nombre del Estudio/Capacitacion</th>
-                  <th>
-                    <Button
-                      variant="outline-primary"
-                      onClick={() =>
-                        openModal(<OtrosEstudios setShowModal={setShowModal} />)
-                      }
-                    >
-                      Añadir
-                      <FontAwesomeIcon icon={faPlus} />
-                      <FontAwesomeIcon icon={faUserGraduate} />
-                    </Button>
-                  </th>
-                </tr>
-                <tr>
-                  <td>fefef</td>
-                  <td>fefeff</td>
+                  <th></th>
                 </tr>
               </thead>
-              <tbody></tbody>
+              <tbody>
+                {estudios.length == 1 ? (
+                  <tr>No hay Estudios ingresados</tr>
+                ) : (
+                  map(estudios, (est, index) => (
+                    <TableRowEducacion estudio={est} key={index} />
+                  ))
+                )}
+              </tbody>
             </Table>
           </div>
         </Jumbotron>
-        <Button variant="primary" type="submit">
+        <Button variant="info" type="submit">
           {!guardadoLoading ? "Siguiente" : <Spinner animation="border" />}
         </Button>
       </Form>
@@ -515,18 +518,17 @@ function initialFormValue() {
   };
 }
 
-function cargarTabla(listaOpciones) {
-  var options = listaOpciones;
-  var listaACargar = document.getElementById("tabla");
+function formatModel(estudios) {
+  //lista temporal
+  const estudiosTemp = [];
 
-  for (var i in options) {
-    // creamos un elemento de tipo option
-    var opt = document.createElement("td");
-    // le damos un valor
-    opt.value = options[i].id;
-    // le ponemos un texto
-    opt.textContent = options[i].nombre;
-    // lo agregamos al select
-    listaACargar.options.add(opt);
-  }
+  estudios.forEach((estudio) => {
+    estudiosTemp.push({
+      //creo el formato
+      id: estudio.id,
+      nombreInstituto: estudio.nombreInstituto,
+      anioEstudio: estudio.anioEstudio,
+    });
+  });
+  return estudiosTemp;
 }

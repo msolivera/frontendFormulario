@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { values, size } from "lodash";
 import {
   crearEstudio,
   obtenerOtrosEstudios,
@@ -18,7 +19,7 @@ export default function OtrosEstudios(props) {
   const [guardadoLoading, setGuardadoLoading] = useState(false);
   //state que guarda la info del formulario
   const [formData, setFormData] = useState(initialFormValue());
-  const { setShowModal } = props;
+  const { setShowModal, contador, setcontador } = props;
 
   //recibo el id de postulante (del local storage y cambio mi estado para luego asignarlo al form data)
   useEffect(() => {
@@ -35,24 +36,34 @@ export default function OtrosEstudios(props) {
   const onSubmit = (e) => {
     e.preventDefault();
     setShowModal(false);
-    // obtenerOtrosEstudios();
-    setGuardadoLoading(true);
-    crearEstudio(formData)
-      .then((response) => {
-        if (response.code) {
-          toast.warning(response.message);
-        } else {
-          toast.success("Registro correcto");
-          setFormData(initialFormValue());
-        }
-      })
-      .catch(() => {
-        toast.error("Error del servidor");
-      })
-      .finally(() => {
-        setGuardadoLoading(false);
-      });
-    /*}*/
+
+    let validCount = 0;
+    values(formData).some((value) => {
+      value && validCount++;
+      return null;
+    });
+
+    if (validCount !== size(formData)) {
+      toast.warning("Faltan campos que completar");
+    } else {
+      setGuardadoLoading(true);
+      crearEstudio(formData)
+        .then((response) => {
+          if (response.code) {
+            toast.warning(response.message);
+          } else {
+            toast.success("Registro correcto");
+            setFormData(initialFormValue());
+          }
+        })
+        .catch(() => {
+          toast.error("Error del servidor");
+        })
+        .finally(() => {
+          setGuardadoLoading(false);
+        });
+      setcontador(contador + 1);
+    }
   };
 
   return (

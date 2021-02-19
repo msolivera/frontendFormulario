@@ -11,6 +11,7 @@ export default function InicioForm() {
   return (
     <div>
       <FormPostulante />
+      <OtrosFamiliares />
     </div>
   );
 }

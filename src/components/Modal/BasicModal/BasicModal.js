@@ -5,6 +5,7 @@ import "./BasicModal.scss";
 
 export default function BasicModal(props) {
   const { show, setShow, children } = props;
+
   return (
     <Modal
       className="basic-modal "

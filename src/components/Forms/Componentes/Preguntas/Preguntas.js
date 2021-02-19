@@ -31,20 +31,22 @@ export default function Preguntas(props) {
     e.preventDefault();
   };
   return (
-    <Container>
-      <div>
+    <div>
+      <Container>
         <Form onSubmit={onSubmit}>
           <Jumbotron>
             <h2>Responda las siguientes preguntas:</h2>
             <Table>
               <thead>
                 <tr>
-                  <th>Pregunta</th>
-                  <th>Respuesta</th>
-                  <th>Accion</th>
+                  <th>Responda cada pregunta y luego haga click en Guardar.</th>
                 </tr>
               </thead>
               <tbody>
+                {/**En esta parte hago un if que controla si el array de preguntas no tiene nada cargado aun
+                 * muestra el mensaje que no hay preguntas, sino hace un map con la lista de preguntas y llama al
+                 * tableRow que yo hice mandandole los parametros del map.
+                 */}
                 {preguntas.length == 0 ? (
                   <tr>No hay preguntas</tr>
                 ) : (
@@ -54,22 +56,28 @@ export default function Preguntas(props) {
                 )}
               </tbody>
             </Table>
-            <Button variant="info" type="submit">
-              Guardar
-            </Button>
           </Jumbotron>
         </Form>
-      </div>
-    </Container>
+      </Container>
+    </div>
   );
 }
 
+/**Esta funcion se encarga de dar formato a la respuesta del servidor cuando pido todas las preguntas segun el tipo de persona
+ * respuesta del servidor= preg
+ * tipoPerState = tipo de persona
+ * idPersona = obtengo el id de persona desde el localStorage esto facilita el insert de la respuesta posteriormente xq ya tengo el id de la persona
+ */
 function formatModel(preg, tipoPerstate, idPersona) {
+  //lista temporal
   const preguntasTemp = [];
+  //si es postulante
   if (tipoPerstate == 1) {
     preg.forEach((pregunta) => {
+      //tomo las preguntas que son para el tipoPer 1 (postulante)
       if (pregunta.tipo_persona_id == 1) {
         preguntasTemp.push({
+          //creo el formato
           id: pregunta.id,
           texto: pregunta.textoPregunta,
           tipo_persona: pregunta.tipo_persona_id,
@@ -79,8 +87,10 @@ function formatModel(preg, tipoPerstate, idPersona) {
     });
   } else {
     preg.forEach((pregunta) => {
+      //si la pregunta es para  cualquiera persona menos postulante
       if (pregunta.tipo_persona_id != 1) {
         preguntasTemp.push({
+          //creo formato
           id: pregunta.id,
           texto: pregunta.textoPregunta,
           tipo_persona: pregunta.tipo_persona_id,
@@ -89,6 +99,5 @@ function formatModel(preg, tipoPerstate, idPersona) {
       }
     });
   }
-
   return preguntasTemp;
 }

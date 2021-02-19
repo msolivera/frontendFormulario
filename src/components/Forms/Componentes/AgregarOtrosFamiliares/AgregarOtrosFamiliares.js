@@ -23,7 +23,7 @@ export default function AgregarOtrosFamiliares(props) {
   const [guardadoLoading, setGuardadoLoading] = useState(false);
   //state que guarda la info del formulario
   const [formData, setFormData] = useState(initialFormValue());
-  const { setShowModal } = props;
+  const { setShowModal, contador, setcontador } = props;
 
   useEffect(() => {
     getTipoPersonaApi()
@@ -75,34 +75,26 @@ export default function AgregarOtrosFamiliares(props) {
     setShowModal(false);
     //lo siguiente se encarga de recorrer el form y ver si tiene el campo relleno o no
     //si el valid count tiene tiene el mismo numero que el total de keys del formdata entonces significa que tiene todos los campos rellenados
-    let validCount = 0;
-    values(formData).some((value) => {
-      value && validCount++;
-      return null;
-    });
 
-    if (validCount !== size(formData)) {
-      toast.warning("Faltan campos que completar");
-    } else {
-      setGuardadoLoading(true);
-      crearOtroFliar(formData)
-        .then((response) => {
-          if (response.code) {
-            toast.warning(response.message);
-          } else {
-            toast.success("Registro correcto");
-            setFormData(initialFormValue());
-            setIdsApi(0, response.data);
-          }
-        })
-        .catch(() => {
-          toast.error("Error del servidor");
-        })
-        .finally(() => {
-          setGuardadoLoading(false);
-          crearParentesco(jsonParientes());
-        });
-    }
+    setGuardadoLoading(true);
+    crearOtroFliar(formData)
+      .then((response) => {
+        if (response.code) {
+          toast.warning(response.message);
+        } else {
+          toast.success("Registro correcto");
+          setFormData(initialFormValue());
+          setIdsApi(0, response.data);
+        }
+      })
+      .catch(() => {
+        toast.error("Error del servidor");
+      })
+      .finally(() => {
+        setGuardadoLoading(false);
+        crearParentesco(jsonParientes());
+        setcontador(contador + 1);
+      });
   };
 
   return (
@@ -263,13 +255,22 @@ function cargarCombos(listaOpciones, idComponente) {
   var listaACargar = document.getElementById(idComponente);
 
   for (var i in options) {
-    // creamos un elemento de tipo option
-    var opt = document.createElement("option");
-    // le damos un valor
-    opt.value = options[i].id;
-    // le ponemos un texto
-    opt.textContent = options[i].nombre;
-    // lo agregamos al select
-    listaACargar.options.add(opt);
+    //saco las opciones de los familiares madre padre y pareja y postulante
+    if (
+      (options[i].id != 2) &
+      (options[i].id != 3) &
+      (options[i].id != 10) &
+      (options[i].id != 14) &
+      (options[i].id != 1)
+    ) {
+      // creamos un elemento de tipo option
+      var opt = document.createElement("option");
+      // le damos un valor
+      opt.value = options[i].id;
+      // le ponemos un texto
+      opt.textContent = options[i].nombre;
+      // lo agregamos al select
+      listaACargar.options.add(opt);
+    }
   }
 }
