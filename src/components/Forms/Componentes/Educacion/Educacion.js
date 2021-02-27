@@ -7,7 +7,11 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserGraduate, faPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faUserGraduate,
+  faPlus,
+  faSave,
+} from "@fortawesome/free-solid-svg-icons";
 
 import BasicModal from "../../../Modal/BasicModal";
 import OtrosEstudios from "../OtrosEstudios";
@@ -411,7 +415,7 @@ export default function Educacion() {
 
             <h3>Otros Estudios Realizados</h3>
             <Button
-              variant="outline-primary"
+              variant="agregar"
               onClick={() =>
                 openModal(
                   <OtrosEstudios
@@ -422,9 +426,9 @@ export default function Educacion() {
                 )
               }
             >
-              Añadir
-              <FontAwesomeIcon icon={faPlus} />
-              <FontAwesomeIcon icon={faUserGraduate} />
+              <span>
+                Añadir <FontAwesomeIcon icon={faUserGraduate} />{" "}
+              </span>
             </Button>
             <Table id="tabla">
               <thead>
@@ -445,10 +449,11 @@ export default function Educacion() {
               </tbody>
             </Table>
           </div>
+          <Button variant="guardar" type="submit">
+            {!guardadoLoading ? "Guardar  " : <Spinner animation="border" />}
+            <FontAwesomeIcon icon={faSave} />
+          </Button>
         </Jumbotron>
-        <Button variant="info" type="submit">
-          {!guardadoLoading ? "Siguiente" : <Spinner animation="border" />}
-        </Button>
       </Form>
     </div>
   );

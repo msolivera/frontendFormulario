@@ -1,19 +1,16 @@
-import React, { useState } from "react";
-import Principal from "./page/Principal";
+import React from "react";
 import InicioForm from "./page/InicioForm/Index";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Header from "./components/Layout/Header";
-import Footer from "./components/Layout/Footer";
-import "./index.scss";
-export default function App() {
-  /*const [user, serUser] = useState({ name: "micaela" });
 
-  return <div>{user ? <Principal /> : <h1>no estas logueado</h1>}</div>;*/
+import "./index.scss";
+import Routing from "./routes/Routing";
+export default function App() {
   return (
     <div>
       <Header />
-      <InicioForm />
+      <Routing />
       <ToastContainer
         position="top-right"
         autoClose={5000}
@@ -25,6 +22,4 @@ export default function App() {
       />
     </div>
   );
-
-  /*<Footer className="footer" />*/
 }

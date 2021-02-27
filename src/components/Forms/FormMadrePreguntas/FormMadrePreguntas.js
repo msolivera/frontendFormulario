@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-import DatosPersonales from "../Componentes/DatosPersonales/index";
+import Preguntas from "../Componentes/Preguntas/index";
 
 import "../FormPostulante/FormPostulante.scss";
 
@@ -12,17 +12,17 @@ export default function FormMadre() {
   return (
     <>
       <Container>
-        <h2>Quinto Paso: Datos de la madre</h2>
-        <DatosPersonales tipoPerstate={tipoPerstate} />
+        <h2>Septimo Paso: Responda las siguientes Preguntas.</h2>
+        <Preguntas tipoPerstate={tipoPerstate} />
 
-        <Link to="/preguntasPostulante">
+        <Link to="/laboralMadre">
           <Button variant="nav-prev" type="submit">
             <span>Anterior</span>
           </Button>
         </Link>
-        <Link to="/laboralMadre">
+        <Link to="/datosPadre">
           <Button variant="nav-next" type="submit">
-            <span> Siguiente</span>
+            <span>Siguiente</span>
           </Button>
         </Link>
       </Container>

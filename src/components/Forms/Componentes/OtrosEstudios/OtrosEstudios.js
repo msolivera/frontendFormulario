@@ -111,7 +111,7 @@ export default function OtrosEstudios(props) {
           </tbody>
         </Table>
 
-        <Button variant="info" type="submit">
+        <Button variant="agregar" type="submit">
           <FontAwesomeIcon icon={faSave} />
           Guardar
         </Button>

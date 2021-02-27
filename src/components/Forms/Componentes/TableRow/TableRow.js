@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { crearRespuesta } from "../../../../api/auth";
 import { toast } from "react-toastify";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSave } from "@fortawesome/free-solid-svg-icons";
 import "react-toastify/dist/ReactToastify.css";
 //este componente se usa para cargar dinamicamente las preguntas que traigo de la base
 export default function TableRow(props) {
@@ -50,8 +52,8 @@ export default function TableRow(props) {
           />
         </td>
         <td>
-          <Button variant="info" type="button" onClick={onSubmit}>
-            Guardar
+          <Button variant="agregar" type="button" onClick={onSubmit}>
+            <FontAwesomeIcon icon={faSave} /> Guardar
           </Button>
         </td>
       </tr>

@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button, Container } from "react-bootstrap";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLongArrowAltRight } from "@fortawesome/free-solid-svg-icons";
+import { Button, Container } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 import DatosPersonales from "../Componentes/DatosPersonales/index";
-import Domicilio from "../Componentes/Domicilio/index";
-import Laboral from "../Componentes/Laboral/index";
-import Preguntas from "../Componentes/Preguntas/index";
 
 import "../FormPostulante/FormPostulante.scss";
 
@@ -17,10 +12,19 @@ export default function FormPadre() {
   return (
     <>
       <Container>
-        <h2>Tercer Paso: Datos del Padre</h2>
+        <h2>Octavo Paso: Datos del Padre</h2>
         <DatosPersonales tipoPerstate={tipoPerstate} />
-        <Laboral tipoPerstate={tipoPerstate} />
-        <Preguntas tipoPerstate={tipoPerstate} />
+
+        <Link to="/preguntasMadre">
+          <Button variant="nav-prev" type="submit">
+            <span>Anterior</span>
+          </Button>
+        </Link>
+        <Link to="/laboralPadre">
+          <Button variant="nav-next" type="submit">
+            <span>Siguiente</span>
+          </Button>
+        </Link>
       </Container>
     </>
   );

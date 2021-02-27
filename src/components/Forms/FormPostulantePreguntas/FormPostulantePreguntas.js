@@ -1,27 +1,24 @@
 import React, { useState } from "react";
-import { Button, Container } from "react-bootstrap";
-
+import { Container, Button } from "react-bootstrap";
+import Preguntas from "../Componentes/Preguntas/index";
 import { Link } from "react-router-dom";
 
-import DatosPersonales from "../Componentes/DatosPersonales/index";
+import "./FormPostulantePreguntas.scss";
 
-import "../FormPostulante/FormPostulante.scss";
-
-export default function FormPareja() {
+export default function FormPostulantePreguntas() {
   //este state lo uso para harcodear el tipo de persona que recibe el componente de datos personales
-  const [tipoPerstate, settipoPerstate] = useState(10);
+  const [tipoPerstate, settipoPerstate] = useState(1);
   return (
     <>
       <Container>
-        <h2>Decimo Primer Paso: Datos Conyuge, Concubino/a , Novio/a</h2>
-        <DatosPersonales tipoPerstate={tipoPerstate} />
-
-        <Link to="/preguntasPadre">
+        <h2>Cuarto paso: Responda las siguientes Preguntas.</h2>
+        <Preguntas tipoPerstate={tipoPerstate} />
+        <Link to="/laboralPostulante">
           <Button variant="nav-prev" type="submit">
             <span>Anterior</span>
           </Button>
         </Link>
-        <Link to="/laboralPareja">
+        <Link to="/datosMadre">
           <Button variant="nav-next" type="submit">
             <span>Siguiente</span>
           </Button>

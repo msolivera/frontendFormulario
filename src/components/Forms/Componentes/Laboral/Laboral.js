@@ -4,6 +4,8 @@ import { values, size } from "lodash";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../../FormPostulante/FormPostulante.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSave } from "@fortawesome/free-solid-svg-icons";
 
 import { crearOcupacion, getSuId } from "../../../../api/auth";
 
@@ -136,10 +138,11 @@ export default function Laboral(props) {
               </Form.Group>
             </Form>
           </div>
+          <Button variant="guardar" type="submit">
+            {!guardadoLoading ? "Guardar " : <Spinner animation="border" />}
+            <FontAwesomeIcon icon={faSave} />
+          </Button>
         </Jumbotron>
-        <Button variant="primary" type="submit">
-          {!guardadoLoading ? "Siguiente" : <Spinner animation="border" />}
-        </Button>
       </Form>
     </div>
   );

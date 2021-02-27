@@ -5,9 +5,12 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import range from "lodash/range";
 
-import { values, size } from "lodash";
+import { values } from "lodash";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+import { faSave } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { isEmailValid } from "../../../../utils/validations";
 import {
@@ -31,7 +34,7 @@ import "../../FormPostulante/FormPostulante.scss";
 
 export default function DatosPersonales(props) {
   //este estate me lo manda el form que lo llame para harcodear tipo de persona
-  const { tipoPerstate } = props;
+  const { tipoPerstate, guardadoBoton, setguardadoBoton } = props;
 
   const [guardadoLoading, setGuardadoLoading] = useState(false);
   //state que guarda la info del formulario
@@ -626,11 +629,16 @@ export default function DatosPersonales(props) {
               </Row>
             </Form.Group>
           </div>
-        </Jumbotron>
+          <Button
+            variant="guardar"
+            type="submit"
+            onClick={setguardadoBoton(true)}
+          >
+            {!guardadoLoading ? "Guardar  " : <Spinner animation="border" />}
 
-        <Button variant="info" type="submit">
-          {!guardadoLoading ? "Siguiente" : <Spinner animation="border" />}
-        </Button>
+            <FontAwesomeIcon icon={faSave} />
+          </Button>
+        </Jumbotron>
       </Form>
     </div>
   );

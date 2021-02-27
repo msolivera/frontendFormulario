@@ -35,7 +35,6 @@ export default function Preguntas(props) {
       <Container>
         <Form onSubmit={onSubmit}>
           <Jumbotron>
-            <h2>Responda las siguientes preguntas:</h2>
             <Table>
               <thead>
                 <tr>

@@ -83,6 +83,7 @@ export default function AgregarOtrosFamiliares(props) {
           toast.warning(response.message);
         } else {
           toast.success("Registro correcto");
+          setcontador(contador + 1);
           setFormData(initialFormValue());
           setIdsApi(0, response.data);
         }
@@ -93,7 +94,6 @@ export default function AgregarOtrosFamiliares(props) {
       .finally(() => {
         setGuardadoLoading(false);
         crearParentesco(jsonParientes());
-        setcontador(contador + 1);
       });
   };
 
@@ -225,7 +225,7 @@ export default function AgregarOtrosFamiliares(props) {
             </tr>
           </tbody>
         </Table>
-        <Button variant="primary" type="submit">
+        <Button variant="agregar" type="submit">
           <FontAwesomeIcon icon={faSave} />
           Guardar
         </Button>

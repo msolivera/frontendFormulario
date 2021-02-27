@@ -33,7 +33,6 @@ export default function FormOtrosFamiliares() {
   };
   //state para hacer funcionar el Spinner
   const [guardadoLoading, setGuardadoLoading] = useState(false);
-  console.log(contador);
   useEffect(() => {
     getOtrosFamiliaresPersona(getIdPostu())
       .then((response) => {
@@ -60,7 +59,7 @@ export default function FormOtrosFamiliares() {
             <div>
               <h2>Otros Familiares</h2>
               <Button
-                variant="outline-primary"
+                variant="agregar"
                 onClick={() =>
                   openModal(
                     <AgregarOtrosFamiliares
@@ -71,9 +70,10 @@ export default function FormOtrosFamiliares() {
                   )
                 }
               >
-                Añadir
-                <FontAwesomeIcon icon={faPlus} />
-                <FontAwesomeIcon icon={faUsers} />
+                <span>
+                  Añadir
+                  <FontAwesomeIcon icon={faUsers} />
+                </span>
               </Button>
 
               {fliares.length == 0 ? (
@@ -86,11 +86,6 @@ export default function FormOtrosFamiliares() {
             </div>
           </Jumbotron>
         </Form>
-
-        <Button variant="primary" type="submit">
-          Guardar y Descargar <FontAwesomeIcon icon={faSave} />
-          <FontAwesomeIcon icon={faCloudDownloadAlt} />
-        </Button>
       </Container>
     </div>
   );
