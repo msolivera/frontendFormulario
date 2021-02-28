@@ -5,20 +5,26 @@ import {
   ID_PAREJA,
   ID_PADRE,
   ID_OTRO_FLIAR,
+  DATA_POSTU,
+  DATA_MADRE,
+  DATA_PADRE,
+  DATA_PAREJA,
+  EST_BASICO,
+  LAB_POSTU,
+  LAB_MADRE,
+  LAB_PADRE,
+  LAB_PAREJA,
 } from "../utils/constant";
 
+/**LIMPIAR ESTA CLASE POR FAVOR */
 export function crearPostulante(persona) {
   const url = `${API_HOST}persona`;
-
-  //console.log(persona);
-  // console.log(url);
 
   const personaTemp = {
     ...persona,
     correoElectronico: persona.correoElectronico.toLowerCase(),
   };
 
-  //console.log(personaTemp);
   const params = {
     method: "POST",
     headers: {
@@ -330,28 +336,91 @@ export function comboPaises() {
     });
 }
 
-//esto no funciona aun
-export function obtenerOtrosEstudios() {
-  const url = `${API_HOST}estudios`;
-  const params = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-  console.log(params);
-  console.log(url);
-  return fetch(url, params)
-    .then((response) => {
-      if (response.status >= 200 && response.status < 300) {
-        return response.json();
-      }
-      return { code: 404, message: "Error al guardar los datos" };
-    })
-    .then((result) => {
-      return result;
-    })
-    .catch((err) => {
-      return err;
-    });
+/**ESTA HAY QUE SACARLO DE ACA */
+export function setDataPostu(data) {
+  return localStorage.setItem(DATA_POSTU, data);
+}
+
+export function getDataPostu() {
+  var guardado = localStorage.getItem(DATA_POSTU);
+
+  return JSON.parse(guardado);
+}
+
+export function setDataMadre(data) {
+  return localStorage.setItem(DATA_MADRE, data);
+}
+
+export function getDataMadre() {
+  var guardado = localStorage.getItem(DATA_MADRE);
+
+  return JSON.parse(guardado);
+}
+export function setDataPadre(data) {
+  return localStorage.setItem(DATA_PADRE, data);
+}
+
+export function getDataPadre() {
+  var guardado = localStorage.getItem(DATA_PADRE);
+
+  return JSON.parse(guardado);
+}
+export function setDataPareja(data) {
+  return localStorage.setItem(DATA_PAREJA, data);
+}
+
+export function getDataPareja() {
+  var guardado = localStorage.getItem(DATA_PAREJA);
+
+  return JSON.parse(guardado);
+}
+
+export function setEstudiosBasicos(data) {
+  return localStorage.setItem(EST_BASICO, data);
+}
+
+export function getEstudiosBasicos() {
+  var guardado = localStorage.getItem(EST_BASICO);
+
+  return JSON.parse(guardado);
+}
+
+export function setLabPostu(data) {
+  return localStorage.setItem(LAB_POSTU, data);
+}
+
+export function getLabPostu() {
+  var guardado = localStorage.getItem(LAB_POSTU);
+
+  return JSON.parse(guardado);
+}
+
+export function setLabMadre(data) {
+  return localStorage.setItem(LAB_MADRE, data);
+}
+
+export function getLabMadre() {
+  var guardado = localStorage.getItem(LAB_MADRE);
+
+  return JSON.parse(guardado);
+}
+
+export function setLabPadre(data) {
+  return localStorage.setItem(LAB_PADRE, data);
+}
+
+export function getLabPadre() {
+  var guardado = localStorage.getItem(LAB_PADRE);
+
+  return JSON.parse(guardado);
+}
+
+export function setLabPareja(data) {
+  return localStorage.setItem(LAB_PAREJA, data);
+}
+
+export function getLabPareja() {
+  var guardado = localStorage.getItem(LAB_PAREJA);
+
+  return JSON.parse(guardado);
 }

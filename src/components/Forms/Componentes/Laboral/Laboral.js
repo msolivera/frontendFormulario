@@ -7,7 +7,14 @@ import "../../FormPostulante/FormPostulante.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 
-import { crearOcupacion, getSuId } from "../../../../api/auth";
+import {
+  crearOcupacion,
+  getSuId,
+  setLabPostu,
+  setLabMadre,
+  setLabPadre,
+  setLabPareja,
+} from "../../../../api/auth";
 
 export default function Laboral(props) {
   const { tipoPerstate } = props;
@@ -42,6 +49,18 @@ export default function Laboral(props) {
       toast.warning("Faltan campos que completar");
     } else {
       setGuardadoLoading(true);
+      if (tipoPerstate === 1) {
+        setLabPostu(JSON.stringify(formData));
+      }
+      if (tipoPerstate === 2) {
+        setLabMadre(JSON.stringify(formData));
+      }
+      if (tipoPerstate === 3) {
+        setLabPadre(JSON.stringify(formData));
+      }
+      if (tipoPerstate === 10) {
+        setLabPareja(JSON.stringify(formData));
+      }
       crearOcupacion(formData)
         .then((response) => {
           if (response.code) {

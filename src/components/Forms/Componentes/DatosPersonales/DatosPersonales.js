@@ -13,6 +13,7 @@ import { faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { isEmailValid } from "../../../../utils/validations";
+
 import {
   crearPostulante,
   setIdsApi,
@@ -22,6 +23,10 @@ import {
   getIdPareja,
   crearParentesco,
   crearFamiliarPostulante,
+  setDataPostu,
+  setDataMadre,
+  setDataPadre,
+  setDataPareja,
 } from "../../../../api/auth";
 import {
   getPaisesApi,
@@ -74,7 +79,6 @@ export default function DatosPersonales(props) {
 
   //useEffect que recibe la respuesta de la funcion de obtener estados civiles y luego la procesa en una lista de opciones.''
 
-  //console.log(estadoCivi);
   useEffect(() => {
     getEstadosCivilesApi()
       .then((response) => {
@@ -83,7 +87,7 @@ export default function DatosPersonales(props) {
           return { id: `${estadocivil.id}`, nombre: `${estadocivil.nombre}` };
         });
         setEstadoCivi(opciones);
-        //console.log(estadoCivi);
+
         cargarCombos(opciones, "select_form_estadoCivil");
         return { opciones: opciones };
       })
@@ -151,7 +155,7 @@ export default function DatosPersonales(props) {
       return null;
     });
 
-    if (tipoPerstate == 1) {
+    if (tipoPerstate === 1) {
       if (validCount < 18) {
         toast.warning("Faltan campos que completar");
       } else {
@@ -159,6 +163,8 @@ export default function DatosPersonales(props) {
           toast.warning("email invalido");
         } else {
           setGuardadoLoading(true);
+          setDataPostu(JSON.stringify(formData));
+
           crearPostulante(formData)
             .then((response) => {
               if (response.code) {
@@ -167,6 +173,7 @@ export default function DatosPersonales(props) {
                 toast.success("Registro correcto");
                 setFormData(initialFormValue(tipoPerstate));
                 setIdsApi(tipoPerstate, response.data);
+                setguardadoBoton(false);
               }
             })
             .catch(() => {
@@ -174,12 +181,20 @@ export default function DatosPersonales(props) {
             })
             .finally(() => {
               setGuardadoLoading(false);
-              crearParentesco(jsonParientes(tipoPerstate));
             });
         }
       }
     } else {
       setGuardadoLoading(true);
+      if (tipoPerstate === 2) {
+        setDataMadre(JSON.stringify(formData));
+      }
+      if (tipoPerstate === 3) {
+        setDataPadre(JSON.stringify(formData));
+      }
+      if (tipoPerstate === 10) {
+        setDataPareja(JSON.stringify(formData));
+      }
       crearFamiliarPostulante(formData)
         .then((response) => {
           if (response.code) {
@@ -188,6 +203,7 @@ export default function DatosPersonales(props) {
             toast.success("Registro correcto");
             setFormData(initialFormValue(tipoPerstate));
             setIdsApi(tipoPerstate, response.data);
+            crearParentesco(jsonParientes(tipoPerstate));
           }
         })
         .catch(() => {
@@ -195,7 +211,6 @@ export default function DatosPersonales(props) {
         })
         .finally(() => {
           setGuardadoLoading(false);
-          crearParentesco(jsonParientes(tipoPerstate));
         });
     }
   };
@@ -380,7 +395,7 @@ export default function DatosPersonales(props) {
                         </button>
                       </div>
                     )}
-                    selected={new Date()}
+                    selected={startDate}
                     onChange={(date) =>
                       setStartDate(date) |
                       setFormData({
@@ -629,11 +644,7 @@ export default function DatosPersonales(props) {
               </Row>
             </Form.Group>
           </div>
-          <Button
-            variant="guardar"
-            type="submit"
-            onClick={setguardadoBoton(true)}
-          >
+          <Button variant="guardar" type="submit">
             {!guardadoLoading ? "Guardar  " : <Spinner animation="border" />}
 
             <FontAwesomeIcon icon={faSave} />
@@ -766,9 +777,6 @@ function cargarComboCiudad(listaOpciones, idDepa) {
       opt.textContent = options[i].nombre;
       // lo agregamos al select
       listaACargar.options.add(opt);
-      console.log(opt);
     }
   }
-  //console.log("cantidad elementos");
-  //console.log(listaACargar.length);
 }

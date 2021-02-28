@@ -12,6 +12,7 @@ import FormPareja from "../components/Forms/FormPareja/index";
 import FormParejaLaboral from "../components/Forms/FormParejaLaboral/index";
 import FormParejaPreguntas from "../components/Forms/FormParejaPreguntas/index";
 import FormOtrosFamiliares from "../components/Forms/FormOtrosFamiliares/index";
+import Pdf from "../components/Pdf/Pdf";
 
 export default [
   {
@@ -90,6 +91,6 @@ export default [
   {
     path: "/formFinal",
     exact: true,
-    page: "EN CONSTRUCCION",
+    page: Pdf,
   },
 ];

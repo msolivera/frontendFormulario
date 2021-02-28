@@ -16,7 +16,7 @@ import {
 import BasicModal from "../../../Modal/BasicModal";
 import OtrosEstudios from "../OtrosEstudios";
 import TableRowEducacion from "../TableRowEducacion";
-import { getIdPostu } from "../../../../api/auth";
+import { getIdPostu, setEstudiosBasicos } from "../../../../api/auth";
 import { getEstudiosPersona } from "../../../../api/tablas";
 import "../../FormPostulante/FormPostulante.scss";
 export default function Educacion() {
@@ -74,6 +74,7 @@ export default function Educacion() {
   const onSubmit = (e) => {
     e.preventDefault();
     setGuardadoLoading(true);
+    setEstudiosBasicos(JSON.stringify(formData));
     crearEstudiosBasicos(formData)
       .then((response) => {
         if (response.code) {

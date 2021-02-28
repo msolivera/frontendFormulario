@@ -1,11 +1,12 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM, { render } from "react-dom";
 import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import Footer from "./components/Layout/Footer";
 import Header from "./components/Layout/Header";
 import "react-datepicker/dist/react-datepicker.css";
+import Pdf from "./components/Pdf/Pdf";
 
 ReactDOM.render(<App />, document.getElementById("root"));
 
