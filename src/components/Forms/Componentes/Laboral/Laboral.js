@@ -40,43 +40,35 @@ export default function Laboral(props) {
     e.preventDefault();
     //lo siguiente se encarga de recorrer el form y ver si tiene el campo relleno o no
     //si el valid count tiene tiene el mismo numero que el total de keys del formdata entonces significa que tiene todos los campos rellenados
-    let validCount = 0;
-    values(formData).some((value) => {
-      value && validCount++;
-      return null;
-    });
-    if (validCount !== size(formData)) {
-      toast.warning("Faltan campos que completar");
-    } else {
-      setGuardadoLoading(true);
-      if (tipoPerstate === 1) {
-        setLabPostu(JSON.stringify(formData));
-      }
-      if (tipoPerstate === 2) {
-        setLabMadre(JSON.stringify(formData));
-      }
-      if (tipoPerstate === 3) {
-        setLabPadre(JSON.stringify(formData));
-      }
-      if (tipoPerstate === 10) {
-        setLabPareja(JSON.stringify(formData));
-      }
-      crearOcupacion(formData)
-        .then((response) => {
-          if (response.code) {
-            toast.warning(response.message);
-          } else {
-            toast.success("Registro correcto");
-            setFormData(initialFormValue());
-          }
-        })
-        .catch(() => {
-          toast.error("Error del servidor");
-        })
-        .finally(() => {
-          setGuardadoLoading(false);
-        });
+
+    setGuardadoLoading(true);
+    if (tipoPerstate === 1) {
+      setLabPostu(JSON.stringify(formData));
     }
+    if (tipoPerstate === 2) {
+      setLabMadre(JSON.stringify(formData));
+    }
+    if (tipoPerstate === 3) {
+      setLabPadre(JSON.stringify(formData));
+    }
+    if (tipoPerstate === 10) {
+      setLabPareja(JSON.stringify(formData));
+    }
+    crearOcupacion(formData)
+      .then((response) => {
+        if (response.code) {
+          toast.warning(response.message);
+        } else {
+          toast.success("Registro correcto");
+          setFormData(initialFormValue());
+        }
+      })
+      .catch(() => {
+        toast.error("Error del servidor");
+      })
+      .finally(() => {
+        setGuardadoLoading(false);
+      });
   };
 
   /////////////////////////////////EMPIEZA FORMULARIO
