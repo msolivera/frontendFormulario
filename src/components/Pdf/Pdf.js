@@ -4,11 +4,15 @@ import ReactToPrint from "react-to-print";
 import { map } from "lodash";
 import TableRowEducacion from "../Forms/Componentes/TableRowEducacion/index";
 import TableRowPregPDF from "../Forms/Componentes/TableRowPregPDF/index";
+import TableRowFamiliares from "../Forms/Componentes/TableRowFamiliares/index";
 import {
   listaOtrosEstudios,
   getEstudiosLocal,
   listarRespuestas,
   getRespuestasLocal,
+  getOtrosFamiliaresPersona,
+  getfliaresLocal,
+  listaOtrosFamiliaresPersona,
 } from "../../api/tablas";
 
 import { Row, Col, Form, Container, Table } from "react-bootstrap";
@@ -55,6 +59,8 @@ class ComponentToPrint extends React.Component {
     this.preguntasPadre = getRespuestasLocal(3);
     this.listaPreguntasPareja = listarRespuestas(getIdPareja(), 10);
     this.preguntasPareja = getRespuestasLocal(10);
+    this.listaParientes = listaOtrosFamiliaresPersona(getIdPostu());
+    this.parientes = getfliaresLocal();
   }
 
   render() {
@@ -1147,6 +1153,25 @@ class ComponentToPrint extends React.Component {
                   )}
                 </tbody>
               </Table>
+            </Form>
+          </Container>
+        </div>
+
+        <div>
+          <Container>
+            <h2>Otros Familiares:</h2>
+            <Form>
+              <div>
+                <h2>Otros Familiares</h2>
+
+                {this.parientes.length == 0 ? (
+                  <tr>No hay Familiares ingresados</tr>
+                ) : (
+                  map(this.parientes, (fliar, index) => (
+                    <TableRowFamiliares pariente={fliar} key={index} />
+                  ))
+                )}
+              </div>
             </Form>
           </Container>
         </div>

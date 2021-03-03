@@ -5,6 +5,7 @@ import {
   RESP_MADRE,
   RESP_PADRE,
   RESP_PAREJA,
+  FAMILIARES,
 } from "../utils/constant";
 
 export function getEstudiosPersona(idPersona) {
@@ -162,6 +163,38 @@ export function getOtrosFamiliaresPersona(idPersona) {
     .catch((err) => {
       return err;
     });
+}
+
+export function listaOtrosFamiliaresPersona(id) {
+  var lista = [];
+  getOtrosFamiliaresPersona(id).then((response) => {
+    lista = formatModelOtrosFliares(response.data);
+    // console.log(lista);
+
+    return lista;
+  });
+}
+export function formatModelOtrosFliares(fliares) {
+  //lista temporal
+  const fliaresTemp = [];
+
+  fliares.forEach((fliar) => {
+    fliaresTemp.push({
+      //creo el formato
+      id: fliar.familiar_id,
+      primerNombre: fliar.primerNombre,
+      primerApellido: fliar.primerApellido,
+      fechaNacimiento: fliar.fechaNacimiento,
+      tipo_persona_id: fliar.tipo_persona_id,
+      tipoPersona: fliar.nombre,
+    });
+  });
+  localStorage.setItem(FAMILIARES, JSON.stringify(fliaresTemp));
+  return;
+}
+export function getfliaresLocal() {
+  var guardado = localStorage.getItem(FAMILIARES);
+  return JSON.parse(guardado);
 }
 
 export function getPreguntasApi() {
