@@ -9,14 +9,19 @@ import "../FormPostulante/FormPostulante.scss";
 export default function FormPadre() {
   //este state lo uso para harcodear el tipo de persona que recibe el componente de datos personales
   const [tipoPerstate, settipoPerstate] = useState(3);
+  const [guardadoBoton, setguardadoBoton] = useState(true);
+
   return (
     <>
       <Container>
         <h2>Octavo Paso: Datos del Padre</h2>
-        <DatosPersonales tipoPerstate={tipoPerstate} />
+        <DatosPersonales
+          tipoPerstate={tipoPerstate}
+          setguardadoBoton={setguardadoBoton}
+        />
 
         <Link to="/preguntasMadre">
-          <Button variant="nav-prev" type="submit">
+          <Button variant="nav-prev" type="submit" disabled={guardadoBoton}>
             <span>Anterior</span>
           </Button>
         </Link>

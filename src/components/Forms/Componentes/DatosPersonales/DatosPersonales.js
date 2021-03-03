@@ -16,6 +16,7 @@ import { isEmailValid } from "../../../../utils/validations";
 
 import {
   crearPostulante,
+  updatePostulante,
   setIdsApi,
   getIdPostu,
   getIdMadre,
@@ -23,10 +24,12 @@ import {
   getIdPareja,
   crearParentesco,
   crearFamiliarPostulante,
+  updateFamiliarPostulante,
   setDataPostu,
   setDataMadre,
   setDataPadre,
   setDataPareja,
+  getSuId,
 } from "../../../../api/auth";
 import {
   getPaisesApi,
@@ -39,7 +42,7 @@ import "../../FormPostulante/FormPostulante.scss";
 
 export default function DatosPersonales(props) {
   //este estate me lo manda el form que lo llame para harcodear tipo de persona
-  const { tipoPerstate, guardadoBoton, setguardadoBoton } = props;
+  const { tipoPerstate, setguardadoBoton } = props;
 
   const [guardadoLoading, setGuardadoLoading] = useState(false);
   //state que guarda la info del formulario
@@ -156,21 +159,100 @@ export default function DatosPersonales(props) {
     });
 
     if (tipoPerstate === 1) {
-      if (validCount < 18) {
-        toast.warning("Faltan campos que completar");
-      } else {
-        if (!isEmailValid(formData.correoElectronico)) {
-          toast.warning("email invalido");
+      if (localStorage.getItem("guardadoDataPostu") == null) {
+        if (validCount < 18) {
+          toast.warning("Faltan campos que completar");
         } else {
-          setGuardadoLoading(true);
-          setDataPostu(JSON.stringify(formData));
+          if (!isEmailValid(formData.correoElectronico)) {
+            toast.warning("email invalido");
+          } else {
+            setGuardadoLoading(true);
+            setDataPostu(JSON.stringify(formData));
 
-          crearPostulante(formData)
+            crearPostulante(formData)
+              .then((response) => {
+                if (response.code) {
+                  toast.warning(response.message);
+                } else {
+                  toast.success("Registro correcto");
+                  setFormData(initialFormValue(tipoPerstate));
+                  setIdsApi(tipoPerstate, response.data);
+                  setguardadoBoton(false);
+                  localStorage.setItem("guardadoDataPostu", "true");
+                }
+              })
+              .catch(() => {
+                toast.error("Error del servidor");
+              })
+              .finally(() => {
+                setGuardadoLoading(false);
+              });
+          }
+        }
+      } else {
+        if (validCount < 18) {
+          toast.warning("Faltan campos que completar");
+        } else {
+          if (!isEmailValid(formData.correoElectronico)) {
+            toast.warning("email invalido");
+          } else {
+            setGuardadoLoading(true);
+            setDataPostu(JSON.stringify(formData));
+
+            updatePostulante(formData, getIdPostu())
+              .then((response) => {
+                if (response.code) {
+                  toast.warning(response.message);
+                } else {
+                  toast.success("Actualizacion correcta");
+                  setFormData(initialFormValue(tipoPerstate));
+                  setIdsApi(tipoPerstate, response.data);
+                  setguardadoBoton(false);
+                  localStorage.setItem("guardadoDataPostu", "true");
+                }
+              })
+              .catch(() => {
+                toast.error("Error del servidor");
+              })
+              .finally(() => {
+                setGuardadoLoading(false);
+              });
+          }
+        }
+      }
+    } else {
+      setGuardadoLoading(true);
+      if (tipoPerstate === 2) {
+        if (localStorage.getItem("guardadoDataMadre") == null) {
+          setDataMadre(JSON.stringify(formData));
+          crearFamiliarPostulante(formData)
             .then((response) => {
               if (response.code) {
                 toast.warning(response.message);
               } else {
                 toast.success("Registro correcto");
+                setFormData(initialFormValue(tipoPerstate));
+                setIdsApi(tipoPerstate, response.data);
+                localStorage.setItem("guardadoDataMadre", "true");
+                setguardadoBoton(false);
+              }
+            })
+            .catch(() => {
+              toast.error("Error del servidor");
+            })
+            .finally(() => {
+              crearParentesco(jsonParientes(tipoPerstate));
+              setGuardadoLoading(false);
+            });
+        } else {
+          setguardadoBoton(false);
+          setDataMadre(JSON.stringify(formData));
+          updateFamiliarPostulante(formData, getIdMadre())
+            .then((response) => {
+              if (response.code) {
+                toast.warning(response.message);
+              } else {
+                toast.success("Actualizacion correcta");
                 setFormData(initialFormValue(tipoPerstate));
                 setIdsApi(tipoPerstate, response.data);
                 setguardadoBoton(false);
@@ -184,34 +266,96 @@ export default function DatosPersonales(props) {
             });
         }
       }
-    } else {
-      setGuardadoLoading(true);
-      if (tipoPerstate === 2) {
-        setDataMadre(JSON.stringify(formData));
-      }
       if (tipoPerstate === 3) {
-        setDataPadre(JSON.stringify(formData));
+        if (localStorage.getItem("guardadoDataPadre") == null) {
+          console.log("NO hay datos Padre");
+          setDataPadre(JSON.stringify(formData));
+          crearFamiliarPostulante(formData)
+            .then((response) => {
+              if (response.code) {
+                toast.warning(response.message);
+              } else {
+                toast.success("Registro correcto");
+                setFormData(initialFormValue(tipoPerstate));
+                setIdsApi(tipoPerstate, response.data);
+                localStorage.setItem("guardadoDataPadre", "true");
+                setguardadoBoton(false);
+              }
+            })
+            .catch(() => {
+              toast.error("Error del servidor");
+            })
+            .finally(() => {
+              crearParentesco(jsonParientes(tipoPerstate));
+              setGuardadoLoading(false);
+            });
+        } else {
+          setguardadoBoton(false);
+          setDataPadre(JSON.stringify(formData));
+          updateFamiliarPostulante(formData, getIdPadre())
+            .then((response) => {
+              if (response.code) {
+                toast.warning(response.message);
+              } else {
+                toast.success("Actualizacion correcta");
+                setFormData(initialFormValue(tipoPerstate));
+                setIdsApi(tipoPerstate, response.data);
+                setguardadoBoton(false);
+              }
+            })
+            .catch(() => {
+              toast.error("Error del servidor");
+            })
+            .finally(() => {
+              setGuardadoLoading(false);
+            });
+        }
       }
       if (tipoPerstate === 10) {
-        setDataPareja(JSON.stringify(formData));
+        if (localStorage.getItem("guardadoDataPreja") == null) {
+          console.log("NO hay datos Pareja");
+          setDataPareja(JSON.stringify(formData));
+          crearFamiliarPostulante(formData)
+            .then((response) => {
+              if (response.code) {
+                toast.warning(response.message);
+              } else {
+                toast.success("Registro correcto");
+                setFormData(initialFormValue(tipoPerstate));
+                setIdsApi(tipoPerstate, response.data);
+                localStorage.setItem("guardadoDataPreja", "true");
+                setguardadoBoton(false);
+              }
+            })
+            .catch(() => {
+              toast.error("Error del servidor");
+            })
+            .finally(() => {
+              crearParentesco(jsonParientes(tipoPerstate));
+              setGuardadoLoading(false);
+            });
+        } else {
+          setguardadoBoton(false);
+          setDataPareja(JSON.stringify(formData));
+          updateFamiliarPostulante(formData, getIdPareja())
+            .then((response) => {
+              if (response.code) {
+                toast.warning(response.message);
+              } else {
+                toast.success("Actualizacion correcta");
+                setFormData(initialFormValue(tipoPerstate));
+                setIdsApi(tipoPerstate, response.data);
+                setguardadoBoton(false);
+              }
+            })
+            .catch(() => {
+              toast.error("Error del servidor");
+            })
+            .finally(() => {
+              setGuardadoLoading(false);
+            });
+        }
       }
-      crearFamiliarPostulante(formData)
-        .then((response) => {
-          if (response.code) {
-            toast.warning(response.message);
-          } else {
-            toast.success("Registro correcto");
-            setFormData(initialFormValue(tipoPerstate));
-            setIdsApi(tipoPerstate, response.data);
-            crearParentesco(jsonParientes(tipoPerstate));
-          }
-        })
-        .catch(() => {
-          toast.error("Error del servidor");
-        })
-        .finally(() => {
-          setGuardadoLoading(false);
-        });
     }
   };
   //###################EMPIEZA FORMULARIO####################################################
@@ -235,8 +379,9 @@ export default function DatosPersonales(props) {
                       setFormData({
                         ...formData,
                         primerNombre: e.target.value,
-                      })
+                      }) | guardandoLocal(tipoPerstate, formData)
                     }
+                    onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
                   />
                 </Col>
                 <Col>
@@ -249,8 +394,9 @@ export default function DatosPersonales(props) {
                       setFormData({
                         ...formData,
                         segundoNombre: e.target.value,
-                      })
+                      }) | guardandoLocal(tipoPerstate, formData)
                     }
+                    onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
                   />
                 </Col>
               </Row>
@@ -265,8 +411,9 @@ export default function DatosPersonales(props) {
                       setFormData({
                         ...formData,
                         primerApellido: e.target.value,
-                      })
+                      }) | guardandoLocal(tipoPerstate, formData)
                     }
+                    onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
                   />
                 </Col>
                 <Col>
@@ -279,8 +426,9 @@ export default function DatosPersonales(props) {
                       setFormData({
                         ...formData,
                         segundoApellido: e.target.value,
-                      })
+                      }) | guardandoLocal(tipoPerstate, formData)
                     }
+                    onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
                   />
                 </Col>
               </Row>
@@ -298,8 +446,9 @@ export default function DatosPersonales(props) {
                       setFormData({
                         ...formData,
                         telefono_celular: e.target.value,
-                      })
+                      }) | guardandoLocal(tipoPerstate, formData)
                     }
+                    onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
                   />
                 </Col>
                 <Col>
@@ -312,8 +461,9 @@ export default function DatosPersonales(props) {
                       setFormData({
                         ...formData,
                         cedula: e.target.value,
-                      })
+                      }) | guardandoLocal(tipoPerstate, formData)
                     }
+                    onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
                   />
                 </Col>
               </Row>
@@ -331,8 +481,9 @@ export default function DatosPersonales(props) {
                       setFormData({
                         ...formData,
                         apodo: e.target.value,
-                      })
+                      }) | guardandoLocal(tipoPerstate, formData)
                     }
+                    onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
                   />
                 </Col>
                 <Col>
@@ -401,8 +552,10 @@ export default function DatosPersonales(props) {
                       setFormData({
                         ...formData,
                         fechaNacimiento: formatearDate(date),
-                      })
+                      }) |
+                      guardandoLocal(tipoPerstate, formData)
                     }
+                    onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
                   />
                 </Col>
                 <Col>
@@ -415,8 +568,9 @@ export default function DatosPersonales(props) {
                       setFormData({
                         ...formData,
                         sexo: e.target.value,
-                      })
+                      }) | guardandoLocal(tipoPerstate, formData)
                     }
+                    onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
                   >
                     <option value="0"> Seleccione</option>
                     <option value="Femenino">Femenino</option>
@@ -441,8 +595,9 @@ export default function DatosPersonales(props) {
                         setFormData({
                           ...formData,
                           estadocivil_id: e.target.value,
-                        })
+                        }) | guardandoLocal(tipoPerstate, formData)
                       }
+                      onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
                     >
                       <option value=""> Seleccione</option>
                     </Form.Control>
@@ -458,8 +613,9 @@ export default function DatosPersonales(props) {
                       setFormData({
                         ...formData,
                         credencialSerie: e.target.value,
-                      })
+                      }) | guardandoLocal(tipoPerstate, formData)
                     }
+                    onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
                   />
                 </Col>
                 <Col>
@@ -472,8 +628,9 @@ export default function DatosPersonales(props) {
                       setFormData({
                         ...formData,
                         credencialNumero: e.target.value,
-                      })
+                      }) | guardandoLocal(tipoPerstate, formData)
                     }
+                    onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
                   />
                 </Col>
               </Row>
@@ -490,8 +647,9 @@ export default function DatosPersonales(props) {
                       setFormData({
                         ...formData,
                         correoElectronico: e.target.value,
-                      })
+                      }) | guardandoLocal(tipoPerstate, formData)
                     }
+                    onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
                   />
                 </Col>
               </Row>
@@ -517,8 +675,9 @@ export default function DatosPersonales(props) {
                       setFormData({
                         ...formData,
                         pais_id: e.target.value,
-                      })
+                      }) | guardandoLocal(tipoPerstate, formData)
                     }
+                    onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
                   >
                     <option value=""> Seleccione</option>
                   </Form.Control>
@@ -533,8 +692,9 @@ export default function DatosPersonales(props) {
                       setFormData({
                         ...formData,
                         domicilioActual: e.target.value,
-                      })
+                      }) | guardandoLocal(tipoPerstate, formData)
                     }
+                    onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
                   />
                 </Col>
               </Row>
@@ -553,8 +713,10 @@ export default function DatosPersonales(props) {
                       setFormData({
                         ...formData,
                         departamento_id: e.target.value,
-                      })
+                      }) |
+                      guardandoLocal(tipoPerstate, formData)
                     }
+                    onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
                   >
                     <option Value="0">Seleccione</option>
                   </Form.Control>
@@ -564,14 +726,18 @@ export default function DatosPersonales(props) {
                   <Form.Control
                     id="select_form_ciudad"
                     as="select"
-                    defaultValue="Seleccione"
+                    defaultValue={
+                      formData.ciudadBarrio_id /*|
+                      cargarComboCiudad(ciudades, formData.departamento_id)*/
+                    }
                     value={formData.ciudadBarrio_id}
                     onChange={(e) =>
                       setFormData({
                         ...formData,
                         ciudadBarrio_id: e.target.value,
-                      })
+                      }) | guardandoLocal(tipoPerstate, formData)
                     }
+                    onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
                   >
                     <option value="0"> Seleccione</option>
                   </Form.Control>
@@ -590,8 +756,9 @@ export default function DatosPersonales(props) {
                       setFormData({
                         ...formData,
                         seccionalPolicial: e.target.value,
-                      })
+                      }) | guardandoLocal(tipoPerstate, formData)
                     }
+                    onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
                   />
                 </Col>
               </Row>
@@ -606,8 +773,9 @@ export default function DatosPersonales(props) {
                     setFormData({
                       ...formData,
                       domicilioAnterior: e.target.value,
-                    })
+                    }) | guardandoLocal(tipoPerstate, formData)
                   }
+                  onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
                 />
               </Row>
 
@@ -623,8 +791,9 @@ export default function DatosPersonales(props) {
                       setFormData({
                         ...formData,
                         nombre_departamento_estado: e.target.value,
-                      })
+                      }) | guardandoLocal(tipoPerstate, formData)
                     }
+                    onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
                   />
                 </Col>
                 <Col>
@@ -637,8 +806,9 @@ export default function DatosPersonales(props) {
                       setFormData({
                         ...formData,
                         nombre_ciudad: e.target.value,
-                      })
+                      }) | guardandoLocal(tipoPerstate, formData)
                     }
+                    onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
                   />
                 </Col>
               </Row>
@@ -655,61 +825,122 @@ export default function DatosPersonales(props) {
   );
 }
 
+function llenarDelStorage(campo, defval, tipoPerstate) {
+  switch (tipoPerstate) {
+    case 1:
+      var datosStorage = JSON.parse(localStorage.getItem("dataPostu"));
+      if (datosStorage != undefined) {
+        return datosStorage[campo];
+      }
+    case 2:
+      var datosStorage = JSON.parse(localStorage.getItem("dataMadre"));
+      if (datosStorage != undefined) {
+        return datosStorage[campo];
+      }
+
+    case 3:
+      var datosStorage = JSON.parse(localStorage.getItem("dataPadre"));
+      if (datosStorage != undefined) {
+        return datosStorage[campo];
+      }
+
+    case 10:
+      var datosStorage = JSON.parse(localStorage.getItem("dataPareja"));
+      if (datosStorage != undefined) {
+        return datosStorage[campo];
+      }
+    default:
+      break;
+  }
+  return defval;
+}
+
 //FUNCION QUE GUARDA LA INFO QUE UNO ESCRIBE EN EL FORMULARIO
 function initialFormValue(tipoPerstate) {
   if (tipoPerstate == 1) {
     return {
-      primerNombre: "",
-      segundoNombre: "",
-      primerApellido: "",
-      segundoApellido: "",
-      apodo: "",
-      fechaNacimiento: "",
-      cedula: "",
-      credencialSerie: "",
-      credencialNumero: "",
-      sexo: "",
-      domicilioActual: "",
-      domicilioAnterior: "",
-      telefono_celular: "",
-      correoElectronico: "",
-      seccionalPolicial: "",
-      estadocivil_id: "",
-      pais_id: "",
+      primerNombre: llenarDelStorage("primerNombre", "", tipoPerstate),
+      segundoNombre: llenarDelStorage("segundoNombre", "", tipoPerstate),
+      primerApellido: llenarDelStorage("primerApellido", "", tipoPerstate),
+      segundoApellido: llenarDelStorage("segundoApellido", "", tipoPerstate),
+      apodo: llenarDelStorage("apodo", "", tipoPerstate),
+      fechaNacimiento: llenarDelStorage("fechaNacimiento", "", tipoPerstate),
+      cedula: llenarDelStorage("cedula", "", tipoPerstate),
+      credencialSerie: llenarDelStorage("credencialSerie", "", tipoPerstate),
+      credencialNumero: llenarDelStorage("credencialNumero", "", tipoPerstate),
+      sexo: llenarDelStorage("sexo", "", tipoPerstate),
+      domicilioActual: llenarDelStorage("domicilioActual", "", tipoPerstate),
+      domicilioAnterior: llenarDelStorage(
+        "domicilioAnterior",
+        "",
+        tipoPerstate
+      ),
+      telefono_celular: llenarDelStorage("telefono_celular", "", tipoPerstate),
+      correoElectronico: llenarDelStorage(
+        "correoElectronico",
+        "",
+        tipoPerstate
+      ),
+      seccionalPolicial: llenarDelStorage(
+        "seccionalPolicial",
+        "",
+        tipoPerstate
+      ),
+      estadocivil_id: llenarDelStorage("estadocivil_id", "", tipoPerstate),
+      pais_id: llenarDelStorage("pais_id", "", tipoPerstate),
       tipo_persona_id: tipoPerstate,
       inscripcion_id: "1",
-      departamento_id: "",
-      ciudadBarrio_id: "",
+      departamento_id: llenarDelStorage("departamento_id", "", tipoPerstate),
+      ciudadBarrio_id: llenarDelStorage("ciudadBarrio_id", "", tipoPerstate),
 
-      nombre_departamento_estado: "",
-      nombre_ciudad: "",
+      nombre_departamento_estado: llenarDelStorage(
+        "nombre_departamento_estado",
+        "",
+        tipoPerstate
+      ),
+      nombre_ciudad: llenarDelStorage("nombre_ciudad", "", tipoPerstate),
     };
   } else {
     return {
-      primerNombre: "",
-      segundoNombre: "",
-      primerApellido: "",
-      segundoApellido: "",
-      apodo: "",
-      fechaNacimiento: "",
-      cedula: "0",
-      credencialSerie: "",
-      credencialNumero: "0",
-      sexo: "",
-      domicilioActual: "",
-      domicilioAnterior: "",
-      telefono_celular: "0",
-      correoElectronico: "",
-      seccionalPolicial: "",
-      estadocivil_id: "0",
-      pais_id: "0",
+      primerNombre: llenarDelStorage("primerNombre", "", tipoPerstate),
+      segundoNombre: llenarDelStorage("segundoNombre", "", tipoPerstate),
+      primerApellido: llenarDelStorage("primerApellido", "", tipoPerstate),
+      segundoApellido: llenarDelStorage("segundoApellido", "", tipoPerstate),
+      apodo: llenarDelStorage("apodo", "", tipoPerstate),
+      fechaNacimiento: llenarDelStorage("fechaNacimiento", "", tipoPerstate),
+      cedula: llenarDelStorage("cedula", "0", tipoPerstate),
+      credencialSerie: llenarDelStorage("credencialSerie", "", tipoPerstate),
+      credencialNumero: llenarDelStorage("cedula", "0", tipoPerstate),
+      sexo: llenarDelStorage("credencialNumero", "", tipoPerstate),
+      domicilioActual: llenarDelStorage("domicilioActual", "", tipoPerstate),
+      domicilioAnterior: llenarDelStorage(
+        "domicilioAnterior",
+        "",
+        tipoPerstate
+      ),
+      telefono_celular: llenarDelStorage("telefono_celular", "0", tipoPerstate),
+      correoElectronico: llenarDelStorage(
+        "correoElectronico",
+        "",
+        tipoPerstate
+      ),
+      seccionalPolicial: llenarDelStorage(
+        "seccionalPolicial",
+        "",
+        tipoPerstate
+      ),
+      estadocivil_id: llenarDelStorage("estadocivil_id", "0", tipoPerstate),
+      pais_id: llenarDelStorage("pais_id", "0", tipoPerstate),
       tipo_persona_id: tipoPerstate,
       inscripcion_id: "1",
-      departamento_id: "0",
-      ciudadBarrio_id: "0",
-
-      nombre_departamento_estado: "",
-      nombre_ciudad: "",
+      departamento_id: llenarDelStorage("departamento_id", "0", tipoPerstate),
+      ciudadBarrio_id: llenarDelStorage("ciudadBarrio_id", "0", tipoPerstate),
+      nombre_departamento_estado: llenarDelStorage(
+        "nombre_departamento_estado",
+        "",
+        tipoPerstate
+      ),
+      nombre_ciudad: llenarDelStorage("nombre_ciudad", "", tipoPerstate),
     };
   }
 }
@@ -721,21 +952,17 @@ function jsonParientes(tipoPerstate) {
         postulante_id: getIdPostu(),
         familiar_id: getIdMadre(),
       };
-
-      break;
     case 3:
       return {
         postulante_id: getIdPostu(),
         familiar_id: getIdPadre(),
       };
-      break;
 
     case 10:
       return {
         postulante_id: getIdPostu(),
         familiar_id: getIdPareja(),
       };
-      break;
 
     default:
       break;
@@ -778,5 +1005,25 @@ function cargarComboCiudad(listaOpciones, idDepa) {
       // lo agregamos al select
       listaACargar.options.add(opt);
     }
+  }
+}
+
+function guardandoLocal(tipoPerstate, formData) {
+  switch (tipoPerstate) {
+    case 1:
+      setDataPostu(JSON.stringify(formData));
+      break;
+    case 2:
+      setDataMadre(JSON.stringify(formData));
+      break;
+    case 3:
+      setDataPadre(JSON.stringify(formData));
+      break;
+    case 10:
+      setDataPareja(JSON.stringify(formData));
+      break;
+
+    default:
+      break;
   }
 }

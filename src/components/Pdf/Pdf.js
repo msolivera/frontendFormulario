@@ -48,13 +48,13 @@ class ComponentToPrint extends React.Component {
     this.laboralPadre = getLabPadre();
     this.laboralPareja = getLabPareja();
     this.listaPreguntasPostu = listarRespuestas(getIdPostu(), 1);
-    this.preguntasPostu = getRespuestasLocal(getIdPostu(), 1);
+    this.preguntasPostu = getRespuestasLocal(1);
     this.listaPreguntasMadre = listarRespuestas(getIdMadre(), 2);
-    this.preguntasMadre = getRespuestasLocal(getIdMadre(), 2);
+    this.preguntasMadre = getRespuestasLocal(2);
     this.listaPreguntasPadre = listarRespuestas(getIdPadre(), 3);
-    this.preguntasPadre = getRespuestasLocal(getIdPadre(), 3);
+    this.preguntasPadre = getRespuestasLocal(3);
     this.listaPreguntasPareja = listarRespuestas(getIdPareja(), 10);
-    this.preguntasPareja = getRespuestasLocal(getIdPareja(), 10);
+    this.preguntasPareja = getRespuestasLocal(10);
   }
 
   render() {
@@ -464,7 +464,7 @@ class ComponentToPrint extends React.Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {this.estudios.length == 0 ? (
+                    {this.estudios == null ? (
                       <tr>No hay Estudios ingresados</tr>
                     ) : (
                       map(this.estudios, (est, index) => (

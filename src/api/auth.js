@@ -48,6 +48,37 @@ export function crearPostulante(persona) {
     });
 }
 
+export function updatePostulante(persona, id) {
+  const url = `${API_HOST}persona/${id}`;
+
+  const personaTemp = {
+    ...persona,
+    correoElectronico: persona.correoElectronico.toLowerCase(),
+  };
+
+  const params = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(personaTemp),
+  };
+
+  return fetch(url, params)
+    .then((response) => {
+      if (response.status >= 200 && response.status < 300) {
+        return response.json();
+      }
+      return { code: 404, message: "Error al guardar los datos" };
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return err;
+    });
+}
+
 export function crearFamiliarPostulante(persona) {
   const url = `${API_HOST}personaFamiliar`;
 
@@ -62,6 +93,40 @@ export function crearFamiliarPostulante(persona) {
   //console.log(personaTemp);
   const params = {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(personaTemp),
+  };
+
+  return fetch(url, params)
+    .then((response) => {
+      if (response.status >= 200 && response.status < 300) {
+        return response.json();
+      }
+      return { code: 404, message: "Error al guardar los datos" };
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return err;
+    });
+}
+export function updateFamiliarPostulante(persona, idPersona) {
+  const url = `${API_HOST}personaFamiliar/${idPersona}`;
+
+  //console.log(persona);
+  // console.log(url);
+
+  const personaTemp = {
+    ...persona,
+    correoElectronico: persona.correoElectronico.toLowerCase(),
+  };
+
+  //console.log(personaTemp);
+  const params = {
+    method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
@@ -117,17 +182,47 @@ export function crearOcupacion(ocupacion) {
       return err;
     });
 }
+export function updateOcupacion(ocupacion, idOcupacion) {
+  const url = `${API_HOST}ocupacion/${idOcupacion}`;
+
+  const ocupacionTemp = {
+    ...ocupacion,
+    cargo_funcion: ocupacion.cargo_funcion.toLowerCase(),
+    nombreEmpresa: ocupacion.nombreEmpresa.toLowerCase(),
+    direccion: ocupacion.direccion.toLowerCase(),
+  };
+
+  const params = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(ocupacionTemp),
+  };
+
+  return fetch(url, params)
+    .then((response) => {
+      if (response.status >= 200 && response.status < 300) {
+        return response.json();
+      }
+      return { code: 404, message: "Error al guardar los datos" };
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return err;
+    });
+}
 
 export function crearEstudiosBasicos(estudios) {
   const url = `${API_HOST}estudiosBasicos`;
   console.log(estudios);
   console.log(url);
-
   const estudiosTemp = {
     ...estudios,
     primeroPrimaria_nombreInstituto: estudios.primeroPrimaria_nombreInstituto.toLowerCase(),
   };
-
   const params = {
     method: "POST",
     headers: {

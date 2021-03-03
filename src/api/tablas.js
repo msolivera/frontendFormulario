@@ -51,8 +51,7 @@ export function formatModel(estudios) {
   return;
 }
 
-export function getEstudiosLocal(id) {
-  listaOtrosEstudios(id);
+export function getEstudiosLocal() {
   var guardado = localStorage.getItem(ESTUDIOS);
 
   return JSON.parse(guardado);
@@ -119,9 +118,7 @@ export function formatModelResp(respuestas, tipoPer) {
   return;
 }
 
-export function getRespuestasLocal(id, tipoPer) {
-  listaOtrosEstudios(id);
-
+export function getRespuestasLocal(tipoPer) {
   switch (tipoPer) {
     case 1:
       var guardado = localStorage.getItem(RESP_POSTU);
@@ -185,4 +182,44 @@ export function getPreguntasApi() {
     .catch((err) => {
       return err;
     });
+}
+
+export function setPreguntasPostu(data) {
+  return localStorage.setItem(RESP_POSTU, data);
+}
+
+export function getPreguntasPostu() {
+  var guardado = localStorage.getItem(RESP_POSTU);
+
+  return JSON.parse(guardado);
+}
+
+export function setPreguntasMadre(data) {
+  return localStorage.setItem(RESP_MADRE, data);
+}
+
+export function getPreguntasMadre() {
+  var guardado = localStorage.getItem(RESP_MADRE);
+
+  return JSON.parse(guardado);
+}
+
+export function setPreguntasPadre(data) {
+  return localStorage.setItem(RESP_PADRE, data);
+}
+
+export function getPreguntasPadre() {
+  var guardado = localStorage.getItem(RESP_PADRE);
+
+  return JSON.parse(guardado);
+}
+
+export function setPreguntasPareja(data) {
+  return localStorage.setItem(RESP_PAREJA, data);
+}
+
+export function getPreguntasPareja() {
+  var guardado = localStorage.getItem(RESP_PAREJA);
+
+  return JSON.parse(guardado);
 }

@@ -7,26 +7,21 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faUserGraduate,
-  faPlus,
-  faSave,
-} from "@fortawesome/free-solid-svg-icons";
+import { faUserGraduate, faSave } from "@fortawesome/free-solid-svg-icons";
 
 import BasicModal from "../../../Modal/BasicModal";
 import OtrosEstudios from "../OtrosEstudios";
 import TableRowEducacion from "../TableRowEducacion";
 import { getIdPostu, setEstudiosBasicos } from "../../../../api/auth";
-import { getEstudiosPersona } from "../../../../api/tablas";
+import { getEstudiosLocal, getEstudiosPersona } from "../../../../api/tablas";
 import "../../FormPostulante/FormPostulante.scss";
 export default function Educacion() {
   //state que guarda el id del postulante en cero pero lo uso para cambiarlo una vez que di submit en datos personales
-  const [idPostulante, setIdPostulante] = useState(0);
+  const [idPostulante, setIdPostulante] = useState(getIdPostu());
   //Para manejar el Modal
   const [showModal, setShowModal] = useState(false);
   const [contentModal, setContentModal] = useState(null);
-  //estate que uso para mandar al modal de otros estudios e incrementar cuando se cierra el mismo para hacer que el useEfect que carga los estudios se ejecute al cambiar contador
-  const [contador, setcontador] = useState(1);
+  const [refresh, setrefresh] = useState(false);
   //funcion que abre el modal y le agrega el contenido de los form
   const openModal = (content) => {
     setShowModal(true);
@@ -36,13 +31,19 @@ export default function Educacion() {
   const [estudios, setEstudios] = useState([]);
 
   useEffect(() => {
+    let isMounted = true;
     getEstudiosPersona(getIdPostu())
       .then((response) => {
         let listaEstudios = formatModel(response.data);
-        setEstudios(listaEstudios);
+        if (isMounted) {
+          setEstudios(listaEstudios);
+        }
       })
       .catch(() => {});
-  }, [contador]);
+    return () => {
+      isMounted = false;
+    };
+  }, []);
   //recibo el id de postulante (del local storage y cambio mi estado para luego asignarlo al form data)
   useEffect(() => {
     getIdPostu();
@@ -129,7 +130,10 @@ export default function Educacion() {
                         setFormData({
                           ...formData,
                           primeroPrimaria_nombreInstituto: e.target.value,
-                        })
+                        }) | setEstudiosBasicos(JSON.stringify(formData))
+                      }
+                      onKeyUp={() =>
+                        setEstudiosBasicos(JSON.stringify(formData))
                       }
                     />
                   </td>
@@ -152,7 +156,10 @@ export default function Educacion() {
                         setFormData({
                           ...formData,
                           segundoPrimaria_nombreInstituto: e.target.value,
-                        })
+                        }) | setEstudiosBasicos(JSON.stringify(formData))
+                      }
+                      onKeyUp={() =>
+                        setEstudiosBasicos(JSON.stringify(formData))
                       }
                     />
                   </td>
@@ -175,7 +182,10 @@ export default function Educacion() {
                         setFormData({
                           ...formData,
                           terceroPrimaria_nombreInstituto: e.target.value,
-                        })
+                        }) | setEstudiosBasicos(JSON.stringify(formData))
+                      }
+                      onKeyUp={() =>
+                        setEstudiosBasicos(JSON.stringify(formData))
                       }
                     />
                   </td>
@@ -198,7 +208,10 @@ export default function Educacion() {
                         setFormData({
                           ...formData,
                           cuartoPrimaria_nombreInstituto: e.target.value,
-                        })
+                        }) | setEstudiosBasicos(JSON.stringify(formData))
+                      }
+                      onKeyUp={() =>
+                        setEstudiosBasicos(JSON.stringify(formData))
                       }
                     />
                   </td>
@@ -221,7 +234,10 @@ export default function Educacion() {
                         setFormData({
                           ...formData,
                           quintoPrimaria_nombreInstituto: e.target.value,
-                        })
+                        }) | setEstudiosBasicos(JSON.stringify(formData))
+                      }
+                      onKeyUp={() =>
+                        setEstudiosBasicos(JSON.stringify(formData))
                       }
                     />
                   </td>
@@ -244,7 +260,10 @@ export default function Educacion() {
                         setFormData({
                           ...formData,
                           sextoPrimaria_nombreInstituto: e.target.value,
-                        })
+                        }) | setEstudiosBasicos(JSON.stringify(formData))
+                      }
+                      onKeyUp={() =>
+                        setEstudiosBasicos(JSON.stringify(formData))
                       }
                     />
                   </td>
@@ -280,7 +299,10 @@ export default function Educacion() {
                         setFormData({
                           ...formData,
                           primeroSecu_nombreInstituto: e.target.value,
-                        })
+                        }) | setEstudiosBasicos(JSON.stringify(formData))
+                      }
+                      onKeyUp={() =>
+                        setEstudiosBasicos(JSON.stringify(formData))
                       }
                     />
                   </td>
@@ -303,7 +325,10 @@ export default function Educacion() {
                         setFormData({
                           ...formData,
                           segundoSecu_nombreInstituto: e.target.value,
-                        })
+                        }) | setEstudiosBasicos(JSON.stringify(formData))
+                      }
+                      onKeyUp={() =>
+                        setEstudiosBasicos(JSON.stringify(formData))
                       }
                     />
                   </td>
@@ -326,7 +351,10 @@ export default function Educacion() {
                         setFormData({
                           ...formData,
                           terceroSecu_nombreInstituto: e.target.value,
-                        })
+                        }) | setEstudiosBasicos(JSON.stringify(formData))
+                      }
+                      onKeyUp={() =>
+                        setEstudiosBasicos(JSON.stringify(formData))
                       }
                     />
                   </td>
@@ -360,7 +388,10 @@ export default function Educacion() {
                         setFormData({
                           ...formData,
                           cuartoBach_nombreInstituto: e.target.value,
-                        })
+                        }) | setEstudiosBasicos(JSON.stringify(formData))
+                      }
+                      onKeyUp={() =>
+                        setEstudiosBasicos(JSON.stringify(formData))
                       }
                     />
                   </td>
@@ -383,7 +414,10 @@ export default function Educacion() {
                         setFormData({
                           ...formData,
                           quintoBach_nombreInstituto: e.target.value,
-                        })
+                        }) | setEstudiosBasicos(JSON.stringify(formData))
+                      }
+                      onKeyUp={() =>
+                        setEstudiosBasicos(JSON.stringify(formData))
                       }
                     />
                   </td>
@@ -406,7 +440,10 @@ export default function Educacion() {
                         setFormData({
                           ...formData,
                           sextoBach_nombreInstituto: e.target.value,
-                        })
+                        }) | setEstudiosBasicos(JSON.stringify(formData))
+                      }
+                      onKeyUp={() =>
+                        setEstudiosBasicos(JSON.stringify(formData))
                       }
                     />
                   </td>
@@ -418,13 +455,7 @@ export default function Educacion() {
             <Button
               variant="agregar"
               onClick={() =>
-                openModal(
-                  <OtrosEstudios
-                    setShowModal={setShowModal}
-                    contador={contador}
-                    setcontador={setcontador}
-                  />
-                )
+                openModal(<OtrosEstudios setShowModal={setShowModal} />)
               }
             >
               <span>
@@ -440,7 +471,7 @@ export default function Educacion() {
                 </tr>
               </thead>
               <tbody>
-                {estudios.length == 1 ? (
+                {(estudios.length === 0) | (estudios === null) ? (
                   <tr>No hay Estudios ingresados</tr>
                 ) : (
                   map(estudios, (est, index) => (
@@ -460,68 +491,143 @@ export default function Educacion() {
   );
 }
 
+function llenarDelStorage(campo, defval) {
+  let datos = JSON.parse(localStorage.getItem("estudioBasico"));
+  if (datos != undefined) {
+    return datos[campo];
+  }
+  return defval;
+}
+
+/*function capitalize(str) {
+  return str[0].toUpperCase() + str.substring(1);
+}*/
 function initialFormValue() {
-  return {
+  /*let numeros = ["primero", "segundo", "tercero", "cuarto", "quinto", "sexto"];
+  let tipoEstudio = [
+    ["Primaria", "1"],
+    ["Secu", "2"],
+    ["Bach", "3"],
+  ];
+  let data = {};
+
+  for (let i in numeros) {
+    for (let j in tipoEstudio) {
+      data[`${numeros[i]}${tipoEstudio[j][0]}_anioEstudio`] = `${capitalize(
+        numeros[i]
+      )} año`;
+      data[
+        `${numeros[i]}${tipoEstudio[j][0]}_nombreInstituto`
+      ] = llenarDelStorage(
+        `${numeros[i]}${tipoEstudio[j][0]}_nombreInstituto`,
+        ""
+      );
+      data[`${numeros[i]}${tipoEstudio[j][0]}_tipo_estudio_id`] =
+        tipoEstudio[j][1];
+      data[`${numeros[i]}${tipoEstudio[j][0]}_persona_id`] = "";
+    }
+  }
+  console.log(data);*/
+
+  let data = {
     primeroPrimaria_anioEstudio: "Primer año",
-    primeroPrimaria_nombreInstituto: "",
+    primeroPrimaria_nombreInstituto: llenarDelStorage(
+      "primeroPrimaria_nombreInstituto",
+      ""
+    ),
     primeroPrimaria_tipo_estudio_id: "1",
     primeroPrimaria_persona_id: "",
 
     segundoPrimaria_anioEstudio: "Segundo año",
-    segundoPrimaria_nombreInstituto: "",
+    segundoPrimaria_nombreInstituto: llenarDelStorage(
+      "segundoPrimaria_nombreInstituto",
+      ""
+    ),
     segundoPrimaria_tipo_estudio_id: "1",
     segundoPrimaria_persona_id: "",
 
     terceroPrimaria_anioEstudio: "Tercer año",
-    terceroPrimaria_nombreInstituto: "",
+    terceroPrimaria_nombreInstituto: llenarDelStorage(
+      "terceroPrimaria_nombreInstituto",
+      ""
+    ),
     terceroPrimaria_tipo_estudio_id: "1",
     terceroPrimaria_persona_id: "",
 
     cuartoPrimaria_anioEstudio: "Cuarto año",
-    cuartoPrimaria_nombreInstituto: "",
+    cuartoPrimaria_nombreInstituto: llenarDelStorage(
+      "cuartoPrimaria_nombreInstituto",
+      ""
+    ),
     cuartoPrimaria_tipo_estudio_id: "1",
     cuartoPrimaria_persona_id: "",
 
     quintoPrimaria_anioEstudio: "Quinto año",
-    quintoPrimaria_nombreInstituto: "",
+    quintoPrimaria_nombreInstituto: llenarDelStorage(
+      "quintoPrimaria_nombreInstituto",
+      ""
+    ),
     quintoPrimaria_tipo_estudio_id: "1",
     quintoPrimaria_persona_id: "",
 
     sextoPrimaria_anioEstudio: "Sexto año",
-    sextoPrimaria_nombreInstituto: "",
+    sextoPrimaria_nombreInstituto: llenarDelStorage(
+      "sextoPrimaria_nombreInstituto",
+      ""
+    ),
     sextoPrimaria_tipo_estudio_id: "1",
     sextoPrimaria_persona_id: "",
 
     primeroSecu_anioEstudio: "Primer año",
-    primeroSecu_nombreInstituto: "",
+    primeroSecu_nombreInstituto: llenarDelStorage(
+      "primeroSecu_nombreInstituto",
+      ""
+    ),
     primeroSecu_tipo_estudio_id: "2",
     primeroSecu_persona_id: "",
 
     segundoSecu_anioEstudio: "Segundo año",
-    segundoSecu_nombreInstituto: "",
+    segundoSecu_nombreInstituto: llenarDelStorage(
+      "segundoSecu_nombreInstituto",
+      ""
+    ),
     segundoSecu_tipo_estudio_id: "2",
     segundoSecu_persona_id: "",
 
     terceroSecu_anioEstudio: "Tercer año",
-    terceroSecu_nombreInstituto: "",
+    terceroSecu_nombreInstituto: llenarDelStorage(
+      "terceroSecu_nombreInstituto",
+      ""
+    ),
     terceroSecu_tipo_estudio_id: "2",
     terceroSecu_persona_id: "",
 
     cuartoBach_anioEstudio: "Cuarto año",
-    cuartoBach_nombreInstituto: "",
+    cuartoBach_nombreInstituto: llenarDelStorage(
+      "cuartoBach_nombreInstituto",
+      ""
+    ),
     cuartoBach_tipo_estudio_id: "3",
     cuartoBach_persona_id: "",
 
     quintoBach_anioEstudio: "Quinto año",
-    quintoBach_nombreInstituto: "",
+    quintoBach_nombreInstituto: llenarDelStorage(
+      "quintoBach_nombreInstituto",
+      ""
+    ),
     quintoBach_tipo_estudio_id: "3",
     quintoBach_persona_id: "",
 
     sextoBach_anioEstudio: "Sexto año",
-    sextoBach_nombreInstituto: "",
+    sextoBach_nombreInstituto: llenarDelStorage(
+      "sextoBach_nombreInstituto",
+      ""
+    ),
     sextoBach_tipo_estudio_id: "3",
     sextoBach_persona_id: "",
   };
+
+  return data;
 }
 
 function formatModel(estudios) {

@@ -2,16 +2,28 @@ import React, { useState, useEffect } from "react";
 import { map } from "lodash";
 import { Form, Button, Table, Jumbotron, Container } from "react-bootstrap";
 
-import { getPreguntasApi } from "../../../../api/tablas";
+import { getPreguntasApi, getRespuestasPersona } from "../../../../api/tablas";
 
 import "../../FormPostulante/FormPostulante.scss";
 
 import TableRow from "../TableRow/index";
 import { getSuId } from "../../../../api/auth";
+import PreguntasLista from "../PreguntasLista/index";
+import BasicModal from "../../../Modal/BasicModal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserGraduate, faSave } from "@fortawesome/free-solid-svg-icons";
 
 export default function Preguntas(props) {
   const { tipoPerstate } = props;
   const [preguntas, setPreguntas] = useState([]);
+  const [idPersona, setidpersona] = useState(getSuId(tipoPerstate));
+  const [showModal, setShowModal] = useState(false);
+  const [contentModal, setContentModal] = useState(null);
+  const [respuesta, setrespuestas] = useState([]);
+  const openModal = (content) => {
+    setShowModal(true);
+    setContentModal(content);
+  };
 
   //useEffect que se  encarga de cargar las preguntas y guardarlas en un map para cargarlo en la tabla
   useEffect(() => {
@@ -22,23 +34,43 @@ export default function Preguntas(props) {
           tipoPerstate,
           getSuId(tipoPerstate)
         );
-
+        console.log(listaPreg);
         setPreguntas(listaPreg);
       })
       .catch(() => {});
   }, []);
+
+  useEffect(() => {
+    getRespuestasPersona(idPersona)
+      .then((response) => {
+        let listaPreg = formatModelRespuesta(
+          response.data,
+          getSuId(tipoPerstate)
+        );
+        console.log("resp");
+        console.log(listaPreg);
+        setrespuestas(listaPreg);
+      })
+      .catch(() => {});
+  }, []);
+
   const onSubmit = (e) => {
     e.preventDefault();
   };
   return (
     <div>
+      <BasicModal show={showModal} setShow={setShowModal}>
+        {contentModal}
+      </BasicModal>
       <Container>
         <Form onSubmit={onSubmit}>
           <Jumbotron>
             <Table>
               <thead>
                 <tr>
-                  <th>Responda cada pregunta y luego haga click en Guardar.</th>
+                  <th>Pregunta</th>
+
+                  <th>Respuestas</th>
                 </tr>
               </thead>
               <tbody>
@@ -46,13 +78,69 @@ export default function Preguntas(props) {
                  * muestra el mensaje que no hay preguntas, sino hace un map con la lista de preguntas y llama al
                  * tableRow que yo hice mandandole los parametros del map.
                  */}
-                {preguntas.length == 0 ? (
-                  <tr>No hay preguntas</tr>
+                {
+                  /*preguntas.length == 0 ? (
+                  <tr>No hay Respuestas ingresadas aun</tr>
                 ) : (
                   map(preguntas, (preg, index) => (
-                    <TableRow pregunta={preg} key={index} />
+                    <TableRow
+                      pregunta={preg}
+                      key={index}
+                      idPersona={idPersona}
+                      tipoPerstate={tipoPerstate}
+                    />
                   ))
-                )}
+                )*/
+                  respuesta.length == 0 ? (
+                    preguntas.length == 0 ? (
+                      <tr>No hay Respuestas ingresadas aun</tr>
+                    ) : (
+                      map(preguntas, (preg, index) => (
+                        <TableRow
+                          pregunta={preg}
+                          key={index}
+                          idPersona={idPersona}
+                          tipoPerstate={tipoPerstate}
+                        />
+                      ))
+                    )
+                  ) : (
+                    map(respuesta, (preg, index) => (
+                      <TableRow
+                        pregunta={preg}
+                        key={index}
+                        idPersona={idPersona}
+                        tipoPerstate={tipoPerstate}
+                      />
+                    ))
+                  )
+
+                  /* if(respuesta.length==0){
+                  if(preguntas.length == 0){
+                    <tr>No hay Respuestas ingresadas aun</tr>
+                  }else{
+                    map(preguntas, (preg, index) => (
+                      <TableRow
+                        pregunta={preg}
+                        key={index}
+                        idPersona={idPersona}
+                        tipoPerstate={tipoPerstate}
+                      />
+                    ))
+
+                  }
+                }else{
+                  map(respuesta, (preg, index) => (
+                    <TableRow
+                      pregunta={preg}
+                      key={index}
+                      idPersona={idPersona}
+                      tipoPerstate={tipoPerstate}
+                    />
+                  ))
+
+                }*/
+                }
               </tbody>
             </Table>
           </Jumbotron>
@@ -99,4 +187,25 @@ function formatModel(preg, tipoPerstate, idPersona) {
     });
   }
   return preguntasTemp;
+}
+
+function formatModelRespuesta(resp, idPersona) {
+  //lista temporal
+  const respuestasTemp = [];
+  //si es postulante
+
+  resp.forEach((respuesta) => {
+    //tomo las preguntas que son para el tipoPer 1 (postulante)
+
+    respuestasTemp.push({
+      //creo el formato
+      idPregunta: respuesta.pregunta_id,
+      idRespuesta: respuesta.id,
+      texto: respuesta.textoPregunta,
+      persona_id: idPersona,
+      respuesta: respuesta.respuesta,
+    });
+  });
+
+  return respuestasTemp;
 }

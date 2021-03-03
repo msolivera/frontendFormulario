@@ -9,11 +9,15 @@ import "../FormPostulante/FormPostulante.scss";
 export default function FormMadreLaboral() {
   //este state lo uso para harcodear el tipo de persona que recibe el componente de datos personales
   const [tipoPerstate, settipoPerstate] = useState(2);
+  const [guardadoBoton, setguardadoBoton] = useState(true);
   return (
     <>
       <Container>
         <h2>Sexto Paso: Informacion laboral de la madre</h2>
-        <Laboral tipoPerstate={tipoPerstate} />
+        <Laboral
+          tipoPerstate={tipoPerstate}
+          setguardadoBoton={setguardadoBoton}
+        />
 
         <Link to="/datosMadre">
           <Button variant="nav-prev" type="submit">
@@ -21,7 +25,7 @@ export default function FormMadreLaboral() {
           </Button>
         </Link>
         <Link to="/preguntasMadre">
-          <Button variant="nav-next" type="submit">
+          <Button variant="nav-next" type="submit" disabled={guardadoBoton}>
             <span>Siguiente</span>
           </Button>
         </Link>

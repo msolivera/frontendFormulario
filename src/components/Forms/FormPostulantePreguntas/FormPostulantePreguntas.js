@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { Container, Button } from "react-bootstrap";
 import Preguntas from "../Componentes/Preguntas/index";
 import { Link } from "react-router-dom";
-import { listarRespuestas } from "../../../api/tablas.js";
-import { getIdPostu } from "../../../api/auth";
 
 import "./FormPostulantePreguntas.scss";
 
@@ -21,11 +19,7 @@ export default function FormPostulantePreguntas() {
           </Button>
         </Link>
         <Link to="/datosMadre">
-          <Button
-            variant="nav-next"
-            type="submit"
-            onClick={listarRespuestas(getIdPostu(), 1)}
-          >
+          <Button variant="nav-next" type="submit">
             <span>Siguiente</span>
           </Button>
         </Link>

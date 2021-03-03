@@ -8,18 +8,22 @@ import "./FormPostulanteLaboral.scss";
 export default function FormPostulanteLaboral() {
   //este state lo uso para harcodear el tipo de persona que recibe el componente de datos personales
   const [tipoPerstate, settipoPerstate] = useState(1);
+  const [guardadoBoton, setguardadoBoton] = useState(true);
   return (
     <>
       <Container>
         <h2>Tercer paso: Informacion laboral del Postulante</h2>
-        <Laboral tipoPerstate={tipoPerstate} />
+        <Laboral
+          tipoPerstate={tipoPerstate}
+          setguardadoBoton={setguardadoBoton}
+        />
         <Link to="/educacionPostulante">
           <Button variant="nav-prev" type="submit">
             <span>Anterior</span>
           </Button>
         </Link>
         <Link to="/preguntasPostulante">
-          <Button variant="nav-next" type="submit">
+          <Button variant="nav-next" type="submit" disabled={guardadoBoton}>
             <span>Siguiente</span>
           </Button>
         </Link>
