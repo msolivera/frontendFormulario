@@ -349,6 +349,32 @@ export function crearRespuesta(respuesta) {
     });
 }
 
+export function updateRespuesta(respuesta, idRespuesta) {
+  const url = `${API_HOST}respuesta/${idRespuesta}`;
+
+  const params = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(respuesta),
+  };
+
+  return fetch(url, params)
+    .then((response) => {
+      if (response.status >= 200 && response.status < 300) {
+        return response.json();
+      }
+      return { code: 404, message: "Error al guardar los datos" };
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return err;
+    });
+}
+
 export function setIdsApi(tipoPer, id) {
   switch (tipoPer) {
     case 1:

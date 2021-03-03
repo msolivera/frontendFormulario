@@ -91,7 +91,8 @@ export function formatModelResp(respuestas, tipoPer) {
   respuestas.forEach((respuesta) => {
     respuestasTemp.push({
       //creo el formato
-
+      idPregunta: respuesta.pregunta_id,
+      idRespuesta: respuesta.id,
       textoPregunta: respuesta.textoPregunta,
       respuesta: respuesta.respuesta,
     });

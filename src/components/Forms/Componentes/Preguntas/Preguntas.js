@@ -8,10 +8,6 @@ import "../../FormPostulante/FormPostulante.scss";
 
 import TableRow from "../TableRow/index";
 import { getSuId } from "../../../../api/auth";
-import PreguntasLista from "../PreguntasLista/index";
-import BasicModal from "../../../Modal/BasicModal";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserGraduate, faSave } from "@fortawesome/free-solid-svg-icons";
 
 export default function Preguntas(props) {
   const { tipoPerstate } = props;
@@ -20,10 +16,6 @@ export default function Preguntas(props) {
   const [showModal, setShowModal] = useState(false);
   const [contentModal, setContentModal] = useState(null);
   const [respuesta, setrespuestas] = useState([]);
-  const openModal = (content) => {
-    setShowModal(true);
-    setContentModal(content);
-  };
 
   //useEffect que se  encarga de cargar las preguntas y guardarlas en un map para cargarlo en la tabla
   useEffect(() => {
@@ -34,6 +26,7 @@ export default function Preguntas(props) {
           tipoPerstate,
           getSuId(tipoPerstate)
         );
+        console.log("Lista preg");
         console.log(listaPreg);
         setPreguntas(listaPreg);
       })
@@ -47,7 +40,7 @@ export default function Preguntas(props) {
           response.data,
           getSuId(tipoPerstate)
         );
-        console.log("resp");
+        console.log("lista resp");
         console.log(listaPreg);
         setrespuestas(listaPreg);
       })
@@ -55,13 +48,10 @@ export default function Preguntas(props) {
   }, []);
 
   const onSubmit = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
   };
   return (
     <div>
-      <BasicModal show={showModal} setShow={setShowModal}>
-        {contentModal}
-      </BasicModal>
       <Container>
         <Form onSubmit={onSubmit}>
           <Jumbotron>
@@ -78,47 +68,10 @@ export default function Preguntas(props) {
                  * muestra el mensaje que no hay preguntas, sino hace un map con la lista de preguntas y llama al
                  * tableRow que yo hice mandandole los parametros del map.
                  */}
-                {
-                  /*preguntas.length == 0 ? (
-                  <tr>No hay Respuestas ingresadas aun</tr>
-                ) : (
-                  map(preguntas, (preg, index) => (
-                    <TableRow
-                      pregunta={preg}
-                      key={index}
-                      idPersona={idPersona}
-                      tipoPerstate={tipoPerstate}
-                    />
-                  ))
-                )*/
-                  respuesta.length == 0 ? (
-                    preguntas.length == 0 ? (
-                      <tr>No hay Respuestas ingresadas aun</tr>
-                    ) : (
-                      map(preguntas, (preg, index) => (
-                        <TableRow
-                          pregunta={preg}
-                          key={index}
-                          idPersona={idPersona}
-                          tipoPerstate={tipoPerstate}
-                        />
-                      ))
-                    )
-                  ) : (
-                    map(respuesta, (preg, index) => (
-                      <TableRow
-                        pregunta={preg}
-                        key={index}
-                        idPersona={idPersona}
-                        tipoPerstate={tipoPerstate}
-                      />
-                    ))
-                  )
-
-                  /* if(respuesta.length==0){
-                  if(preguntas.length == 0){
+                {respuesta.length == 0 ? (
+                  preguntas.length == 0 ? (
                     <tr>No hay Respuestas ingresadas aun</tr>
-                  }else{
+                  ) : (
                     map(preguntas, (preg, index) => (
                       <TableRow
                         pregunta={preg}
@@ -127,9 +80,8 @@ export default function Preguntas(props) {
                         tipoPerstate={tipoPerstate}
                       />
                     ))
-
-                  }
-                }else{
+                  )
+                ) : (
                   map(respuesta, (preg, index) => (
                     <TableRow
                       pregunta={preg}
@@ -138,9 +90,7 @@ export default function Preguntas(props) {
                       tipoPerstate={tipoPerstate}
                     />
                   ))
-
-                }*/
-                }
+                )}
               </tbody>
             </Table>
           </Jumbotron>

@@ -182,7 +182,7 @@ export default function DatosPersonales(props) {
                 }
               })
               .catch(() => {
-                toast.error("Error del servidor");
+                //toast.error("Error del servidor");
               })
               .finally(() => {
                 setGuardadoLoading(false);

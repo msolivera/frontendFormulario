@@ -30,3 +30,4 @@ export const ID_TRABAJO_POSTU = "idLabPostu";
 export const ID_TRABAJO_MADRE = "idLabMadre";
 export const ID_TRABAJO_PADRE = "idLabPadre";
 export const ID_TRABAJO_PAREJA = "idLabPareja";
+export const RESPONDIO_POSTU = "respondioPostu";

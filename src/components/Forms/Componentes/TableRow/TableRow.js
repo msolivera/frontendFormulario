@@ -6,7 +6,7 @@ import {
   setPreguntasPadre,
   setPreguntasPareja,
 } from "../../../../api/tablas";
-import { crearRespuesta } from "../../../../api/auth";
+import { crearRespuesta, updateRespuesta } from "../../../../api/auth";
 import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
@@ -17,29 +17,46 @@ export default function TableRow(props) {
   const [guardadoLoading, setGuardadoLoading] = useState(false);
   const { pregunta, idPersona, tipoPerstate } = props;
   const [formData, setFormData] = useState(
-    initialFormValue(idPersona, pregunta.id, tipoPerstate, pregunta)
+    initialFormValue(idPersona, pregunta.id, pregunta)
   );
-  console.log(pregunta.texto);
 
   const onSubmit = (e) => {
     e.preventDefault();
-
-    crearRespuesta(formData)
-      .then((response) => {
-        if (response.code) {
-          toast.warning(response.message);
-        } else {
-          setGuardadoLoading(true);
-          toast.success("Registro correcto");
-          listarRespuestas(idPersona, tipoPerstate);
-        }
-      })
-      .catch(() => {
-        toast.error("Error del servidor");
-      })
-      .finally(() => {
-        setGuardadoLoading(false);
-      });
+    if (!tieneID(pregunta)) {
+      crearRespuesta(formData)
+        .then((response) => {
+          if (response.code) {
+            toast.warning(response.message);
+          } else {
+            setGuardadoLoading(true);
+            toast.success("Registro correcto");
+            listarRespuestas(idPersona, tipoPerstate);
+          }
+        })
+        .catch(() => {
+          toast.error("Error del servidor");
+        })
+        .finally(() => {
+          setGuardadoLoading(false);
+        });
+    } else {
+      updateRespuesta(formData, pregunta.idRespuesta)
+        .then((response) => {
+          if (response.code) {
+            toast.warning(response.message);
+          } else {
+            setGuardadoLoading(true);
+            toast.success("Actualizacion correcta");
+            listarRespuestas(idPersona, tipoPerstate);
+          }
+        })
+        .catch(() => {
+          toast.error("Error del servidor");
+        })
+        .finally(() => {
+          setGuardadoLoading(false);
+        });
+    }
   };
 
   return (
@@ -73,7 +90,7 @@ export default function TableRow(props) {
   );
 }
 
-function initialFormValue(personaId, preguntaId, tipoPerstate, pregunta) {
+function initialFormValue(personaId, preguntaId, pregunta) {
   if (pregunta.respuesta != null) {
     return {
       respuesta: pregunta.respuesta,
@@ -83,13 +100,21 @@ function initialFormValue(personaId, preguntaId, tipoPerstate, pregunta) {
     };
   } else {
     return {
-      respuesta: "" /* llenarDelStorage("respuesta", "", tipoPerstate),*/,
+      respuesta: "",
       observaciones: "",
       persona_id: personaId,
       pregunta_id: preguntaId,
     };
   }
 }
+function tieneID(pregunta) {
+  if (pregunta.idRespuesta != null) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 /*
 function guardandoLocal(tipoPerstate, formData) {
   switch (tipoPerstate) {
