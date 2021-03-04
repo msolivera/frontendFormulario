@@ -11,7 +11,9 @@ export default function FormPostulantePreguntas() {
   return (
     <>
       <Container>
-        <h2>Cuarto paso: Responda las siguientes Preguntas.</h2>
+        <h2>Informacion del Postulante</h2>
+        <h3>Cuarto paso: Preguntas</h3>
+
         <Preguntas tipoPerstate={tipoPerstate} />
         <Link to="/laboralPostulante">
           <Button variant="nav-prev" type="submit">

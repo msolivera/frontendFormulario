@@ -12,7 +12,9 @@ export default function FormPostulanteLaboral() {
   return (
     <>
       <Container>
-        <h2>Tercer paso: Informacion laboral del Postulante</h2>
+        <h2>Informacion del Postulante</h2>
+        <h3>Tercer paso: Informacion laboral</h3>
+
         <Laboral
           tipoPerstate={tipoPerstate}
           setguardadoBoton={setguardadoBoton}

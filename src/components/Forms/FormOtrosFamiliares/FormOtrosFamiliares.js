@@ -11,7 +11,7 @@ export default function FormOtrosFamiliares() {
   return (
     <>
       <Container>
-        <h2>Ultimo Paso: Datos de otros familiares</h2>
+        <h2>Ultimo Paso: </h2>
         <OtrosFamiliares />
 
         <Link to="/preguntasPareja">

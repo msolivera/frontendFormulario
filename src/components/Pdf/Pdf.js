@@ -736,7 +736,8 @@ class ComponentToPrint extends React.Component {
               <h2>Respuestas Ingresadas:</h2>
               <Table>
                 <tbody>
-                  {this.preguntasMadre.length == 0 ? (
+                  {(this.preguntasMadre.length == 0) |
+                  (this.preguntasMadre == undefined) ? (
                     <tr>No hay respuestas</tr>
                   ) : (
                     map(this.preguntasMadre, (preg, index) => (

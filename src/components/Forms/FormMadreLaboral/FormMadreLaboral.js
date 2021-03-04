@@ -13,7 +13,8 @@ export default function FormMadreLaboral() {
   return (
     <>
       <Container>
-        <h2>Sexto Paso: Informacion laboral de la madre</h2>
+        <h2>Informacion de la Madre</h2>
+        <h3>Segundo paso: Informacion laboral</h3>
         <Laboral
           tipoPerstate={tipoPerstate}
           setguardadoBoton={setguardadoBoton}

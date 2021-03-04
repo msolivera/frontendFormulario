@@ -13,7 +13,8 @@ export default function FormPadreLaboral() {
   return (
     <>
       <Container>
-        <h2>Noveno Paso: Datos laborales del Padre</h2>
+        <h2>Informacion del Padre</h2>
+        <h3>Segundo paso: Informacion laboral</h3>
         <Laboral
           tipoPerstate={tipoPerstate}
           setguardadoBoton={setguardadoBoton}

@@ -12,7 +12,8 @@ export default function FormParejaPreguntas() {
   return (
     <>
       <Container>
-        <h2>Decimo tercer Paso: Responda las siguientes preguntas</h2>
+        <h2>Informacion de Conyuge, Concubino/a , Novio/a</h2>
+        <h3>Segundo paso: Preguntas</h3>
         <Preguntas tipoPerstate={tipoPerstate} />
 
         <Link to="/laboralPareja">

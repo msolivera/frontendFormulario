@@ -368,8 +368,6 @@ export default function DatosPersonales(props) {
         {/*SECCION DE DATOS PERSONALES DE LA PERSONA*/}
         <Jumbotron>
           <div>
-            <h2>Datos Personales</h2>
-
             <Form.Group>
               <Row>
                 <Col>
@@ -663,7 +661,7 @@ export default function DatosPersonales(props) {
         {/*SECCION DE DOMICILIO DE LA PERSONA*/}
         <Jumbotron>
           <div>
-            <h2>Domicilio</h2>
+            <h3>Domicilio</h3>
 
             <Form.Group>
               <Row>

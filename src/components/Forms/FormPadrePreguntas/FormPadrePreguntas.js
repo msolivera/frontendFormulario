@@ -11,7 +11,8 @@ export default function FormPadrePreguntas() {
   return (
     <>
       <Container>
-        <h2>Decimo Paso: Responda las siguiente preguntas.</h2>
+        <h2>Informacion del Padre</h2>
+        <h3>Tercer paso: Preguntas</h3>
 
         <Preguntas tipoPerstate={tipoPerstate} />
 

@@ -12,7 +12,8 @@ export default function FormMadre() {
   return (
     <>
       <Container>
-        <h2>Septimo Paso: Responda las siguientes Preguntas.</h2>
+        <h2>Informacion de la Madre</h2>
+        <h3>Tercer paso: Preguntas</h3>
         <Preguntas tipoPerstate={tipoPerstate} />
 
         <Link to="/laboralMadre">

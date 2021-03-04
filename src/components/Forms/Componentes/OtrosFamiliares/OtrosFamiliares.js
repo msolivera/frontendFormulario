@@ -61,7 +61,7 @@ export default function FormOtrosFamiliares() {
         <Form onSubmit={onSubmit}>
           <Jumbotron>
             <div>
-              <h2>Otros Familiares</h2>
+              <h3>Otros integrantes del nucleo Habitacional</h3>
               <Button
                 variant="agregar"
                 onClick={() =>

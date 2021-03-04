@@ -11,7 +11,8 @@ export default function FormPostulanteEducacion() {
   return (
     <>
       <Container>
-        <h2>Segundo paso: Educacion del Postulante</h2>
+        <h2>Informacion del Postulante</h2>
+        <h3>Segundo paso: Educacion</h3>
         <Educacion setguardadoBoton={setguardadoBoton} />
         <Link to="/">
           <Button variant="nav-prev" type="submit">

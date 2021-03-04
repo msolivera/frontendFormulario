@@ -108,7 +108,6 @@ export default function Educacion(props) {
       <Form onSubmit={onSubmit}>
         <Jumbotron>
           <div>
-            <h2>Educacion</h2>
             <h3>Primaria</h3>
             <Table>
               <thead>

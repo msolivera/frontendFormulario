@@ -219,7 +219,7 @@ export default function Laboral(props) {
       <Form onSubmit={onSubmit}>
         <Jumbotron>
           <div className="form-datos-personales">
-            <h2>Laboral/Ocupacion Actual</h2>
+            <h3>Ocupacion Actual</h3>
             <Form>
               <Form.Group>
                 <Row>
