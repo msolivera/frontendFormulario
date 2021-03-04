@@ -14,7 +14,10 @@ import {
 import BasicModal from "../../../Modal/BasicModal/index";
 import AgregarOtrosFamiliares from "../AgregarOtrosFamiliares/index";
 import { getIdPostu } from "../../../../api/auth";
-import { getOtrosFamiliaresPersona } from "../../../../api/tablas";
+import {
+  getOtrosFamiliaresPersona,
+  listaOtrosFamiliaresPersona,
+} from "../../../../api/tablas";
 import TableRowFamiliares from "../TableRowFamiliares";
 
 import "../../FormPostulante/FormPostulante";
@@ -45,6 +48,7 @@ export default function FormOtrosFamiliares() {
   const onSubmit = (e) => {
     e.preventDefault();
     setGuardadoLoading(true);
+    listaOtrosFamiliaresPersona(getIdPostu());
   };
 
   return (

@@ -3,7 +3,7 @@ import { Table } from "react-bootstrap";
 //este componente se usa para cargar dinamicamente los estudios que traigo de la base
 export default function TableRowFamiliares(props) {
   const { pariente } = props;
-
+  console.log(pariente.parentesco);
   return (
     <>
       <Table striped bordered hover>
@@ -27,7 +27,7 @@ export default function TableRowFamiliares(props) {
         </thead>
         <tbody>
           <tr>
-            <td>{pariente.parentesco}</td>
+            <td>{pariente.tipoPersona}</td>
             <td>{pariente.fechaNacimiento}</td>
           </tr>
         </tbody>

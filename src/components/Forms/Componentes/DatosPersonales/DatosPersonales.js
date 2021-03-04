@@ -36,6 +36,9 @@ import {
   getEstadosCivilesApi,
   getDepartamentosApi,
   getCiudades,
+  setearPais,
+  setearDepartamento,
+  setearCiudad,
 } from "../../../../api/combos";
 
 import "../../FormPostulante/FormPostulante.scss";
@@ -675,7 +678,9 @@ export default function DatosPersonales(props) {
                       setFormData({
                         ...formData,
                         pais_id: e.target.value,
-                      }) | guardandoLocal(tipoPerstate, formData)
+                      }) |
+                      guardandoLocal(tipoPerstate, formData) |
+                      setearPais(e.target.value, tipoPerstate)
                     }
                     onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
                   >
@@ -714,7 +719,8 @@ export default function DatosPersonales(props) {
                         ...formData,
                         departamento_id: e.target.value,
                       }) |
-                      guardandoLocal(tipoPerstate, formData)
+                      guardandoLocal(tipoPerstate, formData) |
+                      setearDepartamento(e.target.value, tipoPerstate)
                     }
                     onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
                   >
@@ -735,7 +741,9 @@ export default function DatosPersonales(props) {
                       setFormData({
                         ...formData,
                         ciudadBarrio_id: e.target.value,
-                      }) | guardandoLocal(tipoPerstate, formData)
+                      }) |
+                      guardandoLocal(tipoPerstate, formData) |
+                      setearCiudad(e.target.value, tipoPerstate)
                     }
                     onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
                   >

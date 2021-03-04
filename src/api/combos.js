@@ -1,4 +1,18 @@
-import { API_HOST } from "../utils/constant";
+import {
+  API_HOST,
+  PAIS_POSTU,
+  DEPARTAMENTO_POSTU,
+  BARRIO_POSTU,
+  PAIS_MADRE,
+  DEPARTAMENTO_MADRE,
+  BARRIO_MADRE,
+  PAIS_PADRE,
+  DEPARTAMENTO_PADRE,
+  BARRIO_PADRE,
+  PAIS_PAREJA,
+  DEPARTAMENTO_PAREJA,
+  BARRIO_PAREJA,
+} from "../utils/constant";
 
 export function getPaisesApi() {
   const url = `${API_HOST}paises`;
@@ -19,6 +33,138 @@ export function getPaisesApi() {
     .catch((err) => {
       return err;
     });
+}
+
+export function getNombrePais(idPais) {
+  const url = `${API_HOST}pais/${idPais}`;
+
+  const params = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application-json",
+    },
+  };
+
+  return fetch(url, params)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return err;
+    });
+}
+
+export function setearPais(idPais, tipoPerstate) {
+  getNombrePais(idPais).then((response) => {
+    switch (tipoPerstate) {
+      case 1:
+        localStorage.setItem(PAIS_POSTU, response.data);
+        break;
+      case 2:
+        localStorage.setItem(PAIS_MADRE, response.data);
+        break;
+      case 3:
+        localStorage.setItem(PAIS_PADRE, response.data);
+        break;
+      case 10:
+        localStorage.setItem(PAIS_PAREJA, response.data);
+        break;
+
+      default:
+        break;
+    }
+  });
+}
+
+export function getNombreDepartamento(idDepartamento) {
+  const url = `${API_HOST}departamento/${idDepartamento}`;
+
+  const params = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application-json",
+    },
+  };
+
+  return fetch(url, params)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return err;
+    });
+}
+
+export function setearDepartamento(idDepartamento, tipoPerstate) {
+  getNombreDepartamento(idDepartamento).then((response) => {
+    switch (tipoPerstate) {
+      case 1:
+        localStorage.setItem(DEPARTAMENTO_POSTU, response.data);
+        break;
+      case 2:
+        localStorage.setItem(DEPARTAMENTO_MADRE, response.data);
+        break;
+      case 3:
+        localStorage.setItem(DEPARTAMENTO_PADRE, response.data);
+        break;
+      case 10:
+        localStorage.setItem(DEPARTAMENTO_PAREJA, response.data);
+        break;
+
+      default:
+        break;
+    }
+  });
+}
+
+export function getNombreCiudad(idCiudad) {
+  const url = `${API_HOST}ciudad/${idCiudad}`;
+
+  const params = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application-json",
+    },
+  };
+
+  return fetch(url, params)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return err;
+    });
+}
+
+export function setearCiudad(idCiudad, tipoPerstate) {
+  getNombreCiudad(idCiudad).then((response) => {
+    switch (tipoPerstate) {
+      case 1:
+        localStorage.setItem(BARRIO_POSTU, response.data);
+        break;
+      case 2:
+        localStorage.setItem(BARRIO_MADRE, response.data);
+        break;
+      case 3:
+        localStorage.setItem(BARRIO_PADRE, response.data);
+        break;
+      case 10:
+        localStorage.setItem(BARRIO_PAREJA, response.data);
+        break;
+
+      default:
+        break;
+    }
+  });
 }
 
 export function getEstadosCivilesApi() {

@@ -15,7 +15,8 @@ import TableRowEducacion from "../TableRowEducacion";
 import { getIdPostu, setEstudiosBasicos } from "../../../../api/auth";
 import { getEstudiosLocal, getEstudiosPersona } from "../../../../api/tablas";
 import "../../FormPostulante/FormPostulante.scss";
-export default function Educacion() {
+export default function Educacion(props) {
+  const { setguardadoBoton } = props;
   //state que guarda el id del postulante en cero pero lo uso para cambiarlo una vez que di submit en datos personales
   const [idPostulante, setIdPostulante] = useState(getIdPostu());
   //Para manejar el Modal
@@ -29,7 +30,7 @@ export default function Educacion() {
   };
   //state que va a guardar los estudios de la persona
   const [estudios, setEstudios] = useState([]);
-
+  //retornarId("hola");
   useEffect(() => {
     let isMounted = true;
     getEstudiosPersona(getIdPostu())
@@ -83,6 +84,11 @@ export default function Educacion() {
         } else {
           toast.success("Registro correcto");
           setFormData(initialFormValue());
+          setguardadoBoton(false);
+          localStorage.setItem(
+            "estudiosGuardados",
+            JSON.stringify(response.data)
+          );
         }
       })
       .catch(() => {
@@ -498,37 +504,22 @@ function llenarDelStorage(campo, defval) {
   }
   return defval;
 }
+function llenarDelStorageId(campo, defval) {
+  let datos = JSON.parse(localStorage.getItem("estudiosGuardados"));
+  if (datos != undefined) {
+    return datos[campo];
+  }
+  return defval;
+}
+/* function retornarId(nombreEstudio) {
+  let listaEstudios = localStorage.getItem("estudiosGuardados");
+  console.log(listaEstudios);
+} */
 
 /*function capitalize(str) {
   return str[0].toUpperCase() + str.substring(1);
 }*/
 function initialFormValue() {
-  /*let numeros = ["primero", "segundo", "tercero", "cuarto", "quinto", "sexto"];
-  let tipoEstudio = [
-    ["Primaria", "1"],
-    ["Secu", "2"],
-    ["Bach", "3"],
-  ];
-  let data = {};
-
-  for (let i in numeros) {
-    for (let j in tipoEstudio) {
-      data[`${numeros[i]}${tipoEstudio[j][0]}_anioEstudio`] = `${capitalize(
-        numeros[i]
-      )} año`;
-      data[
-        `${numeros[i]}${tipoEstudio[j][0]}_nombreInstituto`
-      ] = llenarDelStorage(
-        `${numeros[i]}${tipoEstudio[j][0]}_nombreInstituto`,
-        ""
-      );
-      data[`${numeros[i]}${tipoEstudio[j][0]}_tipo_estudio_id`] =
-        tipoEstudio[j][1];
-      data[`${numeros[i]}${tipoEstudio[j][0]}_persona_id`] = "";
-    }
-  }
-  console.log(data);*/
-
   let data = {
     primeroPrimaria_anioEstudio: "Primer año",
     primeroPrimaria_nombreInstituto: llenarDelStorage(
@@ -545,6 +536,7 @@ function initialFormValue() {
     ),
     segundoPrimaria_tipo_estudio_id: "1",
     segundoPrimaria_persona_id: "",
+    segundoPrimaria_id: "",
 
     terceroPrimaria_anioEstudio: "Tercer año",
     terceroPrimaria_nombreInstituto: llenarDelStorage(
@@ -553,6 +545,7 @@ function initialFormValue() {
     ),
     terceroPrimaria_tipo_estudio_id: "1",
     terceroPrimaria_persona_id: "",
+    terceroPrimaria_id: "",
 
     cuartoPrimaria_anioEstudio: "Cuarto año",
     cuartoPrimaria_nombreInstituto: llenarDelStorage(
@@ -561,6 +554,7 @@ function initialFormValue() {
     ),
     cuartoPrimaria_tipo_estudio_id: "1",
     cuartoPrimaria_persona_id: "",
+    cuartoPrimaria_id: "",
 
     quintoPrimaria_anioEstudio: "Quinto año",
     quintoPrimaria_nombreInstituto: llenarDelStorage(
@@ -569,6 +563,7 @@ function initialFormValue() {
     ),
     quintoPrimaria_tipo_estudio_id: "1",
     quintoPrimaria_persona_id: "",
+    quintoPrimaria_id: "",
 
     sextoPrimaria_anioEstudio: "Sexto año",
     sextoPrimaria_nombreInstituto: llenarDelStorage(
@@ -577,6 +572,7 @@ function initialFormValue() {
     ),
     sextoPrimaria_tipo_estudio_id: "1",
     sextoPrimaria_persona_id: "",
+    sextoPrimaria_id: "",
 
     primeroSecu_anioEstudio: "Primer año",
     primeroSecu_nombreInstituto: llenarDelStorage(
@@ -585,6 +581,7 @@ function initialFormValue() {
     ),
     primeroSecu_tipo_estudio_id: "2",
     primeroSecu_persona_id: "",
+    primeroSecu_id: "",
 
     segundoSecu_anioEstudio: "Segundo año",
     segundoSecu_nombreInstituto: llenarDelStorage(
@@ -593,6 +590,7 @@ function initialFormValue() {
     ),
     segundoSecu_tipo_estudio_id: "2",
     segundoSecu_persona_id: "",
+    segundoSecu_id: "",
 
     terceroSecu_anioEstudio: "Tercer año",
     terceroSecu_nombreInstituto: llenarDelStorage(
@@ -601,6 +599,7 @@ function initialFormValue() {
     ),
     terceroSecu_tipo_estudio_id: "2",
     terceroSecu_persona_id: "",
+    terceroSecu_id: "",
 
     cuartoBach_anioEstudio: "Cuarto año",
     cuartoBach_nombreInstituto: llenarDelStorage(
@@ -609,6 +608,7 @@ function initialFormValue() {
     ),
     cuartoBach_tipo_estudio_id: "3",
     cuartoBach_persona_id: "",
+    cuartoBach_id: "",
 
     quintoBach_anioEstudio: "Quinto año",
     quintoBach_nombreInstituto: llenarDelStorage(
@@ -617,6 +617,7 @@ function initialFormValue() {
     ),
     quintoBach_tipo_estudio_id: "3",
     quintoBach_persona_id: "",
+    quintoBach_id: "",
 
     sextoBach_anioEstudio: "Sexto año",
     sextoBach_nombreInstituto: llenarDelStorage(
@@ -625,6 +626,7 @@ function initialFormValue() {
     ),
     sextoBach_tipo_estudio_id: "3",
     sextoBach_persona_id: "",
+    sextoBach_id: "",
   };
 
   return data;

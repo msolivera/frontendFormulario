@@ -165,7 +165,9 @@ class ComponentToPrint extends React.Component {
               <Row>
                 <Col>
                   <Form.Label>Pais de Nacimiento</Form.Label>
-                  <Form.Control value={this.dataPostu.pais_id}></Form.Control>
+                  <Form.Control
+                    value={localStorage.getItem("paisPostu")}
+                  ></Form.Control>
                 </Col>
                 <Col>
                   <Form.Label>Domicilio Actual</Form.Label>
@@ -177,13 +179,13 @@ class ComponentToPrint extends React.Component {
                 <Col>
                   <Form.Label>Departamento de Domicilio</Form.Label>
                   <Form.Control
-                    value={this.dataPostu.departamento_id}
+                    value={localStorage.getItem("depaPostu")}
                   ></Form.Control>
                 </Col>
                 <Col>
                   <Form.Label>Ciudad/Barrio</Form.Label>
                   <Form.Control
-                    value={this.dataPostu.ciudadBarrio_id}
+                    value={localStorage.getItem("barrioPostu")}
                   ></Form.Control>
                 </Col>
                 <Row></Row>
@@ -640,7 +642,9 @@ class ComponentToPrint extends React.Component {
               <Row>
                 <Col>
                   <Form.Label>Pais de Nacimiento</Form.Label>
-                  <Form.Control value={this.dataMadre.pais_id}></Form.Control>
+                  <Form.Control
+                    value={localStorage.getItem("paisMadre")}
+                  ></Form.Control>
                 </Col>
                 <Col>
                   <Form.Label>Domicilio Actual</Form.Label>
@@ -652,13 +656,13 @@ class ComponentToPrint extends React.Component {
                 <Col>
                   <Form.Label>Departamento de Domicilio</Form.Label>
                   <Form.Control
-                    value={this.dataMadre.departamento_id}
+                    value={localStorage.getItem("depaMadre")}
                   ></Form.Control>
                 </Col>
                 <Col>
                   <Form.Label>Ciudad/Barrio</Form.Label>
                   <Form.Control
-                    value={this.dataMadre.ciudadBarrio_id}
+                    value={localStorage.getItem("barrioMadre")}
                   ></Form.Control>
                 </Col>
                 <Row></Row>
@@ -844,7 +848,9 @@ class ComponentToPrint extends React.Component {
               <Row>
                 <Col>
                   <Form.Label>Pais de Nacimiento</Form.Label>
-                  <Form.Control value={this.dataPadre.pais_id}></Form.Control>
+                  <Form.Control
+                    value={localStorage.getItem("paisPadre")}
+                  ></Form.Control>
                 </Col>
                 <Col>
                   <Form.Label>Domicilio Actual</Form.Label>
@@ -856,13 +862,13 @@ class ComponentToPrint extends React.Component {
                 <Col>
                   <Form.Label>Departamento de Domicilio</Form.Label>
                   <Form.Control
-                    value={this.dataPadre.departamento_id}
+                    value={localStorage.getItem("depaPadre")}
                   ></Form.Control>
                 </Col>
                 <Col>
                   <Form.Label>Ciudad/Barrio</Form.Label>
                   <Form.Control
-                    value={this.dataPadre.ciudadBarrio_id}
+                    value={localStorage.getItem("barrioPadre")}
                   ></Form.Control>
                 </Col>
                 <Row></Row>
@@ -1048,7 +1054,9 @@ class ComponentToPrint extends React.Component {
               <Row>
                 <Col>
                   <Form.Label>Pais de Nacimiento</Form.Label>
-                  <Form.Control value={this.dataPareja.pais_id}></Form.Control>
+                  <Form.Control
+                    value={localStorage.getItem("paisPareja")}
+                  ></Form.Control>
                 </Col>
                 <Col>
                   <Form.Label>Domicilio Actual</Form.Label>
@@ -1060,13 +1068,13 @@ class ComponentToPrint extends React.Component {
                 <Col>
                   <Form.Label>Departamento de Domicilio</Form.Label>
                   <Form.Control
-                    value={this.dataPareja.departamento_id}
+                    value={localStorage.getItem("depaPareja")}
                   ></Form.Control>
                 </Col>
                 <Col>
                   <Form.Label>Ciudad/Barrio</Form.Label>
                   <Form.Control
-                    value={this.dataPareja.ciudadBarrio_id}
+                    value={localStorage.getItem("barrioPareja")}
                   ></Form.Control>
                 </Col>
                 <Row></Row>
@@ -1159,11 +1167,9 @@ class ComponentToPrint extends React.Component {
 
         <div>
           <Container>
-            <h2>Otros Familiares:</h2>
             <Form>
+              <h2>Otros Familiares:</h2>
               <div>
-                <h2>Otros Familiares</h2>
-
                 {this.parientes.length == 0 ? (
                   <tr>No hay Familiares ingresados</tr>
                 ) : (
@@ -1175,6 +1181,16 @@ class ComponentToPrint extends React.Component {
             </Form>
           </Container>
         </div>
+        <Container>
+          <div style={{ padding: "80px", textAlign: "center" }}>
+            <h3>Firma ....................................</h3>
+            <p style={{ marginLeft: "100px" }}>
+              {this.dataPostu.primerNombre +
+                " " +
+                this.dataPostu.primerApellido}
+            </p>
+          </div>
+        </Container>
       </div>
     );
   }
@@ -1185,7 +1201,7 @@ class Example extends React.Component {
     return (
       <div>
         <ReactToPrint
-          trigger={() => <a href="#">Print this out!</a>}
+          trigger={() => <a href="#">DESCARGAR PDF</a>}
           content={() => this.componentRef}
         />
         <ComponentToPrint ref={(el) => (this.componentRef = el)} />
