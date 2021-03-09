@@ -723,7 +723,7 @@ export default function DatosPersonales(props) {
                     }
                     onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
                   >
-                    <option Value="0">Seleccione</option>
+                    <option value="0">Seleccione</option>
                   </Form.Control>
                 </Col>
                 <Col>
