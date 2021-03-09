@@ -44,3 +44,7 @@ export const BARRIO_PADRE = "barrioPadre";
 export const PAIS_PAREJA = "paisPareja";
 export const DEPARTAMENTO_PAREJA = "depaPareja";
 export const BARRIO_PAREJA = "barrioPareja";
+export const ESTCIVIL_POSTU = "estCivil_postu";
+export const ESTCIVIL_MADRE = "estCivil_madre";
+export const ESTCIVIL_PADRE = "estCivil_padre";
+export const ESTCIVIL_PAREJA = "estCivil_pareja";

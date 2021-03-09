@@ -9,8 +9,6 @@ export default function TableRowPregPDF(props) {
     <>
       <tr>
         <td>{pregunta.textoPregunta}</td>
-      </tr>
-      <tr>
         <td>
           <Form.Control value={pregunta.respuesta} />
         </td>

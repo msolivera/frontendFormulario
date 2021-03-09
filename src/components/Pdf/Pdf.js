@@ -14,7 +14,7 @@ import {
   getfliaresLocal,
   listaOtrosFamiliaresPersona,
 } from "../../api/tablas";
-
+import "../../index.scss";
 import { Row, Col, Form, Container, Table } from "react-bootstrap";
 import {
   getDataPostu,
@@ -66,10 +66,49 @@ class ComponentToPrint extends React.Component {
   render() {
     return (
       <div>
-        <h1>DATOS POSTULANTE</h1>
+        <div>
+          <h1 style={{ textAlign: "center" }}>Reservado</h1>
+          <div>
+            <td style={{ width: "88%" }} align={"left"}>
+              <div>
+                <table>
+                  <td>
+                    <tr>
+                      <h5>SOLICITUD DE INGRESOS</h5>
+                    </tr>
+                    <tr>
+                      <h5>COMANDO GENERAL DE LA ARMADA</h5>
+                    </tr>
+                    <tr>
+                      <h5>UNIDAD ORIGINADORA:</h5>
+                    </tr>
+                  </td>
+                </table>
+              </div>
+            </td>
+            <td align={"right"} style={{ width: "25%", textAlign: "left" }}>
+              <div>
+                <table>
+                  <td>
+                    <tr>
+                      <h5>FORMULARIO 04</h5>
+                    </tr>
+                    <tr>
+                      <h5>FECHA:</h5>
+                    </tr>
+                    <tr>
+                      <h5>SOL. NRO: </h5>
+                    </tr>
+                  </td>
+                </table>
+              </div>
+            </td>
+          </div>
+        </div>
+        <h1 style={{ textAlign: "center" }}>Informacion del Postulante</h1>
 
         <Container>
-          <h2>Datos Personales</h2>
+          <h3 style={{ textAlign: "center" }}>Datos Personales:</h3>
           <Form.Group>
             <Row>
               <Col>
@@ -80,8 +119,7 @@ class ComponentToPrint extends React.Component {
                 <Form.Label>Segundo Nombre</Form.Label>
                 <Form.Control value={this.dataPostu.segundoNombre} />
               </Col>
-            </Row>
-            <Row>
+
               <Col>
                 <Form.Label>Primer Apellido</Form.Label>
                 <Form.Control value={this.dataPostu.primerApellido} />
@@ -103,11 +141,7 @@ class ComponentToPrint extends React.Component {
                 <Form.Label>Cedula de identidad</Form.Label>
                 <Form.Control value={this.dataPostu.cedula} />
               </Col>
-            </Row>
-          </Form.Group>
 
-          <Form.Group>
-            <Row>
               <Col>
                 <Form.Label>Apodo</Form.Label>
                 <Form.Control value={this.dataPostu.apodo} />
@@ -126,15 +160,13 @@ class ComponentToPrint extends React.Component {
           <Form.Group>
             <Row>
               <Col>
-                <Col>
-                  <Form.Label>Estado Civil</Form.Label>
-                </Col>
-                <Col>
-                  <Form.Control
-                    value={this.dataPostu.estadocivil_id}
-                  ></Form.Control>
-                </Col>
+                <Form.Label>Estado Civil</Form.Label>
+
+                <Form.Control
+                  value={localStorage.getItem("estCivil_postu")}
+                ></Form.Control>
               </Col>
+
               <Col>
                 <Form.Label>Credencial Civica Serie</Form.Label>
                 <Form.Control value={this.dataPostu.credencialSerie} />
@@ -143,10 +175,6 @@ class ComponentToPrint extends React.Component {
                 <Form.Label>Credencial Civica Numero</Form.Label>
                 <Form.Control value={this.dataPostu.credencialNumero} />
               </Col>
-            </Row>
-          </Form.Group>
-          <Form.Group>
-            <Row>
               <Col>
                 <Form.Label>Correo Electronico</Form.Label>
                 <Form.Control value={this.dataPostu.correoElectronico} />
@@ -159,7 +187,7 @@ class ComponentToPrint extends React.Component {
 
         <div>
           <Container>
-            <h2>Domicilio</h2>
+            <h3 style={{ textAlign: "center" }}>Domicilio:</h3>
 
             <Form.Group>
               <Row>
@@ -173,9 +201,7 @@ class ComponentToPrint extends React.Component {
                   <Form.Label>Domicilio Actual</Form.Label>
                   <Form.Control value={this.dataPostu.domicilioActual} />
                 </Col>
-              </Row>
 
-              <Row>
                 <Col>
                   <Form.Label>Departamento de Domicilio</Form.Label>
                   <Form.Control
@@ -188,7 +214,6 @@ class ComponentToPrint extends React.Component {
                     value={localStorage.getItem("barrioPostu")}
                   ></Form.Control>
                 </Col>
-                <Row></Row>
               </Row>
 
               <Row>
@@ -196,14 +221,13 @@ class ComponentToPrint extends React.Component {
                   <Form.Label>Seccional Policial</Form.Label>
                   <Form.Control value={this.dataPostu.seccionalPolicial} />
                 </Col>
+                <Col>
+                  <Form.Label>Domicilios Anteriores</Form.Label>
+                  <Form.Control value={this.dataPostu.domicilioAnterior} />
+                </Col>
               </Row>
 
-              <Row>
-                <Form.Label>Domicilios Anteriores</Form.Label>
-                <Form.Control value={this.dataPostu.domicilioAnterior} />
-              </Row>
-
-              <h3>Complete si es nacido en el Extranjero: </h3>
+              <h4>Informacion del extranjero: </h4>
               <Row>
                 <Col>
                   <Form.Label>Departamento/Estado</Form.Label>
@@ -222,246 +246,246 @@ class ComponentToPrint extends React.Component {
           <Container>
             <Form>
               <div>
-                <h2>Educacion</h2>
-                <h3>Primaria</h3>
+                <h3 style={{ textAlign: "center" }}>Educacion</h3>
+
                 <Table>
-                  <thead>
-                    <tr>
-                      <th>Año</th>
-                      <th>Nombre de institucion</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <Form.Control
-                          type="text"
-                          defaultValue="Primer Año"
-                          readOnly
-                        />
-                      </td>
-                      <td>
-                        {" "}
-                        <Form.Control
-                          value={
-                            this.estudiosBasicos.primeroPrimaria_nombreInstituto
-                          }
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <Form.Control
-                          type="text"
-                          defaultValue="Segundo Año"
-                          readOnly
-                        />
-                      </td>
-                      <td>
-                        {" "}
-                        <Form.Control
-                          value={
-                            this.estudiosBasicos.segundoPrimaria_nombreInstituto
-                          }
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <Form.Control
-                          type="text"
-                          defaultValue="Tercer Año"
-                          readOnly
-                        />
-                      </td>
-                      <td>
-                        {" "}
-                        <Form.Control
-                          value={
-                            this.estudiosBasicos.terceroPrimaria_nombreInstituto
-                          }
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <Form.Control
-                          type="text"
-                          defaultValue="Cuarto Año"
-                          readOnly
-                        />
-                      </td>
-                      <td>
-                        {" "}
-                        <Form.Control
-                          value={
-                            this.estudiosBasicos.cuartoPrimaria_nombreInstituto
-                          }
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <Form.Control
-                          type="text"
-                          defaultValue="Quinto Año"
-                          readOnly
-                        />
-                      </td>
-                      <td>
-                        {" "}
-                        <Form.Control
-                          value={
-                            this.estudiosBasicos.quintoPrimaria_nombreInstituto
-                          }
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <Form.Control
-                          type="text"
-                          defaultValue="Sexto Año"
-                          readOnly
-                        />
-                      </td>
-                      <td>
-                        {" "}
-                        <Form.Control
-                          value={
-                            this.estudiosBasicos.sextoPrimaria_nombreInstituto
-                          }
-                        />
-                      </td>
-                    </tr>
-                  </tbody>
+                  <th>
+                    <h4>Primaria</h4>
+                    <thead>
+                      <tr>
+                        <th>Año</th>
+                        <th>Nombre de institucion</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <Form.Control
+                            type="text"
+                            defaultValue="Primer Año"
+                            readOnly
+                          />
+                        </td>
+                        <td>
+                          {" "}
+                          <Form.Control
+                            value={
+                              this.estudiosBasicos
+                                .primeroPrimaria_nombreInstituto
+                            }
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <Form.Control
+                            type="text"
+                            defaultValue="Segundo Año"
+                            readOnly
+                          />
+                        </td>
+                        <td>
+                          {" "}
+                          <Form.Control
+                            value={
+                              this.estudiosBasicos
+                                .segundoPrimaria_nombreInstituto
+                            }
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <Form.Control
+                            type="text"
+                            defaultValue="Tercer Año"
+                            readOnly
+                          />
+                        </td>
+                        <td>
+                          {" "}
+                          <Form.Control
+                            value={
+                              this.estudiosBasicos
+                                .terceroPrimaria_nombreInstituto
+                            }
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <Form.Control
+                            type="text"
+                            defaultValue="Cuarto Año"
+                            readOnly
+                          />
+                        </td>
+                        <td>
+                          {" "}
+                          <Form.Control
+                            value={
+                              this.estudiosBasicos
+                                .cuartoPrimaria_nombreInstituto
+                            }
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <Form.Control
+                            type="text"
+                            defaultValue="Quinto Año"
+                            readOnly
+                          />
+                        </td>
+                        <td>
+                          {" "}
+                          <Form.Control
+                            value={
+                              this.estudiosBasicos
+                                .quintoPrimaria_nombreInstituto
+                            }
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <Form.Control
+                            type="text"
+                            defaultValue="Sexto Año"
+                            readOnly
+                          />
+                        </td>
+                        <td>
+                          {" "}
+                          <Form.Control
+                            value={
+                              this.estudiosBasicos.sextoPrimaria_nombreInstituto
+                            }
+                          />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </th>
+                  <th>
+                    <h4>Secundaria y Bachillerato</h4>
+                    <thead>
+                      <tr>
+                        <th>Año</th>
+                        <th>Nombre de institucion</th>
+                        <th hidden>tipo_estudio</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <Form.Control
+                            type="text"
+                            defaultValue="Primer Año"
+                            readOnly
+                          />
+                        </td>
+                        <td>
+                          {" "}
+                          <Form.Control
+                            value={
+                              this.estudiosBasicos.primeroSecu_nombreInstituto
+                            }
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <Form.Control
+                            type="text"
+                            defaultValue="Segundo Año"
+                            readOnly
+                          />
+                        </td>
+                        <td>
+                          {" "}
+                          <Form.Control
+                            value={
+                              this.estudiosBasicos.segundoSecu_nombreInstituto
+                            }
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <Form.Control
+                            type="text"
+                            defaultValue="Tercer Año"
+                            readOnly
+                          />
+                        </td>
+                        <td>
+                          {" "}
+                          <Form.Control
+                            value={
+                              this.estudiosBasicos.terceroSecu_nombreInstituto
+                            }
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <Form.Control
+                            type="text"
+                            defaultValue="Cuarto Año"
+                            readOnly
+                          />
+                        </td>
+                        <td>
+                          {" "}
+                          <Form.Control
+                            value={
+                              this.estudiosBasicos.cuartoBach_nombreInstituto
+                            }
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <Form.Control
+                            type="text"
+                            defaultValue="Quinto Año"
+                            readOnly
+                          />
+                        </td>
+                        <td>
+                          {" "}
+                          <Form.Control
+                            value={
+                              this.estudiosBasicos.quintoBach_nombreInstituto
+                            }
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <Form.Control
+                            type="text"
+                            defaultValue="Sexto Año"
+                            readOnly
+                          />
+                        </td>
+                        <td>
+                          {" "}
+                          <Form.Control
+                            value={
+                              this.estudiosBasicos.sextoBach_nombreInstituto
+                            }
+                          />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </th>
                 </Table>
 
-                <h3>Secundaria</h3>
-                <Table>
-                  <thead>
-                    <tr>
-                      <th>Año</th>
-                      <th>Nombre de institucion</th>
-                      <th hidden>tipo_estudio</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <Form.Control
-                          type="text"
-                          defaultValue="Primer Año"
-                          readOnly
-                        />
-                      </td>
-                      <td>
-                        {" "}
-                        <Form.Control
-                          value={
-                            this.estudiosBasicos.primeroSecu_nombreInstituto
-                          }
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <Form.Control
-                          type="text"
-                          defaultValue="Segundo Año"
-                          readOnly
-                        />
-                      </td>
-                      <td>
-                        {" "}
-                        <Form.Control
-                          value={
-                            this.estudiosBasicos.segundoSecu_nombreInstituto
-                          }
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <Form.Control
-                          type="text"
-                          defaultValue="Tercer Año"
-                          readOnly
-                        />
-                      </td>
-                      <td>
-                        {" "}
-                        <Form.Control
-                          value={
-                            this.estudiosBasicos.terceroSecu_nombreInstituto
-                          }
-                        />
-                      </td>
-                    </tr>
-                  </tbody>
-                </Table>
-                <h3>Bachillerato</h3>
-                <Table>
-                  <thead>
-                    <tr>
-                      <th>Año</th>
-                      <th>Nombre de institucion</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <Form.Control
-                          type="text"
-                          defaultValue="Cuarto Año"
-                          readOnly
-                        />
-                      </td>
-                      <td>
-                        {" "}
-                        <Form.Control
-                          value={
-                            this.estudiosBasicos.cuartoBach_nombreInstituto
-                          }
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <Form.Control
-                          type="text"
-                          defaultValue="Quinto Año"
-                          readOnly
-                        />
-                      </td>
-                      <td>
-                        {" "}
-                        <Form.Control
-                          value={
-                            this.estudiosBasicos.quintoBach_nombreInstituto
-                          }
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <Form.Control
-                          type="text"
-                          defaultValue="Sexto Año"
-                          readOnly
-                        />
-                      </td>
-                      <td>
-                        {" "}
-                        <Form.Control
-                          value={this.estudiosBasicos.sextoBach_nombreInstituto}
-                        />
-                      </td>
-                    </tr>
-                  </tbody>
-                </Table>
-
-                <h3>Otros Estudios Realizados</h3>
+                <h3 style={{ textAlign: "center" }}>
+                  Otros Estudios Realizados
+                </h3>
 
                 <Table id="tabla">
                   <thead>
@@ -488,7 +512,7 @@ class ComponentToPrint extends React.Component {
           <Container>
             <Form>
               <div className="form-datos-personales">
-                <h2>Laboral/Ocupacion Actual</h2>
+                <h3 style={{ textAlign: "center" }}>Ocupacion Actual</h3>
                 <Form>
                   <Form.Group>
                     <Row>
@@ -502,9 +526,7 @@ class ComponentToPrint extends React.Component {
                           value={this.laboralPostu.ente}
                         ></Form.Control>
                       </Col>
-                    </Row>
 
-                    <Row>
                       <Col>
                         <Form.Label>Nombre de la Empresa</Form.Label>
                         <Form.Control value={this.laboralPostu.nombreEmpresa} />
@@ -523,7 +545,7 @@ class ComponentToPrint extends React.Component {
           {/*PREGUNTAS POSTULANTE*/}
           <Container>
             <Form>
-              <h2>Respuestas Ingresadas:</h2>
+              <h3 style={{ textAlign: "center" }}>Respuestas Ingresadas:</h3>
               <Table>
                 <tbody>
                   {/**En esta parte hago un if que controla si el array de preguntas no tiene nada cargado aun
@@ -544,9 +566,9 @@ class ComponentToPrint extends React.Component {
         </div>
 
         {/**DATOS DE LA MADRE */}
-        <h1>DATOS MADRE</h1>
+        <h1 style={{ textAlign: "center" }}>Informacion de la Madre</h1>
         <Container>
-          <h2>Datos Personales</h2>
+          <h3 style={{ textAlign: "center" }}>Datos Personales</h3>
           <Form.Group>
             <Row>
               <Col>
@@ -557,8 +579,7 @@ class ComponentToPrint extends React.Component {
                 <Form.Label>Segundo Nombre</Form.Label>
                 <Form.Control value={this.dataMadre.segundoNombre} />
               </Col>
-            </Row>
-            <Row>
+
               <Col>
                 <Form.Label>Primer Apellido</Form.Label>
                 <Form.Control value={this.dataMadre.primerApellido} />
@@ -580,11 +601,7 @@ class ComponentToPrint extends React.Component {
                 <Form.Label>Cedula de identidad</Form.Label>
                 <Form.Control value={this.dataMadre.cedula} />
               </Col>
-            </Row>
-          </Form.Group>
 
-          <Form.Group>
-            <Row>
               <Col>
                 <Form.Label>Apodo</Form.Label>
                 <Form.Control value={this.dataMadre.apodo} />
@@ -603,15 +620,13 @@ class ComponentToPrint extends React.Component {
           <Form.Group>
             <Row>
               <Col>
-                <Col>
-                  <Form.Label>Estado Civil</Form.Label>
-                </Col>
-                <Col>
-                  <Form.Control
-                    value={this.dataMadre.estadocivil_id}
-                  ></Form.Control>
-                </Col>
+                <Form.Label>Estado Civil</Form.Label>
+
+                <Form.Control
+                  value={localStorage.getItem("estCivil_madre")}
+                ></Form.Control>
               </Col>
+
               <Col>
                 <Form.Label>Credencial Civica Serie</Form.Label>
                 <Form.Control value={this.dataMadre.credencialSerie} />
@@ -620,10 +635,7 @@ class ComponentToPrint extends React.Component {
                 <Form.Label>Credencial Civica Numero</Form.Label>
                 <Form.Control value={this.dataMadre.credencialNumero} />
               </Col>
-            </Row>
-          </Form.Group>
-          <Form.Group>
-            <Row>
+
               <Col>
                 <Form.Label>Correo Electronico</Form.Label>
                 <Form.Control value={this.dataMadre.correoElectronico} />
@@ -636,7 +648,7 @@ class ComponentToPrint extends React.Component {
 
         <div>
           <Container>
-            <h2>Domicilio</h2>
+            <h3 style={{ textAlign: "center" }}>Domicilio</h3>
 
             <Form.Group>
               <Row>
@@ -650,9 +662,7 @@ class ComponentToPrint extends React.Component {
                   <Form.Label>Domicilio Actual</Form.Label>
                   <Form.Control value={this.dataMadre.domicilioActual} />
                 </Col>
-              </Row>
 
-              <Row>
                 <Col>
                   <Form.Label>Departamento de Domicilio</Form.Label>
                   <Form.Control
@@ -665,7 +675,6 @@ class ComponentToPrint extends React.Component {
                     value={localStorage.getItem("barrioMadre")}
                   ></Form.Control>
                 </Col>
-                <Row></Row>
               </Row>
 
               <Row>
@@ -673,14 +682,13 @@ class ComponentToPrint extends React.Component {
                   <Form.Label>Seccional Policial</Form.Label>
                   <Form.Control value={this.dataMadre.seccionalPolicial} />
                 </Col>
+                <Col>
+                  <Form.Label>Domicilios Anteriores</Form.Label>
+                  <Form.Control value={this.dataMadre.domicilioAnterior} />
+                </Col>
               </Row>
 
-              <Row>
-                <Form.Label>Domicilios Anteriores</Form.Label>
-                <Form.Control value={this.dataMadre.domicilioAnterior} />
-              </Row>
-
-              <h3>Complete si es nacido en el Extranjero: </h3>
+              <h4>Informacion del extranjero:</h4>
               <Row>
                 <Col>
                   <Form.Label>Departamento/Estado</Form.Label>
@@ -699,7 +707,7 @@ class ComponentToPrint extends React.Component {
           <Container>
             <Form>
               <div className="form-datos-personales">
-                <h2>Laboral/Ocupacion Actual</h2>
+                <h3 style={{ textAlign: "center" }}>Ocupacion Actual</h3>
                 <Form>
                   <Form.Group>
                     <Row>
@@ -713,9 +721,7 @@ class ComponentToPrint extends React.Component {
                           value={this.laboralMadre.ente}
                         ></Form.Control>
                       </Col>
-                    </Row>
 
-                    <Row>
                       <Col>
                         <Form.Label>Nombre de la Empresa</Form.Label>
                         <Form.Control value={this.laboralMadre.nombreEmpresa} />
@@ -733,7 +739,7 @@ class ComponentToPrint extends React.Component {
 
           <Container>
             <Form>
-              <h2>Respuestas Ingresadas:</h2>
+              <h3 style={{ textAlign: "center" }}>Respuestas Ingresadas:</h3>
               <Table>
                 <tbody>
                   {(this.preguntasMadre.length == 0) |
@@ -751,9 +757,9 @@ class ComponentToPrint extends React.Component {
         </div>
 
         {/**DATOS DEL PADRE */}
-        <h1>DATOS PADRE</h1>
+        <h1 style={{ textAlign: "center" }}>Informacion del Padre</h1>
         <Container>
-          <h2>Datos Personales</h2>
+          <h3 style={{ textAlign: "center" }}>Datos Personales</h3>
           <Form.Group>
             <Row>
               <Col>
@@ -764,8 +770,7 @@ class ComponentToPrint extends React.Component {
                 <Form.Label>Segundo Nombre</Form.Label>
                 <Form.Control value={this.dataPadre.segundoNombre} />
               </Col>
-            </Row>
-            <Row>
+
               <Col>
                 <Form.Label>Primer Apellido</Form.Label>
                 <Form.Control value={this.dataPadre.primerApellido} />
@@ -787,11 +792,7 @@ class ComponentToPrint extends React.Component {
                 <Form.Label>Cedula de identidad</Form.Label>
                 <Form.Control value={this.dataPadre.cedula} />
               </Col>
-            </Row>
-          </Form.Group>
 
-          <Form.Group>
-            <Row>
               <Col>
                 <Form.Label>Apodo</Form.Label>
                 <Form.Control value={this.dataPadre.apodo} />
@@ -810,15 +811,13 @@ class ComponentToPrint extends React.Component {
           <Form.Group>
             <Row>
               <Col>
-                <Col>
-                  <Form.Label>Estado Civil</Form.Label>
-                </Col>
-                <Col>
-                  <Form.Control
-                    value={this.dataPadre.estadocivil_id}
-                  ></Form.Control>
-                </Col>
+                <Form.Label>Estado Civil</Form.Label>
+
+                <Form.Control
+                  value={localStorage.getItem("estCivil_padre")}
+                ></Form.Control>
               </Col>
+
               <Col>
                 <Form.Label>Credencial Civica Serie</Form.Label>
                 <Form.Control value={this.dataPadre.credencialSerie} />
@@ -827,10 +826,7 @@ class ComponentToPrint extends React.Component {
                 <Form.Label>Credencial Civica Numero</Form.Label>
                 <Form.Control value={this.dataPadre.credencialNumero} />
               </Col>
-            </Row>
-          </Form.Group>
-          <Form.Group>
-            <Row>
+
               <Col>
                 <Form.Label>Correo Electronico</Form.Label>
                 <Form.Control value={this.dataPadre.correoElectronico} />
@@ -843,7 +839,7 @@ class ComponentToPrint extends React.Component {
 
         <div>
           <Container>
-            <h2>Domicilio</h2>
+            <h3 style={{ textAlign: "center" }}>Domicilio</h3>
 
             <Form.Group>
               <Row>
@@ -857,9 +853,7 @@ class ComponentToPrint extends React.Component {
                   <Form.Label>Domicilio Actual</Form.Label>
                   <Form.Control value={this.dataPadre.domicilioActual} />
                 </Col>
-              </Row>
 
-              <Row>
                 <Col>
                   <Form.Label>Departamento de Domicilio</Form.Label>
                   <Form.Control
@@ -872,7 +866,6 @@ class ComponentToPrint extends React.Component {
                     value={localStorage.getItem("barrioPadre")}
                   ></Form.Control>
                 </Col>
-                <Row></Row>
               </Row>
 
               <Row>
@@ -880,14 +873,13 @@ class ComponentToPrint extends React.Component {
                   <Form.Label>Seccional Policial</Form.Label>
                   <Form.Control value={this.dataPadre.seccionalPolicial} />
                 </Col>
+                <Col>
+                  <Form.Label>Domicilios Anteriores</Form.Label>
+                  <Form.Control value={this.dataPadre.domicilioAnterior} />
+                </Col>
               </Row>
 
-              <Row>
-                <Form.Label>Domicilios Anteriores</Form.Label>
-                <Form.Control value={this.dataPadre.domicilioAnterior} />
-              </Row>
-
-              <h3>Complete si es nacido en el Extranjero: </h3>
+              <h4>Informacion del extranjero: </h4>
               <Row>
                 <Col>
                   <Form.Label>Departamento/Estado</Form.Label>
@@ -906,7 +898,7 @@ class ComponentToPrint extends React.Component {
           <Container>
             <Form>
               <div className="form-datos-personales">
-                <h2>Laboral/Ocupacion Actual</h2>
+                <h3 style={{ textAlign: "center" }}>Ocupacion Actual</h3>
                 <Form>
                   <Form.Group>
                     <Row>
@@ -920,9 +912,7 @@ class ComponentToPrint extends React.Component {
                           value={this.laboralPadre.ente}
                         ></Form.Control>
                       </Col>
-                    </Row>
 
-                    <Row>
                       <Col>
                         <Form.Label>Nombre de la Empresa</Form.Label>
                         <Form.Control value={this.laboralPadre.nombreEmpresa} />
@@ -940,7 +930,7 @@ class ComponentToPrint extends React.Component {
 
           <Container>
             <Form>
-              <h2>Respuestas Ingresadas:</h2>
+              <h3 style={{ textAlign: "center" }}>Respuestas Ingresadas:</h3>
               <Table>
                 <tbody>
                   {this.preguntasPadre.length == 0 ? (
@@ -957,9 +947,11 @@ class ComponentToPrint extends React.Component {
         </div>
 
         {/**DATOS DE PAREJA */}
-        <h1>DATOS PAREJA</h1>
+        <h1 style={{ textAlign: "center" }}>
+          Informacion de Conyuge, Concubino/a , Novio/a
+        </h1>
         <Container>
-          <h2>Datos Personales</h2>
+          <h3 style={{ textAlign: "center" }}>Datos Personales</h3>
           <Form.Group>
             <Row>
               <Col>
@@ -970,8 +962,7 @@ class ComponentToPrint extends React.Component {
                 <Form.Label>Segundo Nombre</Form.Label>
                 <Form.Control value={this.dataPareja.segundoNombre} />
               </Col>
-            </Row>
-            <Row>
+
               <Col>
                 <Form.Label>Primer Apellido</Form.Label>
                 <Form.Control value={this.dataPareja.primerApellido} />
@@ -993,11 +984,7 @@ class ComponentToPrint extends React.Component {
                 <Form.Label>Cedula de identidad</Form.Label>
                 <Form.Control value={this.dataPareja.cedula} />
               </Col>
-            </Row>
-          </Form.Group>
 
-          <Form.Group>
-            <Row>
               <Col>
                 <Form.Label>Apodo</Form.Label>
                 <Form.Control value={this.dataPareja.apodo} />
@@ -1016,14 +1003,11 @@ class ComponentToPrint extends React.Component {
           <Form.Group>
             <Row>
               <Col>
-                <Col>
-                  <Form.Label>Estado Civil</Form.Label>
-                </Col>
-                <Col>
-                  <Form.Control
-                    value={this.dataPareja.estadocivil_id}
-                  ></Form.Control>
-                </Col>
+                <Form.Label>Estado Civil</Form.Label>
+
+                <Form.Control
+                  value={localStorage.getItem("estCivil_pareja")}
+                ></Form.Control>
               </Col>
               <Col>
                 <Form.Label>Credencial Civica Serie</Form.Label>
@@ -1033,10 +1017,7 @@ class ComponentToPrint extends React.Component {
                 <Form.Label>Credencial Civica Numero</Form.Label>
                 <Form.Control value={this.dataPareja.credencialNumero} />
               </Col>
-            </Row>
-          </Form.Group>
-          <Form.Group>
-            <Row>
+
               <Col>
                 <Form.Label>Correo Electronico</Form.Label>
                 <Form.Control value={this.dataPareja.correoElectronico} />
@@ -1049,7 +1030,7 @@ class ComponentToPrint extends React.Component {
 
         <div>
           <Container>
-            <h2>Domicilio</h2>
+            <h3 style={{ textAlign: "center" }}>Domicilio</h3>
 
             <Form.Group>
               <Row>
@@ -1063,9 +1044,7 @@ class ComponentToPrint extends React.Component {
                   <Form.Label>Domicilio Actual</Form.Label>
                   <Form.Control value={this.dataPareja.domicilioActual} />
                 </Col>
-              </Row>
 
-              <Row>
                 <Col>
                   <Form.Label>Departamento de Domicilio</Form.Label>
                   <Form.Control
@@ -1078,7 +1057,6 @@ class ComponentToPrint extends React.Component {
                     value={localStorage.getItem("barrioPareja")}
                   ></Form.Control>
                 </Col>
-                <Row></Row>
               </Row>
 
               <Row>
@@ -1086,14 +1064,13 @@ class ComponentToPrint extends React.Component {
                   <Form.Label>Seccional Policial</Form.Label>
                   <Form.Control value={this.dataPareja.seccionalPolicial} />
                 </Col>
+                <Col>
+                  <Form.Label>Domicilios Anteriores</Form.Label>
+                  <Form.Control value={this.dataPareja.domicilioAnterior} />
+                </Col>
               </Row>
 
-              <Row>
-                <Form.Label>Domicilios Anteriores</Form.Label>
-                <Form.Control value={this.dataPareja.domicilioAnterior} />
-              </Row>
-
-              <h3>Complete si es nacido en el Extranjero: </h3>
+              <h4>Informacion del extranjero: </h4>
               <Row>
                 <Col>
                   <Form.Label>Departamento/Estado</Form.Label>
@@ -1112,7 +1089,7 @@ class ComponentToPrint extends React.Component {
           <Container>
             <Form>
               <div className="form-datos-personales">
-                <h2>Laboral/Ocupacion Actual</h2>
+                <h3 style={{ textAlign: "center" }}>Ocupacion Actual</h3>
                 <Form>
                   <Form.Group>
                     <Row>
@@ -1128,9 +1105,7 @@ class ComponentToPrint extends React.Component {
                           value={this.laboralPareja.ente}
                         ></Form.Control>
                       </Col>
-                    </Row>
 
-                    <Row>
                       <Col>
                         <Form.Label>Nombre de la Empresa</Form.Label>
                         <Form.Control
@@ -1150,7 +1125,7 @@ class ComponentToPrint extends React.Component {
 
           <Container>
             <Form>
-              <h2>Respuestas Ingresadas:</h2>
+              <h3 style={{ textAlign: "center" }}>Respuestas Ingresadas:</h3>
               <Table>
                 <tbody>
                   {this.preguntasPareja.length == 0 ? (
@@ -1169,7 +1144,9 @@ class ComponentToPrint extends React.Component {
         <div>
           <Container>
             <Form>
-              <h2>Otros Familiares:</h2>
+              <h3 style={{ textAlign: "center" }}>
+                Otros integrandes del ambito habitacional:
+              </h3>
               <div>
                 {this.parientes.length == 0 ? (
                   <tr>No hay Familiares ingresados</tr>
@@ -1182,13 +1159,50 @@ class ComponentToPrint extends React.Component {
             </Form>
           </Container>
         </div>
+        <div style={{ padding: "25px", textAlign: "center" }}>
+          <Container>
+            <p>
+              CERTIFICO, que las declaraciones que ha brindado revisten al
+              carácter de DECLARACIÓN JURADA, y que las mismas son verdaderas,
+              completas y correctas, según mi mejor saber y entender, y que las
+              he hecho de buena fé, y si se comprobara por parte de la Autoridad
+              Naval , falsedad y omisión intencional, podré ser automáticamente
+              eliminado como Posstulante a ingreso a la Armada Nacional,
+              aceptando la aplicación del ARTÍCULO 239 DEL CODIGO PENAL,
+              FALSIFICACIÓN IDEOLÓGICA POR UN PARTICULAR;"El que, con motivo del
+              otorgamiento o formalización de un documento Público, ante un
+              funcionario Público, prestare declaración falsa sobre su
+              identidad, o estado, o cualquier otra circunstancia del hecho,
+              será castigado con tres a veinticuatro meses de Prisión"
+            </p>
+            <td>
+              <h5>FECHA:</h5>
+            </td>
+            <td>
+              <h5>_____/_____/_________</h5>
+            </td>
+
+            <div style={{ padding: "10px", textAlign: "right" }}>
+              <h5>FIRMA ....................................</h5>
+              <p style={{ marginLeft: "100px" }}>
+                {this.dataPostu.primerNombre +
+                  " " +
+                  this.dataPostu.primerApellido}
+              </p>
+            </div>
+          </Container>
+        </div>
         <Container>
-          <div style={{ padding: "80px", textAlign: "center" }}>
-            <h3>Firma ....................................</h3>
-            <p style={{ marginLeft: "100px" }}>
-              {this.dataPostu.primerNombre +
-                " " +
-                this.dataPostu.primerApellido}
+          <div>
+            <td>
+              <h5>
+                FIRMA:______________________________ACLARACIÓN____________________________MATRÍCULA_________
+              </h5>
+            </td>
+            <p>
+              <strong>
+                De quien controló primariamente el formulario completo.
+              </strong>
             </p>
           </div>
         </Container>

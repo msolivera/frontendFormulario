@@ -12,6 +12,10 @@ import {
   PAIS_PAREJA,
   DEPARTAMENTO_PAREJA,
   BARRIO_PAREJA,
+  ESTCIVIL_POSTU,
+  ESTCIVIL_MADRE,
+  ESTCIVIL_PADRE,
+  ESTCIVIL_PAREJA,
 } from "../utils/constant";
 
 export function getPaisesApi() {
@@ -161,6 +165,51 @@ export function setearCiudad(idCiudad, tipoPerstate) {
         localStorage.setItem(BARRIO_PAREJA, response.data);
         break;
 
+      default:
+        break;
+    }
+  });
+}
+
+export function getNombreEstadoCivil(idestadoCivil) {
+  const url = `${API_HOST}estadoCivil/${idestadoCivil}`;
+
+  const params = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application-json",
+    },
+  };
+
+  return fetch(url, params)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return err;
+    });
+}
+
+export function setearEstadoCivil(idEstadoCivil, tipoPerstate) {
+  getNombreEstadoCivil(idEstadoCivil).then((response) => {
+    switch (tipoPerstate) {
+      case 1:
+        localStorage.setItem(ESTCIVIL_POSTU, response.data);
+        console.log("ESTADO CIVIL");
+        console.log(response.data);
+        break;
+      case 2:
+        localStorage.setItem(ESTCIVIL_MADRE, response.data);
+        break;
+      case 3:
+        localStorage.setItem(ESTCIVIL_PADRE, response.data);
+        break;
+      case 10:
+        localStorage.setItem(ESTCIVIL_PAREJA, response.data);
+        break;
       default:
         break;
     }

@@ -39,6 +39,7 @@ import {
   setearPais,
   setearDepartamento,
   setearCiudad,
+  setearEstadoCivil,
 } from "../../../../api/combos";
 
 import "../../FormPostulante/FormPostulante.scss";
@@ -584,26 +585,26 @@ export default function DatosPersonales(props) {
             <Form.Group>
               <Row>
                 <Col>
-                  <Col>
-                    <Form.Label>Estado Civil</Form.Label>
-                  </Col>
-                  <Col>
-                    <Form.Control
-                      id="select_form_estadoCivil"
-                      as="select"
-                      value={formData.estadocivil_id}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          estadocivil_id: e.target.value,
-                        }) | guardandoLocal(tipoPerstate, formData)
-                      }
-                      onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
-                    >
-                      <option value=""> Seleccione</option>
-                    </Form.Control>
-                  </Col>
+                  <Form.Label>Estado Civil</Form.Label>
+
+                  <Form.Control
+                    id="select_form_estadoCivil"
+                    as="select"
+                    value={formData.estadocivil_id}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        estadocivil_id: e.target.value,
+                      }) |
+                      guardandoLocal(tipoPerstate, formData) |
+                      setearEstadoCivil(e.target.value, tipoPerstate)
+                    }
+                    onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
+                  >
+                    <option value=""> Seleccione</option>
+                  </Form.Control>
                 </Col>
+
                 <Col>
                   <Form.Label>Credencial Civica Serie</Form.Label>
                   <Form.Control
@@ -748,7 +749,6 @@ export default function DatosPersonales(props) {
                     <option value="0"> Seleccione</option>
                   </Form.Control>
                 </Col>
-                <Row></Row>
               </Row>
 
               <Row>
@@ -770,19 +770,21 @@ export default function DatosPersonales(props) {
               </Row>
 
               <Row>
-                <Form.Label>Domicilios Anteriores</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows={2}
-                  value={formData.domicilioAnterior}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      domicilioAnterior: e.target.value,
-                    }) | guardandoLocal(tipoPerstate, formData)
-                  }
-                  onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
-                />
+                <Col>
+                  <Form.Label>Domicilios Anteriores</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={2}
+                    value={formData.domicilioAnterior}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        domicilioAnterior: e.target.value,
+                      }) | guardandoLocal(tipoPerstate, formData)
+                    }
+                    onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
+                  />
+                </Col>
               </Row>
 
               <h3>Complete si es nacido en el Extranjero: </h3>
