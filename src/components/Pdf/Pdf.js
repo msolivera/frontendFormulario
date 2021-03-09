@@ -226,20 +226,6 @@ class ComponentToPrint extends React.Component {
                   <Form.Control value={this.dataPostu.domicilioAnterior} />
                 </Col>
               </Row>
-
-              <h4>Informacion del extranjero: </h4>
-              <Row>
-                <Col>
-                  <Form.Label>Departamento/Estado</Form.Label>
-                  <Form.Control
-                    value={this.dataPostu.nombre_departamento_estado}
-                  />
-                </Col>
-                <Col>
-                  <Form.Label>Ciudad</Form.Label>
-                  <Form.Control value={this.dataPostu.nombre_ciudad} />
-                </Col>
-              </Row>
             </Form.Group>
           </Container>
           {/*estudios dela persona */}
@@ -687,20 +673,6 @@ class ComponentToPrint extends React.Component {
                   <Form.Control value={this.dataMadre.domicilioAnterior} />
                 </Col>
               </Row>
-
-              <h4>Informacion del extranjero:</h4>
-              <Row>
-                <Col>
-                  <Form.Label>Departamento/Estado</Form.Label>
-                  <Form.Control
-                    value={this.dataMadre.nombre_departamento_estado}
-                  />
-                </Col>
-                <Col>
-                  <Form.Label>Ciudad</Form.Label>
-                  <Form.Control value={this.dataMadre.nombre_ciudad} />
-                </Col>
-              </Row>
             </Form.Group>
           </Container>
           {/*LABORAL Madre*/}
@@ -878,20 +850,6 @@ class ComponentToPrint extends React.Component {
                   <Form.Control value={this.dataPadre.domicilioAnterior} />
                 </Col>
               </Row>
-
-              <h4>Informacion del extranjero: </h4>
-              <Row>
-                <Col>
-                  <Form.Label>Departamento/Estado</Form.Label>
-                  <Form.Control
-                    value={this.dataPadre.nombre_departamento_estado}
-                  />
-                </Col>
-                <Col>
-                  <Form.Label>Ciudad</Form.Label>
-                  <Form.Control value={this.dataPadre.nombre_ciudad} />
-                </Col>
-              </Row>
             </Form.Group>
           </Container>
           {/*LABORAL PADRE*/}
@@ -1067,20 +1025,6 @@ class ComponentToPrint extends React.Component {
                 <Col>
                   <Form.Label>Domicilios Anteriores</Form.Label>
                   <Form.Control value={this.dataPareja.domicilioAnterior} />
-                </Col>
-              </Row>
-
-              <h4>Informacion del extranjero: </h4>
-              <Row>
-                <Col>
-                  <Form.Label>Departamento/Estado</Form.Label>
-                  <Form.Control
-                    value={this.dataPareja.nombre_departamento_estado}
-                  />
-                </Col>
-                <Col>
-                  <Form.Label>Ciudad</Form.Label>
-                  <Form.Control value={this.dataPareja.nombre_ciudad} />
                 </Col>
               </Row>
             </Form.Group>

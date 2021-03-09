@@ -576,7 +576,7 @@ export default function DatosPersonales(props) {
                   >
                     <option value="0"> Seleccione</option>
                     <option value="Femenino">Femenino</option>
-                    <option value="Femenino">Masculino</option>
+                    <option value="Masculino">Masculino</option>
                   </Form.Control>
                 </Col>
               </Row>
@@ -780,40 +780,6 @@ export default function DatosPersonales(props) {
                       setFormData({
                         ...formData,
                         domicilioAnterior: e.target.value,
-                      }) | guardandoLocal(tipoPerstate, formData)
-                    }
-                    onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
-                  />
-                </Col>
-              </Row>
-
-              <h3>Complete si es nacido en el Extranjero: </h3>
-              <Row>
-                <Col>
-                  <Form.Label>Departamento/Estado</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Nombre de Departamento/Estado"
-                    value={formData.nombre_departamento_estado}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        nombre_departamento_estado: e.target.value,
-                      }) | guardandoLocal(tipoPerstate, formData)
-                    }
-                    onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
-                  />
-                </Col>
-                <Col>
-                  <Form.Label>Ciudad</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Ciudad"
-                    value={formData.nombre_ciudad}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        nombre_ciudad: e.target.value,
                       }) | guardandoLocal(tipoPerstate, formData)
                     }
                     onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
