@@ -14,8 +14,8 @@ import {
   getfliaresLocal,
   listaOtrosFamiliaresPersona,
 } from "../../api/tablas";
-import "../../index.scss";
-import "../../pdf.scss";
+import "../../scss/index.scss";
+import "../../scss/pdf.scss";
 
 import { Row, Col, Form, Container, Table } from "react-bootstrap";
 import {
