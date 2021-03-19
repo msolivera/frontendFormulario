@@ -1,0 +1,24 @@
+@import "./scss/index.scss";
+@import "bootstrap/dist/css/bootstrap.min.css";
+
+.container{
+  border-style: solid;
+  border-color: black;
+  margin-bottom: 50px;
+  max-width: 1000px;
+  
+}
+
+label{
+  font-weight: bolder;
+}
+
+input.form-control{
+  border: none;
+}
+
+
+.header{
+  background-color: black;
+  color:white;
+}

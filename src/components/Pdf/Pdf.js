@@ -15,6 +15,8 @@ import {
   listaOtrosFamiliaresPersona,
 } from "../../api/tablas";
 import "../../index.scss";
+import "../../pdf.scss";
+
 import { Row, Col, Form, Container, Table } from "react-bootstrap";
 import {
   getDataPostu,
@@ -67,51 +69,66 @@ class ComponentToPrint extends React.Component {
     return (
       <div>
         <div>
-          <h1 style={{ textAlign: "center" }}>Reservado</h1>
-          <div>
+          <div class="container">
             <td style={{ width: "88%" }} align={"left"}>
               <div>
-                <table>
-                  <td>
-                    <tr>
+                <table class="table">
+                  <tr>
+                    <td>
                       <h5>SOLICITUD DE INGRESOS</h5>
-                    </tr>
-                    <tr>
-                      <h5>COMANDO GENERAL DE LA ARMADA</h5>
-                    </tr>
-                    <tr>
-                      <h5>UNIDAD ORIGINADORA:</h5>
-                    </tr>
-                  </td>
-                </table>
-              </div>
-            </td>
-            <td align={"right"} style={{ width: "25%", textAlign: "left" }}>
-              <div>
-                <table>
-                  <td>
-                    <tr>
+                    </td>
+                    <td>
+                      <table>
+                        <tr>
+                          <td>
+                              <img src="logoArmada.jpg" style={{ width: "100px", height: "100px", marginLeft:"40%", marginRight:"50%"}} ></img>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                              <h5>COMANDO GENERAL DE LA ARMADA</h5>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                              <h2 style={{ textAlign: "center" }}>Reservado</h2>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                    <td>
                       <h5>FORMULARIO 04</h5>
-                    </tr>
-                    <tr>
-                      <h5>FECHA:</h5>
-                    </tr>
-                    <tr>
-                      <h5>SOL. NRO: </h5>
-                    </tr>
-                  </td>
+                    </td>
+                  </tr>
                 </table>
               </div>
             </td>
+            <tr align={"right"} style={{ width: "25%", textAlign: "left" }}>
+              <div>
+                <table class="table" >
+                  <tr>
+                    <td>
+                      <h5>UNIDAD ORIGINADORA: ________________</h5>
+                    </td>
+                    <td>
+                      <h5>FECHA: ___/___/____</h5>
+                    </td>
+                    <td>
+                      <h5>SOL. NRO: ________________</h5>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </tr>
           </div>
         </div>
-        <h1 style={{ textAlign: "center" }}>Informacion del Postulante</h1>
+        <h2 style={{ textAlign: "center" }}>Informacion del Postulante</h2>
 
         <Container>
-          <h3 style={{ textAlign: "center" }}>Datos Personales:</h3>
+          <h3 style={{ textAlign: "left" }}>Datos Personales:</h3>
           <Form.Group>
             <Row>
-              <Col>
+              <Col style={{  display: (this.dataPostu.primerNombre=='')?' block;':' none;' }}>
                 <Form.Label>Primer Nombre</Form.Label>
                 <Form.Control value={this.dataPostu.primerNombre} />
               </Col>
@@ -187,7 +204,7 @@ class ComponentToPrint extends React.Component {
 
         <div>
           <Container>
-            <h3 style={{ textAlign: "center" }}>Domicilio:</h3>
+            <h3 style={{ textAlign: "left" }}>Domicilio:</h3>
 
             <Form.Group>
               <Row>
@@ -228,11 +245,44 @@ class ComponentToPrint extends React.Component {
               </Row>
             </Form.Group>
           </Container>
+           {/*LABORAL POSTULANTE*/}
+           <Container>
+            <Form>
+              <div className="form-datos-personales">
+                <h3 style={{ textAlign: "left" }}>Ocupacion Actual</h3>
+                <Form>
+                  <Form.Group>
+                    <Row>
+                      <Col>
+                        <Form.Label>Cargo o Funcion</Form.Label>
+                        <Form.Control value={this.laboralPostu.cargo_funcion} />
+                      </Col>
+                      <Col>
+                        <Form.Label>Ente</Form.Label>
+                        <Form.Control
+                          value={this.laboralPostu.ente}
+                        ></Form.Control>
+                      </Col>
+
+                      <Col>
+                        <Form.Label>Nombre de la Empresa</Form.Label>
+                        <Form.Control value={this.laboralPostu.nombreEmpresa} />
+                      </Col>
+                      <Col>
+                        <Form.Label>Direccion de la Empresa</Form.Label>
+                        <Form.Control value={this.laboralPostu.direccion} />
+                      </Col>
+                    </Row>
+                  </Form.Group>
+                </Form>
+              </div>
+            </Form>
+          </Container>
           {/*estudios dela persona */}
           <Container>
             <Form>
               <div>
-                <h3 style={{ textAlign: "center" }}>Educacion</h3>
+                <h3 style={{ textAlign: "left", pageBreakBefore:"always" }}>Educacion</h3>
 
                 <Table>
                   <th>
@@ -469,7 +519,7 @@ class ComponentToPrint extends React.Component {
                   </th>
                 </Table>
 
-                <h3 style={{ textAlign: "center" }}>
+                <h3 style={{ textAlign: "left" }}>
                   Otros Estudios Realizados
                 </h3>
 
@@ -494,44 +544,12 @@ class ComponentToPrint extends React.Component {
               </div>
             </Form>
           </Container>
-          {/*LABORAL POSTULANTE*/}
-          <Container>
-            <Form>
-              <div className="form-datos-personales">
-                <h3 style={{ textAlign: "center" }}>Ocupacion Actual</h3>
-                <Form>
-                  <Form.Group>
-                    <Row>
-                      <Col>
-                        <Form.Label>Cargo o Funcion</Form.Label>
-                        <Form.Control value={this.laboralPostu.cargo_funcion} />
-                      </Col>
-                      <Col>
-                        <Form.Label>Ente</Form.Label>
-                        <Form.Control
-                          value={this.laboralPostu.ente}
-                        ></Form.Control>
-                      </Col>
-
-                      <Col>
-                        <Form.Label>Nombre de la Empresa</Form.Label>
-                        <Form.Control value={this.laboralPostu.nombreEmpresa} />
-                      </Col>
-                      <Col>
-                        <Form.Label>Direccion de la Empresa</Form.Label>
-                        <Form.Control value={this.laboralPostu.direccion} />
-                      </Col>
-                    </Row>
-                  </Form.Group>
-                </Form>
-              </div>
-            </Form>
-          </Container>
+         
 
           {/*PREGUNTAS POSTULANTE*/}
           <Container>
             <Form>
-              <h3 style={{ textAlign: "center" }}>Respuestas Ingresadas:</h3>
+              <h3 style={{ textAlign: "left" }}>Respuestas Ingresadas:</h3>
               <Table>
                 <tbody>
                   {/**En esta parte hago un if que controla si el array de preguntas no tiene nada cargado aun
@@ -552,9 +570,9 @@ class ComponentToPrint extends React.Component {
         </div>
 
         {/**DATOS DE LA MADRE */}
-        <h1 style={{ textAlign: "center" }}>Informacion de la Madre</h1>
+        <h2 style={{ textAlign: "center" }}>Informacion de la Madre</h2>
         <Container>
-          <h3 style={{ textAlign: "center" }}>Datos Personales</h3>
+          <h3 style={{ textAlign: "left" }}>Datos Personales</h3>
           <Form.Group>
             <Row>
               <Col>
@@ -605,7 +623,7 @@ class ComponentToPrint extends React.Component {
 
           <Form.Group>
             <Row>
-              <Col>
+            <Col style={{  display: ((localStorage.getItem("estCivil_madre")!=null) ?'block':'none') }}>
                 <Form.Label>Estado Civil</Form.Label>
 
                 <Form.Control
@@ -634,7 +652,7 @@ class ComponentToPrint extends React.Component {
 
         <div>
           <Container>
-            <h3 style={{ textAlign: "center" }}>Domicilio</h3>
+            <h3 style={{ textAlign: "left" }}>Domicilio</h3>
 
             <Form.Group>
               <Row>
@@ -679,7 +697,7 @@ class ComponentToPrint extends React.Component {
           <Container>
             <Form>
               <div className="form-datos-personales">
-                <h3 style={{ textAlign: "center" }}>Ocupacion Actual</h3>
+                <h3 style={{ textAlign: "left" }}>Ocupacion Actual</h3>
                 <Form>
                   <Form.Group>
                     <Row>
@@ -711,7 +729,7 @@ class ComponentToPrint extends React.Component {
 
           <Container>
             <Form>
-              <h3 style={{ textAlign: "center" }}>Respuestas Ingresadas:</h3>
+              <h3 style={{ textAlign: "left" }}>Respuestas Ingresadas:</h3>
               <Table>
                 <tbody>
                   {(this.preguntasMadre.length == 0) |
@@ -729,9 +747,9 @@ class ComponentToPrint extends React.Component {
         </div>
 
         {/**DATOS DEL PADRE */}
-        <h1 style={{ textAlign: "center" }}>Informacion del Padre</h1>
+        <h2 style={{ textAlign: "center" }}>Informacion del Padre</h2>
         <Container>
-          <h3 style={{ textAlign: "center" }}>Datos Personales</h3>
+          <h3 style={{ textAlign: "left" }}>Datos Personales</h3>
           <Form.Group>
             <Row>
               <Col>
@@ -811,7 +829,7 @@ class ComponentToPrint extends React.Component {
 
         <div>
           <Container>
-            <h3 style={{ textAlign: "center" }}>Domicilio</h3>
+            <h3 style={{ textAlign: "left" }}>Domicilio</h3>
 
             <Form.Group>
               <Row>
@@ -856,7 +874,7 @@ class ComponentToPrint extends React.Component {
           <Container>
             <Form>
               <div className="form-datos-personales">
-                <h3 style={{ textAlign: "center" }}>Ocupacion Actual</h3>
+                <h3 style={{ textAlign: "left" }}>Ocupacion Actual</h3>
                 <Form>
                   <Form.Group>
                     <Row>
@@ -888,7 +906,7 @@ class ComponentToPrint extends React.Component {
 
           <Container>
             <Form>
-              <h3 style={{ textAlign: "center" }}>Respuestas Ingresadas:</h3>
+              <h3 style={{ textAlign: "left", pageBreakBefore:"always"}}>Respuestas Ingresadas:</h3>
               <Table>
                 <tbody>
                   {this.preguntasPadre.length == 0 ? (
@@ -905,11 +923,11 @@ class ComponentToPrint extends React.Component {
         </div>
 
         {/**DATOS DE PAREJA */}
-        <h1 style={{ textAlign: "center" }}>
+        <h2 style={{ textAlign: "center" }}>
           Informacion de Conyuge, Concubino/a , Novio/a
-        </h1>
+        </h2>
         <Container>
-          <h3 style={{ textAlign: "center" }}>Datos Personales</h3>
+          <h3 style={{ textAlign: "left" }}>Datos Personales</h3>
           <Form.Group>
             <Row>
               <Col>
@@ -988,7 +1006,7 @@ class ComponentToPrint extends React.Component {
 
         <div>
           <Container>
-            <h3 style={{ textAlign: "center" }}>Domicilio</h3>
+            <h3 style={{ textAlign: "left" }}>Domicilio</h3>
 
             <Form.Group>
               <Row>
@@ -1033,7 +1051,7 @@ class ComponentToPrint extends React.Component {
           <Container>
             <Form>
               <div className="form-datos-personales">
-                <h3 style={{ textAlign: "center" }}>Ocupacion Actual</h3>
+                <h3 style={{ textAlign: "left" }}>Ocupacion Actual</h3>
                 <Form>
                   <Form.Group>
                     <Row>
@@ -1069,7 +1087,7 @@ class ComponentToPrint extends React.Component {
 
           <Container>
             <Form>
-              <h3 style={{ textAlign: "center" }}>Respuestas Ingresadas:</h3>
+              <h3 style={{ textAlign: "left" }}>Respuestas Ingresadas:</h3>
               <Table>
                 <tbody>
                   {this.preguntasPareja.length == 0 ? (
@@ -1088,8 +1106,8 @@ class ComponentToPrint extends React.Component {
         <div>
           <Container>
             <Form>
-              <h3 style={{ textAlign: "center" }}>
-                Otros integrandes del ambito habitacional:
+              <h3 style={{ textAlign: "left", pageBreakBefore:"always" }}>
+                Otros integrantes del ambito habitacional:
               </h3>
               <div>
                 {this.parientes.length == 0 ? (
@@ -1103,7 +1121,7 @@ class ComponentToPrint extends React.Component {
             </Form>
           </Container>
         </div>
-        <div style={{ padding: "25px", textAlign: "center" }}>
+        <div >
           <Container>
             <p>
               CERTIFICO, que las declaraciones que ha brindado revisten al
@@ -1160,7 +1178,7 @@ class Example extends React.Component {
     return (
       <div>
         <ReactToPrint
-          trigger={() => <a href="#">DESCARGAR PDF</a>}
+          trigger={() => <a href="#" class="btn btn-success descargar">DESCARGAR PDF</a>}
           content={() => this.componentRef}
         />
         <ComponentToPrint ref={(el) => (this.componentRef = el)} />
