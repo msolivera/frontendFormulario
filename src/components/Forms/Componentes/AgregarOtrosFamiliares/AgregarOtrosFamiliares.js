@@ -108,6 +108,7 @@ export default function AgregarOtrosFamiliares(props) {
               <th>Parentezco</th>
               <th>Primer nombre</th>
               <th>Primer Apellido</th>
+              <th>CI (Sin puntos ni guión)</th>
               <th>Fecha de Nacimiento</th>
             </tr>
           </thead>
@@ -151,6 +152,18 @@ export default function AgregarOtrosFamiliares(props) {
                     setFormData({
                       ...formData,
                       primerApellido: e.target.value,
+                    })
+                  }
+                />
+              </th>
+              <th>
+                <Form.Control
+                  type="text"
+                  value={formData.cedula}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      cedula: e.target.value,
                     })
                   }
                 />
@@ -239,6 +252,7 @@ function initialFormValue() {
     primerNombre: "",
     primerApellido: "",
     fechaNacimiento: "",
+    cedula: "",
     tipo_persona_id: "",
   };
 }

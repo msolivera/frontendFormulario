@@ -164,7 +164,7 @@ export default function DatosPersonales(props) {
 
     if (tipoPerstate === 1) {
       if (localStorage.getItem("guardadoDataPostu") == null) {
-        if (validCount < 18) {
+        if (validCount < 20) {
           toast.warning("Faltan campos que completar");
         } else {
           if (!isEmailValid(formData.correoElectronico)) {
@@ -194,7 +194,7 @@ export default function DatosPersonales(props) {
           }
         }
       } else {
-        if (validCount < 18) {
+        if (validCount < 20) {
           toast.warning("Faltan campos que completar");
         } else {
           if (!isEmailValid(formData.correoElectronico)) {
@@ -317,7 +317,7 @@ export default function DatosPersonales(props) {
       }
       if (tipoPerstate === 10) {
         if (localStorage.getItem("guardadoDataPreja") == null) {
-          console.log("NO hay datos Pareja");
+          //console.log("NO hay datos Pareja");
           setDataPareja(JSON.stringify(formData));
           crearFamiliarPostulante(formData)
             .then((response) => {
@@ -454,7 +454,9 @@ export default function DatosPersonales(props) {
                   />
                 </Col>
                 <Col>
-                  <Form.Label>Cedula de identidad</Form.Label>
+                  <Form.Label>
+                    Cedula de identidad (sin puntos ni guión)
+                  </Form.Label>
                   <Form.Control
                     type="text"
                     placeholder="Cedula de Identidad"
@@ -585,6 +587,53 @@ export default function DatosPersonales(props) {
             <Form.Group>
               <Row>
                 <Col>
+                  <Form.Label>Raza</Form.Label>
+                  <Form.Control
+                    as="select"
+                    defaultValue="Seleccione"
+                    value={formData.raza}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        raza: e.target.value,
+                      }) | guardandoLocal(tipoPerstate, formData)
+                    }
+                    onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
+                  >
+                    <option value="0"> Seleccione</option>
+                    <option value="Afrodescendiente">Afrodescendiente</option>
+                    <option value="No afrodescendiente">
+                      No afrodescendiente
+                    </option>
+                  </Form.Control>
+                </Col>
+
+                <Col>
+                  <Form.Label>Identidad de Género</Form.Label>
+                  <Form.Control
+                    as="select"
+                    defaultValue="Seleccione"
+                    value={formData.identidadGenero}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        identidadGenero: e.target.value,
+                      }) | guardandoLocal(tipoPerstate, formData)
+                    }
+                    onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
+                  >
+                    <option value="0"> Seleccione</option>
+                    <option value="Mujer">Mujer</option>
+                    <option value="Hombre">Hombre</option>
+                    <option value="Trans">Trans</option>
+                  </Form.Control>
+                </Col>
+              </Row>
+            </Form.Group>
+
+            <Form.Group>
+              <Row>
+                <Col>
                   <Form.Label>Estado Civil</Form.Label>
 
                   <Form.Control
@@ -640,9 +689,9 @@ export default function DatosPersonales(props) {
             <Form.Group>
               <Row>
                 <Col>
-                  <Form.Label>Correo Electronico</Form.Label>
+                  <Form.Label>Correo Electrónico</Form.Label>
                   <Form.Control
-                    type="email"
+                    type="text"
                     placeholder="Correo Electronico"
                     value={formData.correoElectronico}
                     onChange={(e) =>
@@ -667,7 +716,7 @@ export default function DatosPersonales(props) {
             <Form.Group>
               <Row>
                 <Col>
-                  <Form.Label>Pais de Nacimiento</Form.Label>
+                  <Form.Label>País de Nacimiento</Form.Label>
                   <Form.Control
                     id="select_form_pais"
                     as="select"
@@ -753,7 +802,7 @@ export default function DatosPersonales(props) {
 
               <Row>
                 <Col>
-                  <Form.Label>Seccional Policial</Form.Label>
+                  <Form.Label>Seccional Policial (solo números)</Form.Label>
                   <Form.Control
                     type="text"
                     placeholder="Seccional Policial"
@@ -843,6 +892,8 @@ function initialFormValue(tipoPerstate) {
       credencialSerie: llenarDelStorage("credencialSerie", "", tipoPerstate),
       credencialNumero: llenarDelStorage("credencialNumero", "", tipoPerstate),
       sexo: llenarDelStorage("sexo", "", tipoPerstate),
+      identidadGenero: llenarDelStorage("identidadGenero", "", tipoPerstate),
+      raza: llenarDelStorage("raza", "", tipoPerstate),
       domicilioActual: llenarDelStorage("domicilioActual", "", tipoPerstate),
       domicilioAnterior: llenarDelStorage(
         "domicilioAnterior",
@@ -852,7 +903,7 @@ function initialFormValue(tipoPerstate) {
       telefono_celular: llenarDelStorage("telefono_celular", "", tipoPerstate),
       correoElectronico: llenarDelStorage(
         "correoElectronico",
-        "",
+        "ejemplo@mail.com",
         tipoPerstate
       ),
       seccionalPolicial: llenarDelStorage(
@@ -884,8 +935,10 @@ function initialFormValue(tipoPerstate) {
       fechaNacimiento: llenarDelStorage("fechaNacimiento", "", tipoPerstate),
       cedula: llenarDelStorage("cedula", "0", tipoPerstate),
       credencialSerie: llenarDelStorage("credencialSerie", "", tipoPerstate),
-      credencialNumero: llenarDelStorage("cedula", "0", tipoPerstate),
-      sexo: llenarDelStorage("credencialNumero", "", tipoPerstate),
+      credencialNumero: llenarDelStorage("credencialNumero", "0", tipoPerstate),
+      sexo: llenarDelStorage("sexo", "", tipoPerstate),
+      identidadGenero: llenarDelStorage("identidadGenero", "", tipoPerstate),
+      raza: llenarDelStorage("raza", "", tipoPerstate),
       domicilioActual: llenarDelStorage("domicilioActual", "", tipoPerstate),
       domicilioAnterior: llenarDelStorage(
         "domicilioAnterior",
@@ -895,7 +948,7 @@ function initialFormValue(tipoPerstate) {
       telefono_celular: llenarDelStorage("telefono_celular", "0", tipoPerstate),
       correoElectronico: llenarDelStorage(
         "correoElectronico",
-        "",
+        "ejemplo@mail.com",
         tipoPerstate
       ),
       seccionalPolicial: llenarDelStorage(
