@@ -80,7 +80,7 @@ export default function FormOtrosFamiliares() {
                 </span>
               </Button>
 
-              {fliares.length == 0 ? (
+              {fliares.length === 0 ? (
                 <tr>No hay Familiares ingresados</tr>
               ) : (
                 map(fliares, (fliar, index) => (
@@ -106,6 +106,7 @@ function formatModel(fliares) {
       primerApellido: fliar.primerApellido,
       fechaNacimiento: fliar.fechaNacimiento,
       parentesco: fliar.nombre,
+      cedula: fliar.cedula,
     });
   });
   return fliaresTemp;

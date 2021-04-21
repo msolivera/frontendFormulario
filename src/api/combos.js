@@ -198,8 +198,8 @@ export function setearEstadoCivil(idEstadoCivil, tipoPerstate) {
     switch (tipoPerstate) {
       case 1:
         localStorage.setItem(ESTCIVIL_POSTU, response.data);
-        console.log("ESTADO CIVIL");
-        console.log(response.data);
+        // console.log("ESTADO CIVIL");
+        //console.log(response.data);
         break;
       case 2:
         localStorage.setItem(ESTCIVIL_MADRE, response.data);

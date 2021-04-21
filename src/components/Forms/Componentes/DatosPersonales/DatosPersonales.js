@@ -272,7 +272,7 @@ export default function DatosPersonales(props) {
       }
       if (tipoPerstate === 3) {
         if (localStorage.getItem("guardadoDataPadre") == null) {
-          console.log("NO hay datos Padre");
+          //console.log("NO hay datos Padre");
           setDataPadre(JSON.stringify(formData));
           crearFamiliarPostulante(formData)
             .then((response) => {

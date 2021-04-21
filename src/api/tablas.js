@@ -187,6 +187,7 @@ export function formatModelOtrosFliares(fliares) {
       fechaNacimiento: fliar.fechaNacimiento,
       tipo_persona_id: fliar.tipo_persona_id,
       tipoPersona: fliar.nombre,
+      cedula: fliar.cedula,
     });
   });
   localStorage.setItem(FAMILIARES, JSON.stringify(fliaresTemp));

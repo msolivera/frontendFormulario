@@ -52,17 +52,8 @@ export default function Educacion(props) {
     setFormData({
       ...formData,
       primeroPrimaria_persona_id: idPostulante,
-      segundoPrimaria_persona_id: idPostulante,
-      terceroPrimaria_persona_id: idPostulante,
-      cuartoPrimaria_persona_id: idPostulante,
-      quintoPrimaria_persona_id: idPostulante,
-      sextoPrimaria_persona_id: idPostulante,
       primeroSecu_persona_id: idPostulante,
-      segundoSecu_persona_id: idPostulante,
-      terceroSecu_persona_id: idPostulante,
       cuartoBach_persona_id: idPostulante,
-      quintoBach_persona_id: idPostulante,
-      sextoBach_persona_id: idPostulante,
     });
 
     return getIdPostu();
@@ -108,20 +99,13 @@ export default function Educacion(props) {
       <Form onSubmit={onSubmit}>
         <Jumbotron>
           <div>
-            <h3>Primaria</h3>
             <Table>
-              <thead>
-                <tr>
-                  <th>Año</th>
-                  <th>Nombre de institucion</th>
-                </tr>
-              </thead>
               <tbody>
                 <tr>
                   <td>
                     <Form.Control
                       type="text"
-                      defaultValue="Primer Año"
+                      defaultValue="Primaria"
                       readOnly
                     />
                   </td>
@@ -143,154 +127,16 @@ export default function Educacion(props) {
                     />
                   </td>
                 </tr>
-                <tr>
-                  <td>
-                    <Form.Control
-                      type="text"
-                      defaultValue="Segundo Año"
-                      readOnly
-                    />
-                  </td>
-                  <td>
-                    {" "}
-                    <Form.Control
-                      type="text"
-                      placeholder="Nombre de escuela/colegio"
-                      value={formData.segundoPrimaria_nombreInstituto}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          segundoPrimaria_nombreInstituto: e.target.value,
-                        }) | setEstudiosBasicos(JSON.stringify(formData))
-                      }
-                      onKeyUp={() =>
-                        setEstudiosBasicos(JSON.stringify(formData))
-                      }
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <Form.Control
-                      type="text"
-                      defaultValue="Tercer Año"
-                      readOnly
-                    />
-                  </td>
-                  <td>
-                    {" "}
-                    <Form.Control
-                      type="text"
-                      placeholder="Nombre de escuela/colegio"
-                      value={formData.terceroPrimaria_nombreInstituto}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          terceroPrimaria_nombreInstituto: e.target.value,
-                        }) | setEstudiosBasicos(JSON.stringify(formData))
-                      }
-                      onKeyUp={() =>
-                        setEstudiosBasicos(JSON.stringify(formData))
-                      }
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <Form.Control
-                      type="text"
-                      defaultValue="Cuarto Año"
-                      readOnly
-                    />
-                  </td>
-                  <td>
-                    {" "}
-                    <Form.Control
-                      type="text"
-                      placeholder="Nombre de escuela/colegio"
-                      value={formData.cuartoPrimaria_nombreInstituto}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          cuartoPrimaria_nombreInstituto: e.target.value,
-                        }) | setEstudiosBasicos(JSON.stringify(formData))
-                      }
-                      onKeyUp={() =>
-                        setEstudiosBasicos(JSON.stringify(formData))
-                      }
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <Form.Control
-                      type="text"
-                      defaultValue="Quinto Año"
-                      readOnly
-                    />
-                  </td>
-                  <td>
-                    {" "}
-                    <Form.Control
-                      type="text"
-                      placeholder="Nombre de escuela/colegio"
-                      value={formData.quintoPrimaria_nombreInstituto}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          quintoPrimaria_nombreInstituto: e.target.value,
-                        }) | setEstudiosBasicos(JSON.stringify(formData))
-                      }
-                      onKeyUp={() =>
-                        setEstudiosBasicos(JSON.stringify(formData))
-                      }
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <Form.Control
-                      type="text"
-                      defaultValue="Sexto Año"
-                      readOnly
-                    />
-                  </td>
-                  <td>
-                    {" "}
-                    <Form.Control
-                      type="text"
-                      placeholder="Nombre de escuela/colegio"
-                      value={formData.sextoPrimaria_nombreInstituto}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          sextoPrimaria_nombreInstituto: e.target.value,
-                        }) | setEstudiosBasicos(JSON.stringify(formData))
-                      }
-                      onKeyUp={() =>
-                        setEstudiosBasicos(JSON.stringify(formData))
-                      }
-                    />
-                  </td>
-                </tr>
               </tbody>
             </Table>
 
-            <h3>Secundaria</h3>
             <Table>
-              <thead>
-                <tr>
-                  <th>Año</th>
-                  <th>Nombre de institucion</th>
-                  <th hidden>tipo_estudio</th>
-                </tr>
-              </thead>
               <tbody>
                 <tr>
                   <td>
                     <Form.Control
                       type="text"
-                      defaultValue="Primer Año"
+                      defaultValue="Secundaria"
                       readOnly
                     />
                   </td>
@@ -312,74 +158,16 @@ export default function Educacion(props) {
                     />
                   </td>
                 </tr>
-                <tr>
-                  <td>
-                    <Form.Control
-                      type="text"
-                      defaultValue="Segundo Año"
-                      readOnly
-                    />
-                  </td>
-                  <td>
-                    {" "}
-                    <Form.Control
-                      type="text"
-                      placeholder="Nombre de liceo/colegio"
-                      value={formData.segundoSecu_nombreInstituto}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          segundoSecu_nombreInstituto: e.target.value,
-                        }) | setEstudiosBasicos(JSON.stringify(formData))
-                      }
-                      onKeyUp={() =>
-                        setEstudiosBasicos(JSON.stringify(formData))
-                      }
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <Form.Control
-                      type="text"
-                      defaultValue="Tercer Año"
-                      readOnly
-                    />
-                  </td>
-                  <td>
-                    {" "}
-                    <Form.Control
-                      type="text"
-                      placeholder="Nombre de liceo/colegio"
-                      value={formData.terceroSecu_nombreInstituto}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          terceroSecu_nombreInstituto: e.target.value,
-                        }) | setEstudiosBasicos(JSON.stringify(formData))
-                      }
-                      onKeyUp={() =>
-                        setEstudiosBasicos(JSON.stringify(formData))
-                      }
-                    />
-                  </td>
-                </tr>
               </tbody>
             </Table>
-            <h3>Bachillerato</h3>
+
             <Table>
-              <thead>
-                <tr>
-                  <th>Año</th>
-                  <th>Nombre de institucion</th>
-                </tr>
-              </thead>
               <tbody>
                 <tr>
                   <td>
                     <Form.Control
                       type="text"
-                      defaultValue="Cuarto Año"
+                      defaultValue="Bachillerato"
                       readOnly
                     />
                   </td>
@@ -393,58 +181,6 @@ export default function Educacion(props) {
                         setFormData({
                           ...formData,
                           cuartoBach_nombreInstituto: e.target.value,
-                        }) | setEstudiosBasicos(JSON.stringify(formData))
-                      }
-                      onKeyUp={() =>
-                        setEstudiosBasicos(JSON.stringify(formData))
-                      }
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <Form.Control
-                      type="text"
-                      defaultValue="Quinto Año"
-                      readOnly
-                    />
-                  </td>
-                  <td>
-                    {" "}
-                    <Form.Control
-                      type="text"
-                      placeholder="Nombre de liceo/colegio"
-                      value={formData.quintoBach_nombreInstituto}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          quintoBach_nombreInstituto: e.target.value,
-                        }) | setEstudiosBasicos(JSON.stringify(formData))
-                      }
-                      onKeyUp={() =>
-                        setEstudiosBasicos(JSON.stringify(formData))
-                      }
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <Form.Control
-                      type="text"
-                      defaultValue="Sexto Año"
-                      readOnly
-                    />
-                  </td>
-                  <td>
-                    {" "}
-                    <Form.Control
-                      type="text"
-                      placeholder="Nombre de liceo/colegio"
-                      value={formData.sextoBach_nombreInstituto}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          sextoBach_nombreInstituto: e.target.value,
                         }) | setEstudiosBasicos(JSON.stringify(formData))
                       }
                       onKeyUp={() =>
@@ -520,7 +256,7 @@ function llenarDelStorageId(campo, defval) {
 }*/
 function initialFormValue() {
   let data = {
-    primeroPrimaria_anioEstudio: "Primer año",
+    primeroPrimaria_anioEstudio: "Primaria",
     primeroPrimaria_nombreInstituto: llenarDelStorage(
       "primeroPrimaria_nombreInstituto",
       ""
@@ -528,52 +264,7 @@ function initialFormValue() {
     primeroPrimaria_tipo_estudio_id: "1",
     primeroPrimaria_persona_id: "",
 
-    segundoPrimaria_anioEstudio: "Segundo año",
-    segundoPrimaria_nombreInstituto: llenarDelStorage(
-      "segundoPrimaria_nombreInstituto",
-      ""
-    ),
-    segundoPrimaria_tipo_estudio_id: "1",
-    segundoPrimaria_persona_id: "",
-    segundoPrimaria_id: "",
-
-    terceroPrimaria_anioEstudio: "Tercer año",
-    terceroPrimaria_nombreInstituto: llenarDelStorage(
-      "terceroPrimaria_nombreInstituto",
-      ""
-    ),
-    terceroPrimaria_tipo_estudio_id: "1",
-    terceroPrimaria_persona_id: "",
-    terceroPrimaria_id: "",
-
-    cuartoPrimaria_anioEstudio: "Cuarto año",
-    cuartoPrimaria_nombreInstituto: llenarDelStorage(
-      "cuartoPrimaria_nombreInstituto",
-      ""
-    ),
-    cuartoPrimaria_tipo_estudio_id: "1",
-    cuartoPrimaria_persona_id: "",
-    cuartoPrimaria_id: "",
-
-    quintoPrimaria_anioEstudio: "Quinto año",
-    quintoPrimaria_nombreInstituto: llenarDelStorage(
-      "quintoPrimaria_nombreInstituto",
-      ""
-    ),
-    quintoPrimaria_tipo_estudio_id: "1",
-    quintoPrimaria_persona_id: "",
-    quintoPrimaria_id: "",
-
-    sextoPrimaria_anioEstudio: "Sexto año",
-    sextoPrimaria_nombreInstituto: llenarDelStorage(
-      "sextoPrimaria_nombreInstituto",
-      ""
-    ),
-    sextoPrimaria_tipo_estudio_id: "1",
-    sextoPrimaria_persona_id: "",
-    sextoPrimaria_id: "",
-
-    primeroSecu_anioEstudio: "Primer año",
+    primeroSecu_anioEstudio: "Segundaria",
     primeroSecu_nombreInstituto: llenarDelStorage(
       "primeroSecu_nombreInstituto",
       ""
@@ -582,25 +273,7 @@ function initialFormValue() {
     primeroSecu_persona_id: "",
     primeroSecu_id: "",
 
-    segundoSecu_anioEstudio: "Segundo año",
-    segundoSecu_nombreInstituto: llenarDelStorage(
-      "segundoSecu_nombreInstituto",
-      ""
-    ),
-    segundoSecu_tipo_estudio_id: "2",
-    segundoSecu_persona_id: "",
-    segundoSecu_id: "",
-
-    terceroSecu_anioEstudio: "Tercer año",
-    terceroSecu_nombreInstituto: llenarDelStorage(
-      "terceroSecu_nombreInstituto",
-      ""
-    ),
-    terceroSecu_tipo_estudio_id: "2",
-    terceroSecu_persona_id: "",
-    terceroSecu_id: "",
-
-    cuartoBach_anioEstudio: "Cuarto año",
+    cuartoBach_anioEstudio: "Bachillerato",
     cuartoBach_nombreInstituto: llenarDelStorage(
       "cuartoBach_nombreInstituto",
       ""
@@ -608,24 +281,6 @@ function initialFormValue() {
     cuartoBach_tipo_estudio_id: "3",
     cuartoBach_persona_id: "",
     cuartoBach_id: "",
-
-    quintoBach_anioEstudio: "Quinto año",
-    quintoBach_nombreInstituto: llenarDelStorage(
-      "quintoBach_nombreInstituto",
-      ""
-    ),
-    quintoBach_tipo_estudio_id: "3",
-    quintoBach_persona_id: "",
-    quintoBach_id: "",
-
-    sextoBach_anioEstudio: "Sexto año",
-    sextoBach_nombreInstituto: llenarDelStorage(
-      "sextoBach_nombreInstituto",
-      ""
-    ),
-    sextoBach_tipo_estudio_id: "3",
-    sextoBach_persona_id: "",
-    sextoBach_id: "",
   };
 
   return data;

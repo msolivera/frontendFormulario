@@ -1,5 +1,6 @@
 import React from "react";
 import ReactToPrint from "react-to-print";
+import { Link } from "react-router-dom";
 
 import { map } from "lodash";
 import TableRowEducacion from "../Forms/Componentes/TableRowEducacion/index";
@@ -17,7 +18,7 @@ import {
 import "../../scss/index.scss";
 import "../../scss/pdf.scss";
 
-import { Row, Col, Form, Container, Table } from "react-bootstrap";
+import { Row, Col, Form, Container, Table, Button } from "react-bootstrap";
 import {
   getDataPostu,
   getDataMadre,
@@ -67,7 +68,7 @@ class ComponentToPrint extends React.Component {
 
   render() {
     return (
-      <div>
+      <div ocultarVacios>
         <div>
           <div class="container">
             <td style={{ width: "88%" }} align={"left"}>
@@ -81,17 +82,25 @@ class ComponentToPrint extends React.Component {
                       <table>
                         <tr>
                           <td>
-                              <img src="logoArmada.jpg" style={{ width: "100px", height: "100px", marginLeft:"40%", marginRight:"50%"}} ></img>
+                            <img
+                              src="logoArmada.jpg"
+                              style={{
+                                width: "100px",
+                                height: "100px",
+                                marginLeft: "40%",
+                                marginRight: "50%",
+                              }}
+                            ></img>
                           </td>
                         </tr>
                         <tr>
                           <td>
-                              <h5>COMANDO GENERAL DE LA ARMADA</h5>
+                            <h5>COMANDO GENERAL DE LA ARMADA</h5>
                           </td>
                         </tr>
                         <tr>
                           <td>
-                              <h2 style={{ textAlign: "center" }}>Reservado</h2>
+                            <h2 style={{ textAlign: "center" }}>Reservado</h2>
                           </td>
                         </tr>
                       </table>
@@ -105,7 +114,7 @@ class ComponentToPrint extends React.Component {
             </td>
             <tr align={"right"} style={{ width: "25%", textAlign: "left" }}>
               <div>
-                <table class="table" >
+                <table class="table">
                   <tr>
                     <td>
                       <h5>UNIDAD ORIGINADORA: ________________</h5>
@@ -123,12 +132,16 @@ class ComponentToPrint extends React.Component {
           </div>
         </div>
         <h2 style={{ textAlign: "center" }}>Informacion del Postulante</h2>
-
         <Container>
           <h3 style={{ textAlign: "left" }}>Datos Personales:</h3>
           <Form.Group>
             <Row>
-              <Col style={{  display: (this.dataPostu.primerNombre=='')?' block;':' none;' }}>
+              <Col
+                style={{
+                  display:
+                    this.dataPostu.primerNombre == "" ? " block;" : " none;",
+                }}
+              >
                 <Form.Label>Primer Nombre</Form.Label>
                 <Form.Control value={this.dataPostu.primerNombre} />
               </Col>
@@ -199,9 +212,7 @@ class ComponentToPrint extends React.Component {
             </Row>
           </Form.Group>
         </Container>
-
         {/*SECCION DE DOMICILIO DE LA PERSONA*/}
-
         <div>
           <Container>
             <h3 style={{ textAlign: "left" }}>Domicilio:</h3>
@@ -245,8 +256,8 @@ class ComponentToPrint extends React.Component {
               </Row>
             </Form.Group>
           </Container>
-           {/*LABORAL POSTULANTE*/}
-           <Container>
+          {/*LABORAL POSTULANTE*/}
+          <Container>
             <Form>
               <div className="form-datos-personales">
                 <h3 style={{ textAlign: "left" }}>Ocupacion Actual</h3>
@@ -282,246 +293,71 @@ class ComponentToPrint extends React.Component {
           <Container>
             <Form>
               <div>
-                <h3 style={{ textAlign: "left", pageBreakBefore:"always" }}>Educacion</h3>
+                <h3 style={{ textAlign: "left", pageBreakBefore: "always" }}>
+                  Educacion
+                </h3>
 
                 <Table>
-                  <th>
-                    <h4>Primaria</h4>
-                    <thead>
-                      <tr>
-                        <th>Año</th>
-                        <th>Nombre de institucion</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>
-                          <Form.Control
-                            type="text"
-                            defaultValue="Primer Año"
-                            readOnly
-                          />
-                        </td>
-                        <td>
-                          {" "}
-                          <Form.Control
-                            value={
-                              this.estudiosBasicos
-                                .primeroPrimaria_nombreInstituto
-                            }
-                          />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <Form.Control
-                            type="text"
-                            defaultValue="Segundo Año"
-                            readOnly
-                          />
-                        </td>
-                        <td>
-                          {" "}
-                          <Form.Control
-                            value={
-                              this.estudiosBasicos
-                                .segundoPrimaria_nombreInstituto
-                            }
-                          />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <Form.Control
-                            type="text"
-                            defaultValue="Tercer Año"
-                            readOnly
-                          />
-                        </td>
-                        <td>
-                          {" "}
-                          <Form.Control
-                            value={
-                              this.estudiosBasicos
-                                .terceroPrimaria_nombreInstituto
-                            }
-                          />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <Form.Control
-                            type="text"
-                            defaultValue="Cuarto Año"
-                            readOnly
-                          />
-                        </td>
-                        <td>
-                          {" "}
-                          <Form.Control
-                            value={
-                              this.estudiosBasicos
-                                .cuartoPrimaria_nombreInstituto
-                            }
-                          />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <Form.Control
-                            type="text"
-                            defaultValue="Quinto Año"
-                            readOnly
-                          />
-                        </td>
-                        <td>
-                          {" "}
-                          <Form.Control
-                            value={
-                              this.estudiosBasicos
-                                .quintoPrimaria_nombreInstituto
-                            }
-                          />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <Form.Control
-                            type="text"
-                            defaultValue="Sexto Año"
-                            readOnly
-                          />
-                        </td>
-                        <td>
-                          {" "}
-                          <Form.Control
-                            value={
-                              this.estudiosBasicos.sextoPrimaria_nombreInstituto
-                            }
-                          />
-                        </td>
-                      </tr>
-                    </tbody>
-                  </th>
-                  <th>
-                    <h4>Secundaria y Bachillerato</h4>
-                    <thead>
-                      <tr>
-                        <th>Año</th>
-                        <th>Nombre de institucion</th>
-                        <th hidden>tipo_estudio</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>
-                          <Form.Control
-                            type="text"
-                            defaultValue="Primer Año"
-                            readOnly
-                          />
-                        </td>
-                        <td>
-                          {" "}
-                          <Form.Control
-                            value={
-                              this.estudiosBasicos.primeroSecu_nombreInstituto
-                            }
-                          />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <Form.Control
-                            type="text"
-                            defaultValue="Segundo Año"
-                            readOnly
-                          />
-                        </td>
-                        <td>
-                          {" "}
-                          <Form.Control
-                            value={
-                              this.estudiosBasicos.segundoSecu_nombreInstituto
-                            }
-                          />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <Form.Control
-                            type="text"
-                            defaultValue="Tercer Año"
-                            readOnly
-                          />
-                        </td>
-                        <td>
-                          {" "}
-                          <Form.Control
-                            value={
-                              this.estudiosBasicos.terceroSecu_nombreInstituto
-                            }
-                          />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <Form.Control
-                            type="text"
-                            defaultValue="Cuarto Año"
-                            readOnly
-                          />
-                        </td>
-                        <td>
-                          {" "}
-                          <Form.Control
-                            value={
-                              this.estudiosBasicos.cuartoBach_nombreInstituto
-                            }
-                          />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <Form.Control
-                            type="text"
-                            defaultValue="Quinto Año"
-                            readOnly
-                          />
-                        </td>
-                        <td>
-                          {" "}
-                          <Form.Control
-                            value={
-                              this.estudiosBasicos.quintoBach_nombreInstituto
-                            }
-                          />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <Form.Control
-                            type="text"
-                            defaultValue="Sexto Año"
-                            readOnly
-                          />
-                        </td>
-                        <td>
-                          {" "}
-                          <Form.Control
-                            value={
-                              this.estudiosBasicos.sextoBach_nombreInstituto
-                            }
-                          />
-                        </td>
-                      </tr>
-                    </tbody>
-                  </th>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <Form.Control
+                          type="text"
+                          defaultValue="Primaria"
+                          readOnly
+                        />
+                      </td>
+                      <td>
+                        {" "}
+                        <Form.Control
+                          value={
+                            this.estudiosBasicos.primeroPrimaria_nombreInstituto
+                          }
+                          readOnly
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <Form.Control
+                          type="text"
+                          defaultValue="Secundaria"
+                          readOnly
+                        />
+                      </td>
+                      <td>
+                        {" "}
+                        <Form.Control
+                          value={
+                            this.estudiosBasicos.primeroSecu_nombreInstituto
+                          }
+                          readOnly
+                        />
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        <Form.Control
+                          type="text"
+                          defaultValue="Bachillerato"
+                          readOnly
+                        />
+                      </td>
+                      <td>
+                        {" "}
+                        <Form.Control
+                          value={
+                            this.estudiosBasicos.cuartoBach_nombreInstituto
+                          }
+                          readOnly
+                        />
+                      </td>
+                    </tr>
+                  </tbody>
                 </Table>
 
-                <h3 style={{ textAlign: "left" }}>
-                  Otros Estudios Realizados
-                </h3>
+                <h3 style={{ textAlign: "left" }}>Otros Estudios Realizados</h3>
 
                 <Table id="tabla">
                   <thead>
@@ -532,7 +368,9 @@ class ComponentToPrint extends React.Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {this.estudios == null ? (
+                    {(this.estudios === 0) |
+                    (this.estudios === null) |
+                    (this.estudios === undefined) ? (
                       <tr>No hay Estudios ingresados</tr>
                     ) : (
                       map(this.estudios, (est, index) => (
@@ -544,7 +382,6 @@ class ComponentToPrint extends React.Component {
               </div>
             </Form>
           </Container>
-         
 
           {/*PREGUNTAS POSTULANTE*/}
           <Container>
@@ -568,14 +405,17 @@ class ComponentToPrint extends React.Component {
             </Form>
           </Container>
         </div>
-
         {/**DATOS DE LA MADRE */}
         <h2 style={{ textAlign: "center" }}>Informacion de la Madre</h2>
         <Container>
           <h3 style={{ textAlign: "left" }}>Datos Personales</h3>
           <Form.Group>
             <Row>
-              <Col>
+              <Col
+                style={{
+                  display: this.dataMadre.primerNombre == "" ? "none" : "block",
+                }}
+              >
                 <Form.Label>Primer Nombre</Form.Label>
                 <Form.Control value={this.dataMadre.primerNombre} />
               </Col>
@@ -623,7 +463,14 @@ class ComponentToPrint extends React.Component {
 
           <Form.Group>
             <Row>
-            <Col style={{  display: ((localStorage.getItem("estCivil_madre")!=null) ?'block':'none') }}>
+              <Col
+                style={{
+                  display:
+                    localStorage.getItem("estCivil_madre") != null
+                      ? "block"
+                      : "none",
+                }}
+              >
                 <Form.Label>Estado Civil</Form.Label>
 
                 <Form.Control
@@ -647,9 +494,7 @@ class ComponentToPrint extends React.Component {
             </Row>
           </Form.Group>
         </Container>
-
         {/*SECCION DE DOMICILIO DE LA PERSONA*/}
-
         <div>
           <Container>
             <h3 style={{ textAlign: "left" }}>Domicilio</h3>
@@ -745,7 +590,6 @@ class ComponentToPrint extends React.Component {
             </Form>
           </Container>
         </div>
-
         {/**DATOS DEL PADRE */}
         <h2 style={{ textAlign: "center" }}>Informacion del Padre</h2>
         <Container>
@@ -824,9 +668,7 @@ class ComponentToPrint extends React.Component {
             </Row>
           </Form.Group>
         </Container>
-
         {/*SECCION DE DOMICILIO DE LA PERSONA*/}
-
         <div>
           <Container>
             <h3 style={{ textAlign: "left" }}>Domicilio</h3>
@@ -906,7 +748,9 @@ class ComponentToPrint extends React.Component {
 
           <Container>
             <Form>
-              <h3 style={{ textAlign: "left", pageBreakBefore:"always"}}>Respuestas Ingresadas:</h3>
+              <h3 style={{ textAlign: "left", pageBreakBefore: "always" }}>
+                Respuestas Ingresadas:
+              </h3>
               <Table>
                 <tbody>
                   {this.preguntasPadre.length == 0 ? (
@@ -921,7 +765,6 @@ class ComponentToPrint extends React.Component {
             </Form>
           </Container>
         </div>
-
         {/**DATOS DE PAREJA */}
         <h2 style={{ textAlign: "center" }}>
           Informacion de Conyuge, Concubino/a , Novio/a
@@ -1001,9 +844,7 @@ class ComponentToPrint extends React.Component {
             </Row>
           </Form.Group>
         </Container>
-
         {/*SECCION DE DOMICILIO DE LA PERSONA*/}
-
         <div>
           <Container>
             <h3 style={{ textAlign: "left" }}>Domicilio</h3>
@@ -1102,15 +943,14 @@ class ComponentToPrint extends React.Component {
             </Form>
           </Container>
         </div>
-
         <div>
           <Container>
             <Form>
-              <h3 style={{ textAlign: "left", pageBreakBefore:"always" }}>
+              <h3 style={{ textAlign: "left", pageBreakBefore: "always" }}>
                 Otros integrantes del ambito habitacional:
               </h3>
               <div>
-                {this.parientes.length == 0 ? (
+                {this.parientes == null ? (
                   <tr>No hay Familiares ingresados</tr>
                 ) : (
                   map(this.parientes, (fliar, index) => (
@@ -1121,7 +961,7 @@ class ComponentToPrint extends React.Component {
             </Form>
           </Container>
         </div>
-        <div >
+        <div>
           <Container>
             <p>
               CERTIFICO, que las declaraciones que ha brindado revisten al
@@ -1177,8 +1017,31 @@ class Example extends React.Component {
   render() {
     return (
       <div>
+        <a
+          href="#"
+          onClick={(e) => {
+            localStorage.clear();
+            window.location = "/";
+          }}
+          class="btn btn-danger"
+        >
+          ELIMINAR DATOS PERSONALES
+        </a>
+        <a
+          href="#"
+          onClick={(e) => {
+            window.location = "/";
+          }}
+          class="btn btn-info"
+        >
+          Volver al inicio
+        </a>
         <ReactToPrint
-          trigger={() => <a href="#" class="btn btn-success descargar">DESCARGAR PDF</a>}
+          trigger={() => (
+            <a href="#" class="btn btn-success descargar">
+              DESCARGAR PDF
+            </a>
+          )}
           content={() => this.componentRef}
         />
         <ComponentToPrint ref={(el) => (this.componentRef = el)} />
@@ -1186,5 +1049,12 @@ class Example extends React.Component {
     );
   }
 }
-
 export default Example;
+
+function ocultarVacios() {
+  document.querySelectorAll(".col>input").forEach((e) => {
+    if (e.value == "") {
+      e.parentNode.style.display = "none";
+    }
+  });
+}

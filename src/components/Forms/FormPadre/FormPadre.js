@@ -22,12 +22,12 @@ export default function FormPadre() {
         />
 
         <Link to="/preguntasMadre">
-          <Button variant="nav-prev" type="submit" disabled={guardadoBoton}>
+          <Button variant="nav-prev" type="submit">
             <span>Anterior</span>
           </Button>
         </Link>
         <Link to="/laboralPadre">
-          <Button variant="nav-next" type="submit">
+          <Button variant="nav-next" type="submit" disabled={guardadoBoton}>
             <span>Siguiente</span>
           </Button>
         </Link>
