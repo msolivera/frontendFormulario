@@ -93,8 +93,9 @@ export default function AgregarOtrosFamiliares(props) {
       })
       .finally(() => {
         setGuardadoLoading(false);
-        crearParentesco(jsonParientes());
-        window.location.reload();
+        crearParentesco(jsonParientes()).then(() => {
+          window.location.reload();
+        });
       });
   };
 
