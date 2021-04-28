@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Form, Button, Spinner, Jumbotron } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Form,
+  Button,
+  Spinner,
+  Jumbotron,
+  FormGroup,
+  Check,
+  Container,
+} from "react-bootstrap";
 import { values, size } from "lodash";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -256,6 +266,7 @@ export default function Laboral(props) {
                       <option value="0">Seleccione</option>
                       <option value="Publico">Publico</option>
                       <option value="Privado">Privado</option>
+                      <option value="Independiente">Independiente</option>
                       <option value="No trabaja">No Trabaja</option>
                     </Form.Control>
                   </Col>
@@ -294,6 +305,268 @@ export default function Laboral(props) {
                   </Col>
                 </Row>
               </Form.Group>
+              <hr></hr>
+              <hr></hr>
+              <h3>Responda a las siguientes preguntas</h3>
+              {tipoPerstate === 1 ? (
+                <Form.Group>
+                  <Row>
+                    <Col>
+                      <Form.Control
+                        type="text"
+                        placeholder="Solicitudes de ingreso que haya realizado a Unidades o Reparticiones de FF.AA. o Policiales(Fecha y Dependencia)."
+                        readOnly="true"
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col sm={1}>
+                      <Form.Check
+                        type="radio"
+                        label="SI"
+                        value="SI"
+                        name="formHorizontalRadios"
+                        id="formHorizontalRadios1"
+                        onClick={(e) =>
+                          setFormData({
+                            ...formData,
+                            respuesta1: e.target.value,
+                            //observaciones1: "",
+                          }) |
+                          guardandoLocal(tipoPerstate, formData) |
+                          cambiarDisplay(
+                            true,
+                            "respuestaid1",
+                            "formHorizontalRadios2",
+                            "formHorizontalRadios1"
+                          )
+                        }
+                      />
+                      <Form.Check
+                        type="radio"
+                        label="NO"
+                        value="NO"
+                        name="formHorizontalRadios"
+                        id="formHorizontalRadios2"
+                        onClick={(e) =>
+                          setFormData({
+                            ...formData,
+                            respuesta1: e.target.value,
+                          }) |
+                          guardandoLocal(tipoPerstate, formData) |
+                          cambiarDisplay(false, "respuestaid1")
+                        }
+                      />
+                    </Col>
+                    <Col>
+                      <Form.Control
+                        style={{ display: "none" }}
+                        id="respuestaid1"
+                        type="text"
+                        placeholder="Respuesta"
+                        value={formData.observaciones1}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            observaciones1: e.target.value,
+                          }) | guardandoLocal(tipoPerstate, formData)
+                        }
+                        onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
+                      />
+                    </Col>
+                  </Row>
+
+                  <Row>
+                    <Col>
+                      <Form.Control
+                        type="text"
+                        placeholder="Si ha sido detenido, anotar Dependencia, Fecha y Causa de la o las Detenciones."
+                        readOnly="true"
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col sm={1}>
+                      <Form.Check
+                        name="formHorizontalRadios2"
+                        id="formHorizontalRadios1"
+                        type="radio"
+                        label="SI"
+                        value="SI"
+                        onClick={(e) =>
+                          setFormData({
+                            ...formData,
+                            respuesta2: e.target.value,
+                            //observaciones2: "",
+                          }) |
+                          guardandoLocal(tipoPerstate, formData) |
+                          cambiarDisplay(true, "respuestaid2")
+                        }
+                      />
+                      <Form.Check
+                        name="formHorizontalRadios2"
+                        id="formHorizontalRadios2"
+                        type="radio"
+                        label="NO"
+                        value="NO"
+                        onClick={(e) =>
+                          setFormData({
+                            ...formData,
+                            respuesta2: e.target.value,
+                          }) |
+                          guardandoLocal(tipoPerstate, formData) |
+                          cambiarDisplay(false, "respuestaid2")
+                        }
+                      />
+                    </Col>
+                    <Col>
+                      <Form.Control
+                        style={{ display: "none" }}
+                        id="respuestaid2"
+                        type="text"
+                        placeholder="Respuesta"
+                        value={formData.observaciones2}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            observaciones2: e.target.value,
+                          }) | guardandoLocal(tipoPerstate, formData)
+                        }
+                        onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
+                      />
+                    </Col>
+                  </Row>
+
+                  <Row>
+                    <Col>
+                      <Form.Control
+                        as="textarea"
+                        style={{ resize: "none" }}
+                        rows={2}
+                        type="text"
+                        placeholder="Si ha consumido o Consume Psicofarmacos o drogas alucinogenas, por prescripcion medica o uso personal - Nombre de la misma y fecha de consumo."
+                        readOnly="true"
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col sm={1}>
+                      <Form.Check
+                        name="formHorizontalRadios3"
+                        id="formHorizontalRadios1"
+                        type="radio"
+                        label="SI"
+                        value="SI"
+                        onClick={(e) =>
+                          setFormData({
+                            ...formData,
+                            respuesta3: e.target.value,
+                            //observaciones3: "",
+                          }) |
+                          guardandoLocal(tipoPerstate, formData) |
+                          cambiarDisplay(true, "respuestaid3")
+                        }
+                      />
+                      <Form.Check
+                        name="formHorizontalRadios3"
+                        id="formHorizontalRadios2"
+                        type="radio"
+                        label="NO"
+                        value="NO"
+                        onClick={(e) =>
+                          setFormData({
+                            ...formData,
+                            respuesta3: e.target.value,
+                          }) |
+                          guardandoLocal(tipoPerstate, formData) |
+                          cambiarDisplay(false, "respuestaid3")
+                        }
+                      />
+                    </Col>
+                    <Col>
+                      <Form.Control
+                        style={{ display: "none" }}
+                        id="respuestaid3"
+                        type="text"
+                        placeholder="Respuesta"
+                        value={formData.observaciones3}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            observaciones3: e.target.value,
+                          }) | guardandoLocal(tipoPerstate, formData)
+                        }
+                        onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
+                      />
+                    </Col>
+                  </Row>
+                </Form.Group>
+              ) : (
+                <Form.Group>
+                  <Row>
+                    <Col>
+                      <Form.Control
+                        type="text"
+                        placeholder="Si ha sido detenido, anotar Dependencia, Fecha y Causa de la o las Detenciones."
+                        readOnly="true"
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col sm={1}>
+                      <Form.Check
+                        name="formHorizontalRadios2"
+                        id="formHorizontalRadios1"
+                        type="radio"
+                        label="SI"
+                        value="SI"
+                        onClick={(e) =>
+                          setFormData({
+                            ...formData,
+                            respuesta2: e.target.value,
+                            observaciones1: "",
+
+                            //observaciones2: "",
+                          }) |
+                          guardandoLocal(tipoPerstate, formData) |
+                          cambiarDisplay(true, "respuestaid2")
+                        }
+                      />
+                      <Form.Check
+                        name="formHorizontalRadios2"
+                        id="formHorizontalRadios2"
+                        type="radio"
+                        label="NO"
+                        value="NO"
+                        onClick={(e) =>
+                          setFormData({
+                            ...formData,
+                            respuesta2: e.target.value,
+                          }) |
+                          guardandoLocal(tipoPerstate, formData) |
+                          cambiarDisplay(false, "respuestaid2")
+                        }
+                      />
+                    </Col>
+                    <Col>
+                      <Form.Control
+                        style={{ display: "none" }}
+                        id="respuestaid2"
+                        type="text"
+                        placeholder="Respuesta"
+                        value={formData.observaciones2}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            observaciones2: e.target.value,
+                          }) | guardandoLocal(tipoPerstate, formData)
+                        }
+                        onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
+                      />
+                    </Col>
+                  </Row>
+                </Form.Group>
+              )}
             </Form>
           </div>
           <Button variant="guardar" type="submit">
@@ -307,13 +580,43 @@ export default function Laboral(props) {
 }
 
 function initialFormValue(tipoPerstate) {
-  return {
-    cargo_funcion: llenarDelStorage("cargo_funcion", "", tipoPerstate),
-    ente: llenarDelStorage("ente", "", tipoPerstate),
-    nombreEmpresa: llenarDelStorage("nombreEmpresa", "", tipoPerstate),
-    direccion: llenarDelStorage("direccion", "", tipoPerstate),
-    persona_id: llenarDelStorage("persona_id", "", tipoPerstate),
-  };
+  if (tipoPerstate == 1) {
+    return {
+      cargo_funcion: llenarDelStorage("cargo_funcion", "", tipoPerstate),
+      ente: llenarDelStorage("ente", "", tipoPerstate),
+      nombreEmpresa: llenarDelStorage("nombreEmpresa", "", tipoPerstate),
+      direccion: llenarDelStorage("direccion", "", tipoPerstate),
+      persona_id: llenarDelStorage("persona_id", "", tipoPerstate),
+      /////////////////////////////////////////////////////////////////
+      respuesta1: llenarDelStorage("respuesta1", "NO", tipoPerstate),
+      observaciones1: llenarDelStorage("observaciones1", "0", tipoPerstate),
+      pregunta_id1: "1",
+      respuesta2: llenarDelStorage("respuesta2", "NO", tipoPerstate),
+      observaciones2: llenarDelStorage("observaciones2", "0", tipoPerstate),
+      pregunta_id2: "2",
+      respuesta3: llenarDelStorage("respuesta3", "NO", tipoPerstate),
+      observaciones3: llenarDelStorage("observaciones3", "0", tipoPerstate),
+      pregunta_id3: "3",
+    };
+  } else {
+    return {
+      cargo_funcion: llenarDelStorage("cargo_funcion", "", tipoPerstate),
+      ente: llenarDelStorage("ente", "", tipoPerstate),
+      nombreEmpresa: llenarDelStorage("nombreEmpresa", "", tipoPerstate),
+      direccion: llenarDelStorage("direccion", "", tipoPerstate),
+      persona_id: llenarDelStorage("persona_id", "", tipoPerstate),
+      //////////////////////////////////////////////////////////////////
+      respuesta1: "NO",
+      observaciones1: "N/A",
+      pregunta_id1: "1",
+      respuesta2: llenarDelStorage("respuesta2", "", tipoPerstate),
+      observaciones2: llenarDelStorage("observaciones2", "", tipoPerstate),
+      pregunta_id2: "2",
+      respuesta3: "NO",
+      observaciones3: "N/A",
+      pregunta_id3: "3",
+    };
+  }
 }
 
 function guardandoLocal(tipoPerstate, formData) {
@@ -364,4 +667,11 @@ function llenarDelStorage(campo, defval, tipoPerstate) {
       break;
   }
   return defval;
+}
+function cambiarDisplay(dato, idResp) {
+  if (dato == true) {
+    document.getElementById(idResp).style.display = "block";
+  } else {
+    document.getElementById(idResp).style.display = "none";
+  }
 }

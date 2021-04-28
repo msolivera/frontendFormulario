@@ -184,6 +184,7 @@ export function crearOcupacion(ocupacion) {
 }
 export function updateOcupacion(ocupacion, idOcupacion) {
   const url = `${API_HOST}ocupacion/${idOcupacion}`;
+  console.log(ocupacion);
 
   const ocupacionTemp = {
     ...ocupacion,

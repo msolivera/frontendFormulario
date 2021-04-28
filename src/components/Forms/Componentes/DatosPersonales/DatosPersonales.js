@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Form, Jumbotron, Button, Spinner } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Form,
+  Jumbotron,
+  Button,
+  Spinner,
+  Container,
+} from "react-bootstrap";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -55,6 +63,8 @@ export default function DatosPersonales(props) {
   const [estadoCivi, setEstadoCivi] = useState([]);
 
   const [ciudades, setciudades] = useState([]);
+
+  const [estadoFliar, setestadoFliar] = useState("NO");
 
   //useEffect que recibe la respuesta de la funcion de obtener paises y luego la procesa en una lista de opciones.
   useEffect(() => {
@@ -368,7 +378,152 @@ export default function DatosPersonales(props) {
       <Form onSubmit={onSubmit}>
         {/*SECCION DE DATOS PERSONALES DE LA PERSONA*/}
         <Jumbotron>
-          <div>
+          <div
+            style={{
+              display: tipoPerstate != 1 ? "block" : "none",
+            }}
+          >
+            <Form.Label>
+              <h5>Estado </h5>
+            </Form.Label>
+
+            <div key={`inline`} className="mb-3">
+              <Form.Check
+                inline
+                type="radio"
+                label="Fallecido"
+                value="SI"
+                name="formHorizontalRadios"
+                id="formHorizontalRadios1"
+                onClick={(e) =>
+                  setFormData({
+                    ...formData,
+                    fallecido: e.target.value,
+                  }) |
+                  guardandoLocal(tipoPerstate, formData) |
+                  setestadoFliar("SI")
+                }
+              />
+              <Form.Check
+                inline
+                type="radio"
+                label="No fallecido"
+                value="NO"
+                name="formHorizontalRadios"
+                id="formHorizontalRadios2"
+                onClick={(e) =>
+                  setFormData({
+                    ...formData,
+                    fallecido: e.target.value,
+                  }) |
+                  guardandoLocal(tipoPerstate, formData) |
+                  setestadoFliar("NO")
+                }
+              />
+              <Form.Check
+                inline
+                type="radio"
+                label={
+                  tipoPerstate === 2 || tipoPerstate === 3
+                    ? "Desconocido"
+                    : "No tiene"
+                }
+                value="DESCONOCIDO"
+                name="formHorizontalRadios"
+                id="formHorizontalRadios3"
+                onClick={(e) =>
+                  setFormData({
+                    ...formData,
+                    fallecido: e.target.value,
+                  }) |
+                  guardandoLocal(tipoPerstate, formData) |
+                  setestadoFliar("DESCONOCIDO")
+                }
+              />
+
+              <div
+                style={{
+                  display: estadoFliar == "SI" ? "block" : "none",
+                }}
+              >
+                <Form.Label>Fecha defunción</Form.Label>
+
+                <DatePicker
+                  inline
+                  dateFormat="yyyy/MM/dd"
+                  renderCustomHeader={({
+                    date,
+                    changeYear,
+                    changeMonth,
+                    decreaseMonth,
+                    increaseMonth,
+                    prevMonthButtonDisabled,
+                    nextMonthButtonDisabled,
+                  }) => (
+                    <div
+                      style={{
+                        margin: 10,
+                        display: "flex",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <button
+                        onClick={decreaseMonth}
+                        disabled={prevMonthButtonDisabled}
+                      >
+                        {"<"}
+                      </button>
+                      <select
+                        value={date.getFullYear()}
+                        onChange={({ target: { value } }) => changeYear(value)}
+                      >
+                        {years.map((option) => (
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+
+                      <select
+                        value={months[date.getMonth()]}
+                        onChange={({ target: { value } }) =>
+                          changeMonth(months.indexOf(value))
+                        }
+                      >
+                        {months.map((option) => (
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+
+                      <button
+                        onClick={increaseMonth}
+                        disabled={nextMonthButtonDisabled}
+                      >
+                        {">"}
+                      </button>
+                    </div>
+                  )}
+                  selected={startDate}
+                  onChange={(date) =>
+                    setStartDate(date) |
+                    setFormData({
+                      ...formData,
+                      fechaDefuncion: formatearDate(date),
+                    }) |
+                    guardandoLocal(tipoPerstate, formData)
+                  }
+                  onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            style={{
+              display: estadoFliar == "DESCONOCIDO" ? "none" : "block",
+            }}
+          >
             <Form.Group>
               <Row>
                 <Col>
@@ -438,58 +593,6 @@ export default function DatosPersonales(props) {
 
             <Form.Group>
               <Row>
-                <Col>
-                  <Form.Label>Telefono/Celular</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Telefono/Celular"
-                    value={formData.telefono_celular}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        telefono_celular: e.target.value,
-                      }) | guardandoLocal(tipoPerstate, formData)
-                    }
-                    onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
-                  />
-                </Col>
-                <Col>
-                  <Form.Label>
-                    Cedula de identidad (sin puntos ni guión)
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Cedula de Identidad"
-                    value={formData.cedula}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        cedula: e.target.value,
-                      }) | guardandoLocal(tipoPerstate, formData)
-                    }
-                    onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
-                  />
-                </Col>
-              </Row>
-            </Form.Group>
-
-            <Form.Group>
-              <Row>
-                <Col>
-                  <Form.Label>Apodo</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Apodo"
-                    value={formData.apodo}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        apodo: e.target.value,
-                      }) | guardandoLocal(tipoPerstate, formData)
-                    }
-                    onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
-                  />
-                </Col>
                 <Col>
                   <Form.Label>Fecha de Nacimiento</Form.Label>
                   <DatePicker
@@ -562,123 +665,19 @@ export default function DatosPersonales(props) {
                     onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
                   />
                 </Col>
-                <Col>
-                  <Form.Label>Sexo</Form.Label>
-                  <Form.Control
-                    as="select"
-                    defaultValue="Seleccione"
-                    value={formData.sexo}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        sexo: e.target.value,
-                      }) | guardandoLocal(tipoPerstate, formData)
-                    }
-                    onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
-                  >
-                    <option value="0"> Seleccione</option>
-                    <option value="Femenino">Femenino</option>
-                    <option value="Masculino">Masculino</option>
-                  </Form.Control>
-                </Col>
-              </Row>
-            </Form.Group>
-
-            <Form.Group>
-              <Row>
-                <Col>
-                  <Form.Label>Raza</Form.Label>
-                  <Form.Control
-                    as="select"
-                    defaultValue="Seleccione"
-                    value={formData.raza}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        raza: e.target.value,
-                      }) | guardandoLocal(tipoPerstate, formData)
-                    }
-                    onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
-                  >
-                    <option value="0"> Seleccione</option>
-                    <option value="Afrodescendiente">Afrodescendiente</option>
-                    <option value="No afrodescendiente">
-                      No afrodescendiente
-                    </option>
-                  </Form.Control>
-                </Col>
 
                 <Col>
-                  <Form.Label>Identidad de Género</Form.Label>
-                  <Form.Control
-                    as="select"
-                    defaultValue="Seleccione"
-                    value={formData.identidadGenero}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        identidadGenero: e.target.value,
-                      }) | guardandoLocal(tipoPerstate, formData)
-                    }
-                    onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
-                  >
-                    <option value="0"> Seleccione</option>
-                    <option value="Mujer">Mujer</option>
-                    <option value="Hombre">Hombre</option>
-                    <option value="Trans">Trans</option>
-                  </Form.Control>
-                </Col>
-              </Row>
-            </Form.Group>
-
-            <Form.Group>
-              <Row>
-                <Col>
-                  <Form.Label>Estado Civil</Form.Label>
-
-                  <Form.Control
-                    id="select_form_estadoCivil"
-                    as="select"
-                    value={formData.estadocivil_id}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        estadocivil_id: e.target.value,
-                      }) |
-                      guardandoLocal(tipoPerstate, formData) |
-                      setearEstadoCivil(e.target.value, tipoPerstate)
-                    }
-                    onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
-                  >
-                    <option value=""> Seleccione</option>
-                  </Form.Control>
-                </Col>
-
-                <Col>
-                  <Form.Label>Credencial Civica Serie</Form.Label>
+                  <Form.Label>
+                    Cedula de identidad (sin puntos ni guión)
+                  </Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="Credencial Serie"
-                    value={formData.credencialSerie}
+                    placeholder="Cedula de Identidad"
+                    value={formData.cedula}
                     onChange={(e) =>
                       setFormData({
                         ...formData,
-                        credencialSerie: e.target.value,
-                      }) | guardandoLocal(tipoPerstate, formData)
-                    }
-                    onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
-                  />
-                </Col>
-                <Col>
-                  <Form.Label>Credencial Civica Numero</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Credencial Numero"
-                    value={formData.credencialNumero}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        credencialNumero: e.target.value,
+                        cedula: e.target.value,
                       }) | guardandoLocal(tipoPerstate, formData)
                     }
                     onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
@@ -686,30 +685,199 @@ export default function DatosPersonales(props) {
                 </Col>
               </Row>
             </Form.Group>
-            <Form.Group>
-              <Row>
-                <Col>
-                  <Form.Label>Correo Electrónico</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Correo Electronico"
-                    value={formData.correoElectronico}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        correoElectronico: e.target.value,
-                      }) | guardandoLocal(tipoPerstate, formData)
-                    }
-                    onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
-                  />
-                </Col>
-              </Row>
-            </Form.Group>
+            <div
+              style={{
+                display: estadoFliar == "SI" ? "none" : "block",
+              }}
+            >
+              <Form.Group>
+                <Row>
+                  <Col>
+                    <Form.Label>Apodo</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Apodo"
+                      value={formData.apodo}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          apodo: e.target.value,
+                        }) | guardandoLocal(tipoPerstate, formData)
+                      }
+                      onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
+                    />
+                  </Col>
+                  <Col>
+                    <Form.Label>Telefono/Celular</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Telefono/Celular"
+                      value={formData.telefono_celular}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          telefono_celular: e.target.value,
+                        }) | guardandoLocal(tipoPerstate, formData)
+                      }
+                      onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
+                    />
+                  </Col>
+                  <Col>
+                    <Form.Label>Sexo</Form.Label>
+                    <Form.Control
+                      as="select"
+                      defaultValue="Seleccione"
+                      value={formData.sexo}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          sexo: e.target.value,
+                        }) | guardandoLocal(tipoPerstate, formData)
+                      }
+                      onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
+                    >
+                      <option value="0"> Seleccione</option>
+                      <option value="Femenino">Femenino</option>
+                      <option value="Masculino">Masculino</option>
+                    </Form.Control>
+                  </Col>
+                </Row>
+              </Form.Group>
+
+              <Form.Group>
+                <Row>
+                  <Col>
+                    <Form.Label>Raza</Form.Label>
+                    <Form.Control
+                      as="select"
+                      defaultValue="Seleccione"
+                      value={formData.raza}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          raza: e.target.value,
+                        }) | guardandoLocal(tipoPerstate, formData)
+                      }
+                      onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
+                    >
+                      <option value="0"> Seleccione</option>
+                      <option value="Afrodescendiente">Afrodescendiente</option>
+                      <option value="No afrodescendiente">
+                        No afrodescendiente
+                      </option>
+                    </Form.Control>
+                  </Col>
+
+                  <Col>
+                    <Form.Label>Identidad de Género</Form.Label>
+                    <Form.Control
+                      as="select"
+                      defaultValue="Seleccione"
+                      value={formData.identidadGenero}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          identidadGenero: e.target.value,
+                        }) | guardandoLocal(tipoPerstate, formData)
+                      }
+                      onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
+                    >
+                      <option value="0"> Seleccione</option>
+                      <option value="Mujer">Mujer</option>
+                      <option value="Hombre">Hombre</option>
+                      <option value="Trans">Trans</option>
+                    </Form.Control>
+                  </Col>
+                </Row>
+              </Form.Group>
+
+              <Form.Group>
+                <Row>
+                  <Col>
+                    <Form.Label>Estado Civil</Form.Label>
+
+                    <Form.Control
+                      id="select_form_estadoCivil"
+                      as="select"
+                      value={formData.estadocivil_id}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          estadocivil_id: e.target.value,
+                        }) |
+                        guardandoLocal(tipoPerstate, formData) |
+                        setearEstadoCivil(e.target.value, tipoPerstate)
+                      }
+                      onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
+                    >
+                      <option value=""> Seleccione</option>
+                    </Form.Control>
+                  </Col>
+
+                  <Col>
+                    <Form.Label>Credencial Civica Serie</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Credencial Serie"
+                      value={formData.credencialSerie}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          credencialSerie: e.target.value,
+                        }) | guardandoLocal(tipoPerstate, formData)
+                      }
+                      onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
+                    />
+                  </Col>
+                  <Col>
+                    <Form.Label>Credencial Civica Numero</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Credencial Numero"
+                      value={formData.credencialNumero}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          credencialNumero: e.target.value,
+                        }) | guardandoLocal(tipoPerstate, formData)
+                      }
+                      onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
+                    />
+                  </Col>
+                </Row>
+              </Form.Group>
+              <Form.Group>
+                <Row>
+                  <Col>
+                    <Form.Label>Correo Electrónico</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Correo Electronico"
+                      value={formData.correoElectronico}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          correoElectronico: e.target.value,
+                        }) | guardandoLocal(tipoPerstate, formData)
+                      }
+                      onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
+                    />
+                  </Col>
+                </Row>
+              </Form.Group>
+            </div>
           </div>
         </Jumbotron>
 
         {/*SECCION DE DOMICILIO DE LA PERSONA*/}
-        <Jumbotron>
+        <Jumbotron
+          style={{
+            display:
+              estadoFliar == "DESCONOCIDO" || estadoFliar == "SI"
+                ? "none"
+                : "block",
+          }}
+        >
           <div>
             <h3>Domicilio</h3>
 
@@ -837,12 +1005,28 @@ export default function DatosPersonales(props) {
               </Row>
             </Form.Group>
           </div>
-          <Button variant="guardar" type="submit">
+        </Jumbotron>
+        <Container>
+          <Button
+            variant="guardar"
+            type="submit"
+            style={{
+              display: estadoFliar == "DESCONOCIDO" ? "none" : "block",
+            }}
+          >
             {!guardadoLoading ? "Guardar  " : <Spinner animation="border" />}
 
             <FontAwesomeIcon icon={faSave} />
           </Button>
-        </Jumbotron>
+          <Button
+            variant="guardar"
+            style={{
+              display: estadoFliar == "DESCONOCIDO" ? "block" : "none",
+            }}
+          >
+            Siguiente Paso
+          </Button>
+        </Container>
       </Form>
     </div>
   );
@@ -887,7 +1071,9 @@ function initialFormValue(tipoPerstate) {
       primerApellido: llenarDelStorage("primerApellido", "", tipoPerstate),
       segundoApellido: llenarDelStorage("segundoApellido", "", tipoPerstate),
       apodo: llenarDelStorage("apodo", "", tipoPerstate),
+      fallecido: llenarDelStorage("fallecido", "", tipoPerstate),
       fechaNacimiento: llenarDelStorage("fechaNacimiento", "", tipoPerstate),
+      fechaDefuncion: llenarDelStorage("fechaDefuncion", "", tipoPerstate),
       cedula: llenarDelStorage("cedula", "", tipoPerstate),
       credencialSerie: llenarDelStorage("credencialSerie", "", tipoPerstate),
       credencialNumero: llenarDelStorage("credencialNumero", "", tipoPerstate),
@@ -932,7 +1118,9 @@ function initialFormValue(tipoPerstate) {
       primerApellido: llenarDelStorage("primerApellido", "", tipoPerstate),
       segundoApellido: llenarDelStorage("segundoApellido", "", tipoPerstate),
       apodo: llenarDelStorage("apodo", "", tipoPerstate),
+      fallecido: llenarDelStorage("fallecido", "", tipoPerstate),
       fechaNacimiento: llenarDelStorage("fechaNacimiento", "", tipoPerstate),
+      fechaDefuncion: llenarDelStorage("fechaDefuncion", "", tipoPerstate),
       cedula: llenarDelStorage("cedula", "0", tipoPerstate),
       credencialSerie: llenarDelStorage("credencialSerie", "", tipoPerstate),
       credencialNumero: llenarDelStorage("credencialNumero", "0", tipoPerstate),

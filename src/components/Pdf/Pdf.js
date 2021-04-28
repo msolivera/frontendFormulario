@@ -419,16 +419,32 @@ class ComponentToPrint extends React.Component {
                 <Form.Label>Primer Nombre</Form.Label>
                 <Form.Control value={this.dataMadre.primerNombre} />
               </Col>
-              <Col>
+              <Col
+                style={{
+                  display:
+                    this.dataMadre.segundoNombre == "" ? "none" : "block",
+                }}
+              >
                 <Form.Label>Segundo Nombre</Form.Label>
                 <Form.Control value={this.dataMadre.segundoNombre} />
               </Col>
 
-              <Col>
+              <Col
+                style={{
+                  display:
+                    this.dataMadre.primerApellido == "" ? "none" : "block",
+                }}
+              >
                 <Form.Label>Primer Apellido</Form.Label>
                 <Form.Control value={this.dataMadre.primerApellido} />
               </Col>
-              <Col>
+
+              <Col
+                style={{
+                  display:
+                    this.dataMadre.segundoApellido == "" ? "none" : "block",
+                }}
+              >
                 <Form.Label>Segundo Apellido</Form.Label>
                 <Form.Control value={this.dataMadre.segundoApellido} />
               </Col>
@@ -437,24 +453,46 @@ class ComponentToPrint extends React.Component {
 
           <Form.Group>
             <Row>
-              <Col>
+              <Col
+                style={{
+                  display:
+                    this.dataMadre.telefono_celular == "0" ? "none" : "block",
+                }}
+              >
                 <Form.Label>Telefono/Celular</Form.Label>
                 <Form.Control value={this.dataMadre.telefono_celular} />
               </Col>
-              <Col>
+              <Col
+                style={{
+                  display: this.dataMadre.cedula == "0" ? "none" : "block",
+                }}
+              >
                 <Form.Label>Cedula de identidad</Form.Label>
                 <Form.Control value={this.dataMadre.cedula} />
               </Col>
 
-              <Col>
+              <Col
+                style={{
+                  display: this.dataMadre.apodo == "" ? "none" : "block",
+                }}
+              >
                 <Form.Label>Apodo</Form.Label>
                 <Form.Control value={this.dataMadre.apodo} />
               </Col>
-              <Col>
+              <Col
+                style={{
+                  display:
+                    this.dataMadre.fechaNacimiento == "" ? "none" : "block",
+                }}
+              >
                 <Form.Label>Fecha de Nacimiento</Form.Label>
                 <Form.Control value={this.dataMadre.fechaNacimiento} />
               </Col>
-              <Col>
+              <Col
+                style={{
+                  display: this.dataMadre.sexo == "" ? "none" : "block",
+                }}
+              >
                 <Form.Label>Sexo</Form.Label>
                 <Form.Control value={this.dataMadre.sexo}></Form.Control>
               </Col>
@@ -478,16 +516,33 @@ class ComponentToPrint extends React.Component {
                 ></Form.Control>
               </Col>
 
-              <Col>
+              <Col
+                style={{
+                  display:
+                    this.dataMadre.credencialSerie == "" ? "none" : "block",
+                }}
+              >
                 <Form.Label>Credencial Civica Serie</Form.Label>
                 <Form.Control value={this.dataMadre.credencialSerie} />
               </Col>
-              <Col>
+              <Col
+                style={{
+                  display:
+                    this.dataMadre.credencialNumero == "0" ? "none" : "block",
+                }}
+              >
                 <Form.Label>Credencial Civica Numero</Form.Label>
                 <Form.Control value={this.dataMadre.credencialNumero} />
               </Col>
 
-              <Col>
+              <Col
+                style={{
+                  display:
+                    this.dataMadre.correoElectronico == "ejemplo@mail.com"
+                      ? "none"
+                      : "block",
+                }}
+              >
                 <Form.Label>Correo Electronico</Form.Label>
                 <Form.Control value={this.dataMadre.correoElectronico} />
               </Col>
@@ -501,24 +556,50 @@ class ComponentToPrint extends React.Component {
 
             <Form.Group>
               <Row>
-                <Col>
+                <Col
+                  style={{
+                    display:
+                      localStorage.getItem("paisMadre") != null
+                        ? "block"
+                        : "none",
+                  }}
+                >
                   <Form.Label>Pais de Nacimiento</Form.Label>
                   <Form.Control
                     value={localStorage.getItem("paisMadre")}
                   ></Form.Control>
                 </Col>
-                <Col>
+                <Col
+                  style={{
+                    display:
+                      this.dataMadre.domicilioActual == "" ? "none" : "block",
+                  }}
+                >
                   <Form.Label>Domicilio Actual</Form.Label>
                   <Form.Control value={this.dataMadre.domicilioActual} />
                 </Col>
 
-                <Col>
+                <Col
+                  style={{
+                    display:
+                      localStorage.getItem("depaMadre") != null
+                        ? "block"
+                        : "none",
+                  }}
+                >
                   <Form.Label>Departamento de Domicilio</Form.Label>
                   <Form.Control
                     value={localStorage.getItem("depaMadre")}
                   ></Form.Control>
                 </Col>
-                <Col>
+                <Col
+                  style={{
+                    display:
+                      localStorage.getItem("barrioMadre") != null
+                        ? "block"
+                        : "none",
+                  }}
+                >
                   <Form.Label>Ciudad/Barrio</Form.Label>
                   <Form.Control
                     value={localStorage.getItem("barrioMadre")}
@@ -527,11 +608,21 @@ class ComponentToPrint extends React.Component {
               </Row>
 
               <Row>
-                <Col>
+                <Col
+                  style={{
+                    display:
+                      this.dataMadre.seccionalPolicial == "" ? "none" : "block",
+                  }}
+                >
                   <Form.Label>Seccional Policial</Form.Label>
                   <Form.Control value={this.dataMadre.seccionalPolicial} />
                 </Col>
-                <Col>
+                <Col
+                  style={{
+                    display:
+                      this.dataMadre.domicilioAnterior == "" ? "none" : "block",
+                  }}
+                >
                   <Form.Label>Domicilios Anteriores</Form.Label>
                   <Form.Control value={this.dataMadre.domicilioAnterior} />
                 </Col>
@@ -539,37 +630,56 @@ class ComponentToPrint extends React.Component {
             </Form.Group>
           </Container>
           {/*LABORAL Madre*/}
-          <Container>
-            <Form>
-              <div className="form-datos-personales">
-                <h3 style={{ textAlign: "left" }}>Ocupacion Actual</h3>
-                <Form>
-                  <Form.Group>
-                    <Row>
-                      <Col>
-                        <Form.Label>Cargo o Funcion</Form.Label>
-                        <Form.Control value={this.laboralMadre.cargo_funcion} />
-                      </Col>
-                      <Col>
-                        <Form.Label>Ente</Form.Label>
-                        <Form.Control
-                          value={this.laboralMadre.ente}
-                        ></Form.Control>
-                      </Col>
 
-                      <Col>
-                        <Form.Label>Nombre de la Empresa</Form.Label>
-                        <Form.Control value={this.laboralMadre.nombreEmpresa} />
-                      </Col>
-                      <Col>
-                        <Form.Label>Direccion de la Empresa</Form.Label>
-                        <Form.Control value={this.laboralMadre.direccion} />
-                      </Col>
-                    </Row>
-                  </Form.Group>
-                </Form>
-              </div>
-            </Form>
+          <Container>
+            <div className="form-datos-personales">
+              <h3 style={{ textAlign: "left" }}>Ocupacion Actual</h3>
+
+              <Form.Group>
+                <Row>
+                  <Col
+                    style={{
+                      display:
+                        this.laboralMadre.cargo_funcion == ""
+                          ? "none"
+                          : "block",
+                    }}
+                  >
+                    <Form.Label>Cargo o Funcion</Form.Label>
+                    <Form.Control value={this.laboralMadre.cargo_funcion} />
+                  </Col>
+                  <Col
+                    style={{
+                      display: this.laboralMadre.ente == "" ? "none" : "block",
+                    }}
+                  >
+                    <Form.Label>Ente</Form.Label>
+                    <Form.Control value={this.laboralMadre.ente}></Form.Control>
+                  </Col>
+
+                  <Col
+                    style={{
+                      display:
+                        this.laboralMadre.nombreEmpresa == ""
+                          ? "none"
+                          : "block",
+                    }}
+                  >
+                    <Form.Label>Nombre de la Empresa</Form.Label>
+                    <Form.Control value={this.laboralMadre.nombreEmpresa} />
+                  </Col>
+                  <Col
+                    style={{
+                      display:
+                        this.laboralMadre.direccion == "" ? "none" : "block",
+                    }}
+                  >
+                    <Form.Label>Direccion de la Empresa</Form.Label>
+                    <Form.Control value={this.laboralMadre.direccion} />
+                  </Col>
+                </Row>
+              </Form.Group>
+            </div>
           </Container>
 
           <Container>
@@ -1049,12 +1159,13 @@ class Example extends React.Component {
     );
   }
 }
+
 export default Example;
 
-function ocultarVacios() {
+/*function ocultarVacios() {
   document.querySelectorAll(".col>input").forEach((e) => {
     if (e.value == "") {
       e.parentNode.style.display = "none";
     }
   });
-}
+}*/
