@@ -159,7 +159,7 @@ export default function DatosPersonales(props) {
     if (month.length < 2) month = "0" + month;
     if (day.length < 2) day = "0" + day;
 
-    let fechaFinal = year + "-" + month + "-" + day;
+    let fechaFinal = day + "-" + month + "-" + year;
     return fechaFinal;
   }
   /*DATE PICKER PERSONALIZADO**********************************************/
@@ -462,7 +462,7 @@ export default function DatosPersonales(props) {
 
                 <DatePicker
                   inline
-                  dateFormat="yyyy/MM/dd"
+                  dateFormat="dd/MM/yyyy"
                   renderCustomHeader={({
                     date,
                     changeYear,
@@ -608,7 +608,7 @@ export default function DatosPersonales(props) {
                 <Col>
                   <Form.Label>Fecha de Nacimiento</Form.Label>
                   <DatePicker
-                    dateFormat="yyyy/MM/dd"
+                    dateFormat="dd/MM/yyyy"
                     renderCustomHeader={({
                       date,
                       changeYear,
@@ -1087,7 +1087,7 @@ function initialFormValue(tipoPerstate) {
       primerApellido: llenarDelStorage("primerApellido", "", tipoPerstate),
       segundoApellido: llenarDelStorage("segundoApellido", "", tipoPerstate),
       apodo: llenarDelStorage("apodo", "", tipoPerstate),
-      fallecido: llenarDelStorage("fallecido", "", tipoPerstate),
+      fallecido: llenarDelStorage("fallecido", "NO", tipoPerstate),
       fechaNacimiento: llenarDelStorage("fechaNacimiento", "", tipoPerstate),
       fechaDefuncion: llenarDelStorage("fechaDefuncion", "", tipoPerstate),
       cedula: llenarDelStorage("cedula", "", tipoPerstate),

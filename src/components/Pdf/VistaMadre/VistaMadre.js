@@ -12,7 +12,7 @@ export default function VistaMadre() {
     <div class="div-margen">
       {dataMadre.fallecido === "NO" ? (
         <>
-          <h5 style={{ textAlign: "left" }}>Datos de la Madre:</h5>
+          <p class="p-titulo">Datos de la Madre:</p>
           <hr />
           <table class="table-data">
             <tr>
@@ -43,7 +43,7 @@ export default function VistaMadre() {
               <th>CC Serie</th>
               <th>CC Numero</th>
               <th>País Nacimiento</th>
-              <th>Domicilio actual</th>
+              <th>Domicilio</th>
               <th>Departamento</th>
               <th>Ciudad/Barrio</th>
             </tr>
@@ -107,7 +107,7 @@ export default function VistaMadre() {
         </>
       ) : dataMadre.fallecido === "SI" ? (
         <>
-          <h5 style={{ textAlign: "left" }}>Datos de la Madre:</h5>
+          <p class="p-titulo">Datos de la Madre:</p>
           <hr />
           <table class="table-data">
             <tr>
@@ -130,7 +130,7 @@ export default function VistaMadre() {
         </>
       ) : dataMadre.fallecido === "DESCONOCIDO" ||
         dataMadre.fallecido === "" ? (
-        <h5 style={{ textAlign: "left" }}>Datos de la Madre: Desconocida</h5>
+        <p class="p-titulo">Datos de la Madre: Desconocida</p>
       ) : (
         <h1></h1>
       )}

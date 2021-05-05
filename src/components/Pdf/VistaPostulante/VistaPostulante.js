@@ -23,7 +23,7 @@ export default function VistaPostulante() {
   const [laboralPostu, setlaboralPostu] = useState(getLabPostu());
   return (
     <div class="div-margen">
-      <h5 style={{ textAlign: "left" }}>Datos Del postulante:</h5>
+      <p class="p-titulo">Datos del postulante:</p>
       <hr />
       <table class="table-data">
         <tr>
@@ -51,7 +51,7 @@ export default function VistaPostulante() {
           <th>Estado Civil</th>
           <th>Credencial</th>
           <th>País Nacimiento</th>
-          <th>Domicilio actual</th>
+          <th>Domicilio</th>
           <th>Departamento</th>
           <th>Ciudad/Barrio</th>
           <th>Telefono</th>

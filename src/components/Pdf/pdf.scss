@@ -4,6 +4,8 @@
 
 
 .table{
+    
+
   
     td{
         vertical-align: middle;
@@ -14,6 +16,7 @@
     }
     th
     {
+        padding: 5px ;
     vertical-align: middle;
     text-align: center;
     }
@@ -23,19 +26,24 @@
 }
 
 .table-data{
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
   
     td{
         vertical-align: middle;
         text-align: left;
-        padding: 10px ;
+        padding: 5px ;
         width: 180px;
+        text-transform: capitalize;
         
     }
     th
     {
+        text-transform: uppercase; 
     vertical-align: middle;
     text-align: left;
-    padding: 10px ;
+    padding: 5px ;
     width: 180px;
     }
 }
@@ -48,13 +56,26 @@
     td{
         vertical-align: middle;     
         padding: 5px ;
+        text-transform: capitalize;
 
         
     }
     th
     {
-    vertical-align: middle;  
+    vertical-align: middle; 
+    text-transform: uppercase; 
     }
+}
+
+.thead-fliares{
+    vertical-align: middle; 
+    text-transform: uppercase; 
+
+  td{
+    vertical-align: middle;     
+    padding: 5px ;
+    text-transform: capitalize;
+  }  
 }
 
 
@@ -86,6 +107,16 @@ hr{
 .div-margen{
     border: 1px solid rgb(121, 119, 119);
     margin: 30px 30px 30px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+  
+}
+
+.div-cabezal{
+    border: 1px solid rgb(121, 119, 119);
+    margin: 30px 30px 30px;
+    margin-bottom: 1px;
+    
   
 }
 
@@ -147,7 +178,17 @@ hr{
     text-decoration: none;
 }
 
+.p-nombre{
+text-transform: uppercase;
 
+}
+.p-titulo{
+    text-transform: uppercase;
+    text-align: left; 
+    margin-left: 10px;
+    margin-top: 5px;
+    font-weight: bold;
+    }
 
   ////////////////////////////////////////@at-root
   

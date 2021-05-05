@@ -1,5 +1,8 @@
 import React from "react";
 
+import { getIdPostu } from "../../../api/auth";
+import { listaOtrosFamiliaresPersona } from "../../../api/tablas";
+
 import { Button, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
@@ -20,7 +23,11 @@ export default function FormOtrosFamiliares() {
           </Button>
         </Link>
         <Link to="/formFinal">
-          <Button variant="nav-next" type="submit">
+          <Button
+            variant="nav-next"
+            type="submit"
+            onClick={listaOtrosFamiliaresPersona(getIdPostu())}
+          >
             <span>Siguiente</span>
           </Button>
         </Link>

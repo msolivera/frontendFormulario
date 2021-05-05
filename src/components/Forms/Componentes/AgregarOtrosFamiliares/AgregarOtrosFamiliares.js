@@ -69,7 +69,7 @@ export default function AgregarOtrosFamiliares(props) {
     if (month.length < 2) month = "0" + month;
     if (day.length < 2) day = "0" + day;
 
-    let fechaFinal = year + "-" + month + "-" + day;
+    let fechaFinal = day + "-" + month + "-" + year;
     return fechaFinal;
   }
   /*DATE PICKER PERSONALIZADO**********************************************/
@@ -178,7 +178,7 @@ export default function AgregarOtrosFamiliares(props) {
               </th>
               <th>
                 <DatePicker
-                  dateFormat="yyyy/MM/dd"
+                  dateFormat="dd/MM/yyyy"
                   renderCustomHeader={({
                     date,
                     changeYear,

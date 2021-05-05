@@ -12,7 +12,7 @@ export default function VistaPareja() {
     <div class="div-margen">
       {dataPareja.fallecido === "NO" ? (
         <>
-          <h5 style={{ textAlign: "left" }}>Datos de la Pareja:</h5>
+          <p class="p-titulo">Datos de la Pareja:</p>
           <hr />
           <table class="table-data">
             <tr>
@@ -45,7 +45,7 @@ export default function VistaPareja() {
               <th>CC Serie</th>
               <th>CC Numero</th>
               <th>País Nacimiento</th>
-              <th>Domicilio actual</th>
+              <th>Domicilio </th>
               <th>Departamento</th>
               <th>Ciudad/Barrio</th>
             </tr>
@@ -109,7 +109,7 @@ export default function VistaPareja() {
         </>
       ) : dataPareja.fallecido === "SI" ? (
         <>
-          <h5 style={{ textAlign: "left" }}>Datos de la Pareja:</h5>
+          <p class="p-titulo">Datos de la Pareja:</p>
           <hr />
           <table class="table-data">
             <tr>
@@ -134,7 +134,7 @@ export default function VistaPareja() {
         </>
       ) : dataPareja.fallecido === "DESCONOCIDO" ||
         dataPareja.fallecido === "" ? (
-        <h5 style={{ textAlign: "left" }}>Datos de la Pareja: No tiene</h5>
+        <p class="p-titulo">Datos de la Pareja: No tiene</p>
       ) : (
         <h1></h1>
       )}

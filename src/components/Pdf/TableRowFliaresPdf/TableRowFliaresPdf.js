@@ -1,11 +1,12 @@
 import React from "react";
+import "./../pdf.scss";
 //este componente se usa para cargar dinamicamente LOS FLIARES que traigo de la base
 export default function TableRowFliaresPdf(props) {
   const { pariente } = props;
 
   return (
     <>
-      <thead>
+      <thead class="thead-fliares">
         <tr>
           <th style={{ width: "1200px" }}>Parentezco</th>
           <th style={{ width: "1200px" }}>Nombre</th>

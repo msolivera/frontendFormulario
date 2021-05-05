@@ -16,10 +16,14 @@ export default function VistaNucleoHabitacional() {
   return (
     <div class="div-margen">
       {parientes === null ? (
-        <h5>Otros integrantes del ambito habitacional: N/A</h5>
+        <p class="p-titulo">
+          Otros integrantes del núcleo familiar (quienes conviven): N/A
+        </p>
       ) : (
         <>
-          <h5>Otros integrantes del ambito habitacional:</h5>
+          <p class="p-titulo">
+            Otros integrantes del núcleo familiar (quienes conviven):
+          </p>
           <table
             class="table-preguntas"
             style={{ marginLeft: "10px", marginBottom: "10px" }}

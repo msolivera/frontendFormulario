@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import "./../pdf.scss";
 import "../../../scss/index.scss";
+import { getDataPostu, getIdPostu } from "../../../api/auth";
 
 export default function PieFirma() {
+  const [dataPostu, setdataPostu] = useState(getDataPostu());
   return (
     <div class="div-margen">
       <div>
-        <p class="p-margen">
+        <h6 style={{ marginTop: "5px", textAlign: "left" }}>
+          <strong>POSTULANTE </strong>
+        </h6>
+        <p class="p-margen" style={{ textAlign: "justify" }}>
           <strong>CERTIFICO</strong>, que las declaraciones que ha brindado
           revisten al carácter de DECLARACIÓN JURADA, y que las mismas son
           verdaderas, completas y correctas, según mi mejor saber y entender, y
@@ -22,12 +27,16 @@ export default function PieFirma() {
         </p>
       </div>
       <br />
-      <h6>
-        FIRMA:____________________________________ACLARACIÓN__________________________________FECHA:_____/_____/______
-      </h6>
-      <h6>
-        <p>
-          <strong>Postulante.</strong>
+      <h6 style={{ marginBottom: "0px" }}>
+        FIRMA:____________________________________FECHA:_____/_____/______
+        <p class="p-nombre" style={{ marginBottom: "0px" }}>
+          {"   " +
+            dataPostu.primerNombre +
+            " " +
+            dataPostu.primerApellido +
+            "   " +
+            "C.I. " +
+            dataPostu.cedula}
         </p>
       </h6>
 
@@ -37,9 +46,10 @@ export default function PieFirma() {
         >
           --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         </h6>
-        <h6 style={{ marginTop: "0px" }}>
-          <strong>DE USO EXCLUSIVO DE LA ARMADA:</strong>
+        <h6 style={{ marginTop: "0px", textAlign: "left" }}>
+          <strong>ARMADA NACIONAL - Uso Exclusivo</strong>
         </h6>
+
         <br />
       </div>
       <div>

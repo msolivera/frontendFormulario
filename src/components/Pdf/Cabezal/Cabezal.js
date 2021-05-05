@@ -4,7 +4,7 @@ import "../../../index.scss";
 
 export default function Cabezal() {
   return (
-    <div class="div-margen">
+    <div class="div-cabezal">
       <table class="table">
         <tr>
           <td>
