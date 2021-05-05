@@ -169,8 +169,6 @@ export function listaOtrosFamiliaresPersona(id) {
   var lista = [];
   getOtrosFamiliaresPersona(id).then((response) => {
     lista = formatModelOtrosFliares(response.data);
-    // console.log(lista);
-
     return lista;
   });
 }

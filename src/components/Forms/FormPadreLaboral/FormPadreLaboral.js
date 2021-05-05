@@ -13,8 +13,8 @@ export default function FormPadreLaboral() {
   return (
     <>
       <Container>
-        <h2>Informacion del Padre</h2>
-        <h3>Segundo paso: Informacion laboral</h3>
+        <h3>Información del Padre</h3>
+
         <Laboral
           tipoPerstate={tipoPerstate}
           setguardadoBoton={setguardadoBoton}
@@ -24,7 +24,7 @@ export default function FormPadreLaboral() {
             <span>Anterior</span>
           </Button>
         </Link>
-        <Link to="/preguntasPadre">
+        <Link to="/datosPareja">
           <Button variant="nav-next" type="submit" disabled={guardadoBoton}>
             <span>Siguiente</span>
           </Button>

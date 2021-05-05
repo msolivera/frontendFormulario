@@ -48,3 +48,4 @@ export const ESTCIVIL_POSTU = "estCivil_postu";
 export const ESTCIVIL_MADRE = "estCivil_madre";
 export const ESTCIVIL_PADRE = "estCivil_padre";
 export const ESTCIVIL_PAREJA = "estCivil_pareja";
+export const CIUDADTEMP = "cuidad_temp";

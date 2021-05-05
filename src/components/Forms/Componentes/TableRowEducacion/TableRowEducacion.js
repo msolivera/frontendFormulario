@@ -6,8 +6,8 @@ export default function TableRowEducacion(props) {
   return (
     <>
       <tr>
-        <td>{estudio.anioEstudio}</td>
         <td>{estudio.nombreInstituto}</td>
+        <td>{estudio.anioEstudio}</td>
       </tr>
     </>
   );

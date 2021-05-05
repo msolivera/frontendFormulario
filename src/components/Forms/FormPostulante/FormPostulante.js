@@ -13,8 +13,8 @@ export default function FormPostulante() {
   return (
     <>
       <Container>
-        <h2>Informacion del Postulante</h2>
-        <h3>Primer paso: Datos Personales</h3>
+        <h3>Información del Postulante</h3>
+
         <DatosPersonales
           tipoPerstate={tipoPerstate}
           setguardadoBoton={setguardadoBoton}

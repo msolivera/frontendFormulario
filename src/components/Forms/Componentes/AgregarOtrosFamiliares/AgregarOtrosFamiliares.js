@@ -13,6 +13,10 @@ import {
   getIdOtro,
   crearParentesco,
 } from "../../../../api/auth";
+import {
+  getOtrosFamiliaresPersona,
+  listaOtrosFamiliaresPersona,
+} from "../../../../api/tablas";
 import { getTipoPersonaApi } from "../../../../api/combos";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -83,6 +87,7 @@ export default function AgregarOtrosFamiliares(props) {
           toast.warning(response.message);
         } else {
           toast.success("Registro correcto");
+
           setcontador(contador + 1);
           setFormData(initialFormValue());
           setIdsApi(0, response.data);
@@ -93,6 +98,7 @@ export default function AgregarOtrosFamiliares(props) {
       })
       .finally(() => {
         setGuardadoLoading(false);
+        listaOtrosFamiliaresPersona(getIdPostu());
         crearParentesco(jsonParientes()).then(() => {
           window.location.reload();
         });

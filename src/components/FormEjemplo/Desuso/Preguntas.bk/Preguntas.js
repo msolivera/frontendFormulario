@@ -6,7 +6,7 @@ import { getPreguntasApi, getRespuestasPersona } from "../../../../api/tablas";
 
 import "../../FormPostulante/FormPostulante.scss";
 
-import TableRow from "../TableRow/index";
+import TableRow from "../TableRow.bk/index";
 import { getSuId } from "../../../../api/auth";
 
 export default function Preguntas(props) {

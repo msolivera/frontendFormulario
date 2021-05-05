@@ -14,8 +14,7 @@ export default function FormPadre() {
   return (
     <>
       <Container>
-        <h2>Informacion del Padre</h2>
-        <h3>Primer paso: Datos Personales</h3>
+        <h3>Información del Padre</h3>
         <DatosPersonales
           tipoPerstate={tipoPerstate}
           setguardadoBoton={setguardadoBoton}

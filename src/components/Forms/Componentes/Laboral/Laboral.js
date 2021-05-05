@@ -229,7 +229,7 @@ export default function Laboral(props) {
       <Form onSubmit={onSubmit}>
         <Jumbotron>
           <div className="form-datos-personales">
-            <h3>Ocupacion Actual</h3>
+            <h4>Ocupacion Actual</h4>
             <Form>
               <Form.Group>
                 <Row>
@@ -307,7 +307,7 @@ export default function Laboral(props) {
               </Form.Group>
               <hr></hr>
               <hr></hr>
-              <h3>Responda a las siguientes preguntas</h3>
+              <h4>Responda a las siguientes preguntas</h4>
               {tipoPerstate === 1 ? (
                 <Form.Group>
                   <Row>
@@ -352,6 +352,7 @@ export default function Laboral(props) {
                           setFormData({
                             ...formData,
                             respuesta1: e.target.value,
+                            observaciones1: "N/A",
                           }) |
                           guardandoLocal(tipoPerstate, formData) |
                           cambiarDisplay(false, "respuestaid1")
@@ -413,6 +414,7 @@ export default function Laboral(props) {
                           setFormData({
                             ...formData,
                             respuesta2: e.target.value,
+                            observaciones2: "N/A",
                           }) |
                           guardandoLocal(tipoPerstate, formData) |
                           cambiarDisplay(false, "respuestaid2")
@@ -477,6 +479,7 @@ export default function Laboral(props) {
                           setFormData({
                             ...formData,
                             respuesta3: e.target.value,
+                            observaciones3: "N/A",
                           }) |
                           guardandoLocal(tipoPerstate, formData) |
                           cambiarDisplay(false, "respuestaid3")
@@ -542,6 +545,7 @@ export default function Laboral(props) {
                           setFormData({
                             ...formData,
                             respuesta2: e.target.value,
+                            observaciones2: "N/A",
                           }) |
                           guardandoLocal(tipoPerstate, formData) |
                           cambiarDisplay(false, "respuestaid2")
@@ -589,13 +593,13 @@ function initialFormValue(tipoPerstate) {
       persona_id: llenarDelStorage("persona_id", "", tipoPerstate),
       /////////////////////////////////////////////////////////////////
       respuesta1: llenarDelStorage("respuesta1", "NO", tipoPerstate),
-      observaciones1: llenarDelStorage("observaciones1", "0", tipoPerstate),
+      observaciones1: llenarDelStorage("observaciones1", "N/A", tipoPerstate),
       pregunta_id1: "1",
       respuesta2: llenarDelStorage("respuesta2", "NO", tipoPerstate),
-      observaciones2: llenarDelStorage("observaciones2", "0", tipoPerstate),
+      observaciones2: llenarDelStorage("observaciones2", "N/A", tipoPerstate),
       pregunta_id2: "2",
       respuesta3: llenarDelStorage("respuesta3", "NO", tipoPerstate),
-      observaciones3: llenarDelStorage("observaciones3", "0", tipoPerstate),
+      observaciones3: llenarDelStorage("observaciones3", "N/A", tipoPerstate),
       pregunta_id3: "3",
     };
   } else {

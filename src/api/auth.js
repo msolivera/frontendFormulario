@@ -150,8 +150,6 @@ export function updateFamiliarPostulante(persona, idPersona) {
 
 export function crearOcupacion(ocupacion) {
   const url = `${API_HOST}ocupacion`;
-  console.log(ocupacion);
-  console.log(url);
 
   const ocupacionTemp = {
     ...ocupacion,

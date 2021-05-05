@@ -12,8 +12,7 @@ export default function FormPostulanteLaboral() {
   return (
     <>
       <Container>
-        <h2>Informacion del Postulante</h2>
-        <h3>Tercer paso: Informacion laboral</h3>
+        <h3>Información del Postulante</h3>
 
         <Laboral
           tipoPerstate={tipoPerstate}
@@ -24,7 +23,7 @@ export default function FormPostulanteLaboral() {
             <span>Anterior</span>
           </Button>
         </Link>
-        <Link to="/preguntasPostulante">
+        <Link to="/datosMadre">
           <Button variant="nav-next" type="submit" disabled={guardadoBoton}>
             <span>Siguiente</span>
           </Button>

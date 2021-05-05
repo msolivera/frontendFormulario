@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
   Row,
   Col,
@@ -7,6 +8,7 @@ import {
   Button,
   Spinner,
   Container,
+  Table,
 } from "react-bootstrap";
 
 import DatePicker from "react-datepicker";
@@ -14,7 +16,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import range from "lodash/range";
 
 import { values } from "lodash";
-import { toast } from "react-toastify";
+import { toast, useToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { faSave } from "@fortawesome/free-solid-svg-icons";
@@ -378,68 +380,78 @@ export default function DatosPersonales(props) {
       <Form onSubmit={onSubmit}>
         {/*SECCION DE DATOS PERSONALES DE LA PERSONA*/}
         <Jumbotron>
+          <h4>Datos Personales</h4>
           <div
             style={{
               display: tipoPerstate != 1 ? "block" : "none",
             }}
           >
-            <Form.Label>
-              <h5>Estado </h5>
-            </Form.Label>
-
             <div key={`inline`} className="mb-3">
-              <Form.Check
-                inline
-                type="radio"
-                label="Fallecido"
-                value="SI"
-                name="formHorizontalRadios"
-                id="formHorizontalRadios1"
-                onClick={(e) =>
-                  setFormData({
-                    ...formData,
-                    fallecido: e.target.value,
-                  }) |
-                  guardandoLocal(tipoPerstate, formData) |
-                  setestadoFliar("SI")
-                }
-              />
-              <Form.Check
-                inline
-                type="radio"
-                label="No fallecido"
-                value="NO"
-                name="formHorizontalRadios"
-                id="formHorizontalRadios2"
-                onClick={(e) =>
-                  setFormData({
-                    ...formData,
-                    fallecido: e.target.value,
-                  }) |
-                  guardandoLocal(tipoPerstate, formData) |
-                  setestadoFliar("NO")
-                }
-              />
-              <Form.Check
-                inline
-                type="radio"
-                label={
-                  tipoPerstate === 2 || tipoPerstate === 3
-                    ? "Desconocido"
-                    : "No tiene"
-                }
-                value="DESCONOCIDO"
-                name="formHorizontalRadios"
-                id="formHorizontalRadios3"
-                onClick={(e) =>
-                  setFormData({
-                    ...formData,
-                    fallecido: e.target.value,
-                  }) |
-                  guardandoLocal(tipoPerstate, formData) |
-                  setestadoFliar("DESCONOCIDO")
-                }
-              />
+              <Table>
+                <Row>
+                  <Col sm={2}>
+                    <Form.Label inline>
+                      <h6>Situación: </h6>
+                    </Form.Label>
+                  </Col>
+                  <Col>
+                    <Form.Check
+                      inline
+                      type="radio"
+                      label="Vivo"
+                      value="NO"
+                      name="formHorizontalRadios"
+                      id="formHorizontalRadios2"
+                      onClick={(e) =>
+                        setFormData({
+                          ...formData,
+                          fallecido: e.target.value,
+                        }) |
+                        guardandoLocal(tipoPerstate, formData) |
+                        setestadoFliar("NO")
+                      }
+                    />
+                    <Form.Check
+                      inline
+                      type="radio"
+                      label="Fallecido"
+                      value="SI"
+                      name="formHorizontalRadios"
+                      id="formHorizontalRadios1"
+                      onClick={(e) =>
+                        setFormData({
+                          ...formData,
+                          fallecido: e.target.value,
+                        }) |
+                        guardandoLocal(tipoPerstate, formData) |
+                        setestadoFliar("SI")
+                      }
+                    />
+
+                    <Form.Check
+                      inline
+                      type="radio"
+                      label={
+                        tipoPerstate === 2 || tipoPerstate === 3
+                          ? "Desconocido"
+                          : "No tiene"
+                      }
+                      value="DESCONOCIDO"
+                      name="formHorizontalRadios"
+                      id="formHorizontalRadios3"
+                      onClick={(e) =>
+                        setFormData({
+                          ...formData,
+                          fallecido: e.target.value,
+                        }) |
+                        guardandoLocal(tipoPerstate, formData) |
+                        setestadoFliar("DESCONOCIDO") |
+                        setFormData(initialFormValue(tipoPerstate))
+                      }
+                    />
+                  </Col>
+                </Row>
+              </Table>
 
               <div
                 style={{
@@ -788,11 +800,6 @@ export default function DatosPersonales(props) {
                       <option value="Trans">Trans</option>
                     </Form.Control>
                   </Col>
-                </Row>
-              </Form.Group>
-
-              <Form.Group>
-                <Row>
                   <Col>
                     <Form.Label>Estado Civil</Form.Label>
 
@@ -813,7 +820,11 @@ export default function DatosPersonales(props) {
                       <option value=""> Seleccione</option>
                     </Form.Control>
                   </Col>
+                </Row>
+              </Form.Group>
 
+              <Form.Group>
+                <Row>
                   <Col>
                     <Form.Label>Credencial Civica Serie</Form.Label>
                     <Form.Control
@@ -844,10 +855,6 @@ export default function DatosPersonales(props) {
                       onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
                     />
                   </Col>
-                </Row>
-              </Form.Group>
-              <Form.Group>
-                <Row>
                   <Col>
                     <Form.Label>Correo Electrónico</Form.Label>
                     <Form.Control
@@ -879,7 +886,7 @@ export default function DatosPersonales(props) {
           }}
         >
           <div>
-            <h3>Domicilio</h3>
+            <h4>Domicilio</h4>
 
             <Form.Group>
               <Row>
@@ -903,24 +910,6 @@ export default function DatosPersonales(props) {
                     <option value=""> Seleccione</option>
                   </Form.Control>
                 </Col>
-                <Col>
-                  <Form.Label>Domicilio Actual</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Domicilio Actual"
-                    value={formData.domicilioActual}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        domicilioActual: e.target.value,
-                      }) | guardandoLocal(tipoPerstate, formData)
-                    }
-                    onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
-                  />
-                </Col>
-              </Row>
-
-              <Row>
                 <Col>
                   <Form.Label>Departamento de Domicilio</Form.Label>
                   <Form.Control
@@ -970,6 +959,22 @@ export default function DatosPersonales(props) {
 
               <Row>
                 <Col>
+                  <Form.Label>Domicilio Actual</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Domicilio Actual"
+                    value={formData.domicilioActual}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        domicilioActual: e.target.value,
+                      }) | guardandoLocal(tipoPerstate, formData)
+                    }
+                    onKeyUp={() => guardandoLocal(tipoPerstate, formData)}
+                  />
+                </Col>
+
+                <Col>
                   <Form.Label>Seccional Policial (solo números)</Form.Label>
                   <Form.Control
                     type="text"
@@ -1018,14 +1023,25 @@ export default function DatosPersonales(props) {
 
             <FontAwesomeIcon icon={faSave} />
           </Button>
-          <Button
-            variant="guardar"
-            style={{
-              display: estadoFliar == "DESCONOCIDO" ? "block" : "none",
-            }}
+
+          <Link
+            to={
+              tipoPerstate == 2
+                ? "/datosPadre"
+                : tipoPerstate == 3
+                ? "/datosPareja"
+                : "/otrosFliares"
+            }
           >
-            Siguiente Paso
-          </Button>
+            <Button
+              variant="guardar"
+              style={{
+                display: estadoFliar == "DESCONOCIDO" ? "block" : "none",
+              }}
+            >
+              <span> Siguiente Paso</span>
+            </Button>
+          </Link>
         </Container>
       </Form>
     </div>

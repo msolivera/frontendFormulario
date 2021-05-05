@@ -13,8 +13,7 @@ export default function FormParejaLaboral() {
   return (
     <>
       <Container>
-        <h2>Informacion de Conyuge, Concubino/a , Novio/a</h2>
-        <h3>Segundo paso: Informacion laboral</h3>
+        <h3>Información de Conyuge, Concubino/a , Novio/a</h3>
         <Laboral
           tipoPerstate={tipoPerstate}
           setguardadoBoton={setguardadoBoton}
@@ -25,7 +24,7 @@ export default function FormParejaLaboral() {
             <span>Anterior</span>
           </Button>
         </Link>
-        <Link to="/preguntasPareja">
+        <Link to="/otrosFliares">
           <Button variant="nav-next" type="submit" disabled={guardadoBoton}>
             <span>Siguiente</span>
           </Button>

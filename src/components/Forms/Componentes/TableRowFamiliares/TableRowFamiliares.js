@@ -6,7 +6,7 @@ export default function TableRowFamiliares(props) {
   //console.log(pariente.cedula);
   return (
     <>
-      <Table striped bordered hover>
+      <Table>
         <thead>
           <tr>
             <th>Parentezco</th>

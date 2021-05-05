@@ -16,6 +16,7 @@ import {
   ESTCIVIL_MADRE,
   ESTCIVIL_PADRE,
   ESTCIVIL_PAREJA,
+  CIUDADTEMP,
 } from "../utils/constant";
 
 export function getPaisesApi() {
@@ -149,26 +150,41 @@ export function getNombreCiudad(idCiudad) {
     });
 }
 
-export function setearCiudad(idCiudad, tipoPerstate) {
-  getNombreCiudad(idCiudad).then((response) => {
+export function setearCiudad(id, tipoPerstate) {
+  var lista = [];
+  getNombreCiudad(id).then((response) => {
+    lista = formatModel(response.data);
+    //console.log(lista[0].nombre);
     switch (tipoPerstate) {
       case 1:
-        localStorage.setItem(BARRIO_POSTU, response.data);
+        localStorage.setItem(BARRIO_POSTU, lista[0].nombre);
         break;
       case 2:
-        localStorage.setItem(BARRIO_MADRE, response.data);
+        localStorage.setItem(BARRIO_MADRE, lista[0].nombre);
         break;
       case 3:
-        localStorage.setItem(BARRIO_PADRE, response.data);
+        localStorage.setItem(BARRIO_PADRE, lista[0].nombre);
         break;
       case 10:
-        localStorage.setItem(BARRIO_PAREJA, response.data);
+        localStorage.setItem(BARRIO_PAREJA, lista[0].nombre);
         break;
 
       default:
         break;
     }
+    return lista;
   });
+}
+export function formatModel(ciudades) {
+  //lista temporal
+  const ciudadTemp = [];
+
+  ciudades.forEach((ciudad) => {
+    ciudadTemp.push({
+      nombre: ciudad.nombre,
+    });
+  });
+  return ciudadTemp;
 }
 
 export function getNombreEstadoCivil(idestadoCivil) {

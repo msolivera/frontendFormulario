@@ -13,9 +13,7 @@ export default function FormMadre() {
   return (
     <>
       <Container>
-        <h2>Informacion de la Madre</h2>
-        <h3>Primer paso: Datos Personales</h3>
-
+        <h3>Información de la Madre</h3>
         <DatosPersonales
           tipoPerstate={tipoPerstate}
           setguardadoBoton={setguardadoBoton}
