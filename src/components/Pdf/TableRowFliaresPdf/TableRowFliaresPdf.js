@@ -8,7 +8,7 @@ export default function TableRowFliaresPdf(props) {
     <>
       <thead class="thead-fliares">
         <tr>
-          <th style={{ width: "1200px" }}>Parentezco</th>
+          <th style={{ width: "1200px" }}>Parentesco</th>
           <th style={{ width: "1200px" }}>Nombre</th>
           <th style={{ width: "1200px" }}>Apellido</th>
           <th style={{ width: "1200px" }}>Cedula</th>
